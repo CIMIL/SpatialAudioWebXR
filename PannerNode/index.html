@@ -62,10 +62,11 @@
     </a-box>
 
     <!-- user -->
-    <a-entity id="camera" camera look-controls wasd-controls="fly: true;" oculus-touch-controls="hand: right"
-      position="0 1.8 0">
+    <a-entity id="camera" camera look-controls position="0 1.6 0">
       <a-cursor raycaster="objects: [data-raycastable]"></a-cursor>
     </a-entity>
+    <a-entity oculus-touch-controls="hand: left" laser-controls="hand: left"></a-entity>
+    <a-entity oculus-touch-controls="hand: right" laser-controls="hand: right"></a-entity>
   </a-scene>
 </body>
 
