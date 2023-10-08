@@ -67,7 +67,7 @@ AFRAME.registerSystem("building", {
         var vertex = new THREE.Vector3(
           geom.attributes.position.getX(vertexIndex),
           geom.attributes.position.getY(vertexIndex),
-          geom.attributes.position.getZ(vertexIndex)
+          geom.attributes.position.getZ(vertexIndex),
         );
         var uv = callback(vertex, faceVertIndex % 3);
         allUVs[vertexIndex * 2 + 0] = uv[0];
@@ -75,7 +75,7 @@ AFRAME.registerSystem("building", {
       }
       geom.setAttribute(
         "uv",
-        new THREE.BufferAttribute(new Float32Array(allUVs), 2)
+        new THREE.BufferAttribute(new Float32Array(allUVs), 2),
       );
       geom.uvsNeedUpdate = true;
     }
@@ -213,7 +213,7 @@ AFRAME.registerSystem("building", {
               if (rawWalls.length >= 4) {
                 if (rawWalls.length > 4)
                   console.error(
-                    "rooms with WIDTH and LENGTH should only have four walls!"
+                    "rooms with WIDTH and LENGTH should only have four walls!",
                   );
                 rawWalls[0].setAttribute("position", { x: 0, y: 0, z: 0 });
                 rawWalls[1].setAttribute("position", { x: w, y: 0, z: 0 });
@@ -221,12 +221,12 @@ AFRAME.registerSystem("building", {
                 rawWalls[3].setAttribute("position", { x: 0, y: 0, z: l });
               } else {
                 console.error(
-                  "rooms with WIDTH and LENGTH must have four walls!"
+                  "rooms with WIDTH and LENGTH must have four walls!",
                 );
               }
             } else {
               console.error(
-                "rooms with WIDTH must also have LENGTH (and vice versa)"
+                "rooms with WIDTH must also have LENGTH (and vice versa)",
               );
             }
           }
@@ -296,7 +296,7 @@ AFRAME.registerSystem("building", {
                 nextWallNode.components.position.data.z -
                 curWallNode.components.position.data.z;
               var wallLength = Math.sqrt(
-                wallGapX * wallGapX + wallGapZ * wallGapZ
+                wallGapX * wallGapX + wallGapZ * wallGapZ,
               );
               var wallAng = Math.atan2(wallGapZ, wallGapX);
 
@@ -378,13 +378,13 @@ AFRAME.registerSystem("building", {
               wallShape.lineTo(
                 wallLength,
                 nextWallNode.components.position.data.y -
-                  curWallNode.components.position.data.y
+                  curWallNode.components.position.data.y,
               );
               wallShape.lineTo(
                 wallLength,
                 nextWallNode.components.position.data.y -
                   curWallNode.components.position.data.y +
-                  getWallHeight(nextWallNode)
+                  getWallHeight(nextWallNode),
               );
 
               var wallGeom = new THREE.ShapeGeometry(wallShape);
@@ -442,19 +442,19 @@ AFRAME.registerSystem("building", {
                 var curVert = new THREE.Vector3(
                   capGeom.attributes.position.getX(wallIndex),
                   capGeom.attributes.position.getY(wallIndex),
-                  capGeom.attributes.position.getZ(wallIndex)
+                  capGeom.attributes.position.getZ(wallIndex),
                 );
                 curVert.set(
                   curVert.x,
                   curWallNode.components.position.data.y,
-                  curVert.y
+                  curVert.y,
                 );
                 if (isCeiling) curVert.y += getWallHeight(curWallNode);
                 capGeom.attributes.position.setXYZ(
                   wallIndex,
                   curVert.x,
                   curVert.y,
-                  curVert.z
+                  curVert.z,
                 );
               }
 
@@ -479,7 +479,7 @@ AFRAME.registerSystem("building", {
                 curCapNode.myMeshes[typeLabel] = new THREE.Mesh(capGeom, myMat);
                 curCapNode.setObject3D(
                   typeLabel,
-                  curCapNode.myMeshes[typeLabel]
+                  curCapNode.myMeshes[typeLabel],
                 );
               }
             }
@@ -548,7 +548,7 @@ AFRAME.registerSystem("building", {
             function commitVertices() {
               curGeom.setAttribute(
                 "position",
-                new THREE.BufferAttribute(new Float32Array(positionArray), 3)
+                new THREE.BufferAttribute(new Float32Array(positionArray), 3),
               );
             }
             var fVerts = curDoorlink.data.from.myVerts;
@@ -653,8 +653,8 @@ AFRAME.registerComponent(
         length: { type: "number" },
       },
     },
-    refreshSceneConfig
-  )
+    refreshSceneConfig,
+  ),
 );
 
 AFRAME.registerComponent(
@@ -665,8 +665,8 @@ AFRAME.registerComponent(
         height: { type: "number" },
       },
     },
-    refreshSceneConfig
-  )
+    refreshSceneConfig,
+  ),
 );
 
 AFRAME.registerComponent("floor", refreshSceneConfig);
@@ -685,8 +685,8 @@ AFRAME.registerComponent(
         width: { type: "number", default: 0.8 },
       },
     },
-    refreshSceneConfig
-  )
+    refreshSceneConfig,
+  ),
 );
 
 AFRAME.registerComponent("sides", refreshSceneConfig);
