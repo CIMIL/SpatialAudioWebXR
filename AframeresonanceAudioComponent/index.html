@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Room</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <!-- Teleport -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+  <!-- Click and hands -->
+  <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+  <!-- Resonance component -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/aframe-resonance-audio-component@latest/dist/aframe-resonance-audio-component.min.js"></script>
+  <script src="rooms.js"></script>
+</head>
+
+<body>
+  <a-scene background="color: #FAFAFA">
+    <!-- assets -->
+    <a-assets>
+      <!-- sound effect -->
+      <audio id="music" src="../audio/music.mp3" preload></audio>
+    </a-assets>
+
+    <!-- room -->
+    <rw-room position="-5 0 -5" material="color: #444;" height="3">
+      <rw-wall id="wall" position="10 0 10"></rw-wall>
+      <rw-wall position="10 0 0"></rw-wall>
+      <rw-wall position="0 0 0"></rw-wall>
+      <rw-wall position="0 0 10"></rw-wall>
+      <rw-floor id="floor" material="color: #333"></rw-floor>
+      <rw-ceiling material="color: #333"></rw-ceiling>
+    </rw-room>
+
+    <!-- front speaker -->
+    <a-box width="0.5" height="0.5" depth="0.5" material="color: lightblue" position="0 1.8 -4.5"
+      sound="on: click; src: #music">
+      <a-entity position="0 0 0.26" text="value: Waterfall; align: center; color: black; width: 2; wrapCount: 20">
+    </a-box>
+
+    <!-- left speaker -->
+    <a-box width="0.5" height="0.5" depth="0.5" material="color: lightpink;" position="-4.5 1.8 0"
+      sound="on: click; src: #music">
+    </a-box>
+
+    <!-- right speaker -->
+    <a-box width="0.5" height="0.5" depth="0.5" material="color: acqua;" position="4.5 1.8 0"
+      sound="on: click; src: #music">
+    </a-box>
+
+    <!-- back speaker -->
+    <a-box width="0.5" height="0.5" depth="0.5" material="color: lightgreen;" position="0 1.8 4.5"
+      sound="on: click; src: #music">
+    </a-box>
+
+    <!-- top speaker -->
+    <a-box width="0.5" height="0.5" depth="0.5" material="color: lightyellow;" position="0 2.8 0"
+      sound="on: click; src: #music">
+    </a-box>
+
+    <!-- bottom speaker -->
+    <a-box width="0.5" height="0.5" depth="0.5" material="color: lightyellow;" position="0 0.2 0"
+      sound="on: click; src: #music">
+    </a-box>
+
+    <!-- user -->
+    <a-entity id="player">
+      <!-- camera -->
+      <a-entity id="camera" camera position="0 1.6 0" wasd-controls look-controls>
+        <!-- TODO remove with svelte -->
+        <a-cursor geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: red"></a-cursor>
+      </a-entity>
+
+      <!-- hand controls -->
+      <a-entity id="left-hand" super-hands oculus-touch-controls="hand: left"
+        blink-controls="button: trigger; rotateOnTeleport: false; collisionEntities: #floor, #wall;"></a-entity>
+      <a-entity id="right-hand" super-hands="colliderEvent: raycaster-intersection;
+             colliderEventProperty: els;
+             colliderEndEvent: raycaster-intersection-cleared;
+             colliderEndEventProperty: clearedEls" oculus-touch-controls="hand: right"
+        laser-controls="hand: right; model: false"></a-entity>
+    </a-entity>
+  </a-scene>
+
+</body>
+
+</html>
