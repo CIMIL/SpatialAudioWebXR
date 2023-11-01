@@ -1,2 +1,5 @@
 node_modules
 *.pem
+
+# remove every file in audio folders in every subfolder
+**/audio/*
