@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Click and hands -->
+    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
   </head>
   <body>
     <a-scene
@@ -31,30 +33,53 @@
         ></a-text>
       </a-assets>
       <a-sky color="#81D4BD"></a-sky>
-      <a-camera
-        look-controls
-        wasd-controls
-        position="0 1.6 0"
-        cursor="rayOrigin: mouse"
-        raycaster="objects: a-box"
-      >
-        <a-text
-          id="messageBox"
-          value=""
-          color="white"
-          position="-0.7 -0.7 -1"
-          scale="0.3 0.3 0.3 "
-          align="center"
-        ></a-text>
-        <a-text
-          id="scoreBox"
-          value="Score: 0"
-          color="white"
-          position="0.7 -0.7 -1"
-          scale="0.3 0.3 0.3 "
-          align="center"
-        ></a-text>
-      </a-camera>
+
+      <a-entity id="player">
+        <!-- camera -->
+        <a-entity
+          id="camera"
+          camera
+          position="0 1.6 0"
+          wasd-controls
+          look-controls
+          raycaster="objects: a-box"
+        >
+          <a-text
+            id="messageBox"
+            value=""
+            color="white"
+            position="-0.7 -0.7 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+          <a-text
+            id="scoreBox"
+            value="Score: 0"
+            color="white"
+            position="0.7 -0.7 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+          <!-- TODO remove with svelte -->
+          <a-cursor visible="false" cursor="rayOrigin: mouse"></a-cursor>
+        </a-entity>
+
+        <!-- hand controls -->
+        <a-entity
+          id="left-hand"
+          super-hands
+          oculus-touch-controls="hand: left"
+        ></a-entity>
+        <a-entity
+          id="right-hand"
+          super-hands="colliderEvent: raycaster-intersection;
+             colliderEventProperty: els;
+             colliderEndEvent: raycaster-intersection-cleared;
+             colliderEndEventProperty: clearedEls"
+          oculus-touch-controls="hand: right"
+          laser-controls="hand: right; model: true"
+        ></a-entity>
+      </a-entity>
 
       <script src="main.js" type="module"></script>
       <script src="look-at.js" type="module"></script>
