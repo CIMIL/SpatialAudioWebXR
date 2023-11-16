@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene
+      loading-screen="dotsColor: red; backgroundColor: black"
+      dome
+      gamelogic
+    >
+      <a-assets>
+        <audio id="music" src="/cow.wav" preload="auto"></audio>
+        <a-box
+          id="speaker"
+          look-at
+          sound="src: #music; poolSize: 1; loop: true"
+        >
+        </a-box>
+        <a-text
+          id="overSpeakerText"
+          value=""
+          align="center"
+          position="0 1 0"
+          scale="1 1 1"
+          color="black"
+          visible="true"
+        ></a-text>
+      </a-assets>
+      <a-sky color="#81D4BD"></a-sky>
+      <a-camera
+        look-controls
+        wasd-controls
+        position="0 1.6 0"
+        cursor="rayOrigin: mouse"
+        raycaster="objects: a-box"
+      >
+        <a-text
+          id="messageBox"
+          value=""
+          color="white"
+          position="-0.7 -0.7 -1"
+          scale="0.3 0.3 0.3 "
+          align="center"
+        ></a-text>
+        <a-text
+          id="scoreBox"
+          value="Score: 0"
+          color="white"
+          position="0.7 -0.7 -1"
+          scale="0.3 0.3 0.3 "
+          align="center"
+        ></a-text>
+      </a-camera>
+
+      <script src="main.js" type="module"></script>
+      <script src="look-at.js" type="module"></script>
+    </a-scene>
+  </body>
+</html>
