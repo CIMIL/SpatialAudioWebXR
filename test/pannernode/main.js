@@ -1,6 +1,6 @@
 let DEBUG = true;
 const LEVELS = 10;
-const SOUND_DISABLE = false;
+let SOUND_DISABLE = false;
 const scene = document.querySelector("a-scene");
 const camera = scene.querySelector("a-camera");
 const speakerTemplate = document.getElementById("speaker");
@@ -15,6 +15,14 @@ let currentLevel = 0;
 AFRAME.registerComponent("gamelogic", {
   init: function () {
     playRandomSound();
+  },
+});
+
+AFRAME.registerComponent("back-button", {
+  init: function () {
+    this.el.addEventListener("click", () => {
+      window.location.href = "/";
+    });
   },
 });
 

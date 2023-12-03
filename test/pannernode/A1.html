@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Click and hands -->
+    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+    <script src="https://rawgit.com/caseyyee/aframe-ui-widgets/master/dist/aframe-ui-widgets.min.js"></script>
+  </head>
+  <body>
+    <a-scene
+      loading-screen="dotsColor: red; backgroundColor: black"
+      dome
+      gamelogic
+    >
+      <a-assets>
+        <audio
+          id="music"
+          src="https://cdn.freesound.org/previews/58/58277_634166-lq.mp3"
+          crossorigin="anonymous"
+          preload="auto"
+        ></audio>
+        <a-box
+          id="speaker"
+          look-at
+          sound="src: #music; poolSize: 1; loop: true"
+          data-raycastable
+        >
+        </a-box>
+        <a-text
+          id="overSpeakerText"
+          value=""
+          align="center"
+          position="0 1 0"
+          scale="1 1 1"
+          color="black"
+          visible="true"
+        ></a-text>
+      </a-assets>
+      <a-sky color="#81D4BD"></a-sky>
+
+      <a-entity id="player">
+        <!-- camera -->
+        <a-entity
+          id="camera"
+          camera
+          position="0 1.6 0"
+          wasd-controls
+          look-controls
+        >
+          <a-text
+            id="messageBox"
+            value=""
+            color="white"
+            position="-0.7 -0.7 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+          <a-text
+            id="scoreBox"
+            value="Score: 0"
+            color="white"
+            position="0.7 -0.7 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+
+          <a-cursor visible="false" cursor="rayOrigin: mouse"></a-cursor>
+        </a-entity>
+
+        <!-- hand controls -->
+        <a-entity id="left-hand" super-hands oculus-touch-controls="hand: left">
+          <!-- show a plane oriented as the controller -->
+          <a-plane
+            position="0 0.04 -0.15"
+            rotation="-45 0 0"
+            color="red"
+            width="0.1"
+            height="0.1"
+          >
+            <!-- box with text back -->
+            <a-box
+              position="0 0 0.01"
+              color="black"
+              width="0.1"
+              height="0.1"
+              depth="0.01"
+              back-button
+            >
+              <a-text
+                value="Back"
+                align="center"
+                position="0 0 0.01"
+                scale="0.1 0.1 0.1"
+                color="white"
+              ></a-text>
+            </a-box>
+          </a-plane>
+        </a-entity>
+        <a-entity
+          id="right-hand"
+          super-hands="colliderEvent: raycaster-intersection;
+             colliderEventProperty: els;
+             colliderEndEvent: raycaster-intersection-cleared;
+             colliderEndEventProperty: clearedEls"
+          oculus-touch-controls="hand: right"
+          laser-controls="hand: right; model: true"
+          raycaster="objects: [data-raycastable]"
+        ></a-entity>
+      </a-entity>
+
+      <script src="main.js" type="module"></script>
+      <script src="look-at.js" type="module"></script>
+    </a-scene>
+  </body>
+</html>
