@@ -26,7 +26,7 @@
           id="speaker"
           look-at
           sound="src: #music; poolSize: 1; loop: true"
-          data-raycastable
+          data-clickable
         >
         </a-box>
         <a-text
@@ -49,6 +49,8 @@
           position="0 1.6 0"
           wasd-controls
           look-controls
+          cursor="rayOrigin: mouse"
+          raycaster="objects: [data-clickable]"
         >
           <a-text
             id="messageBox"
@@ -66,8 +68,6 @@
             scale="0.3 0.3 0.3 "
             align="center"
           ></a-text>
-
-          <a-cursor visible="false" cursor="rayOrigin: mouse"></a-cursor>
         </a-entity>
 
         <!-- hand controls -->
@@ -88,7 +88,7 @@
               height="0.1"
               depth="0.01"
               back-button
-              data-raycastable
+              data-clickable
             >
               <a-text
                 value="Back"
@@ -108,11 +108,11 @@
              colliderEndEventProperty: clearedEls"
           oculus-touch-controls="hand: right"
           laser-controls="hand: right; model: true"
-          raycaster="objects: [data-raycastable]"
+          raycaster="objects: [data-clickable]"
         ></a-entity>
       </a-entity>
 
-      <script src="main.js" type="module"></script>
+      <script src="a1.js" type="module"></script>
       <script src="look-at.js" type="module"></script>
     </a-scene>
   </body>

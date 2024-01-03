@@ -1,4 +1,4 @@
-let DEBUG = true;
+let DEBUG = false;
 const LEVELS = 10;
 let SOUND_DISABLE = false;
 const scene = document.querySelector("a-scene");
@@ -154,4 +154,20 @@ function updateScoreBox() {
 
 function updateMessageBox(t) {
   messageBox.setAttribute("value", t);
+}
+
+function rotationToZeroFrom(x, y, z) {
+  // calc rotation to zero
+  let rotation = 0;
+  if (x > 0) {
+    rotation = Math.atan(z / x);
+  } else if (x < 0) {
+    rotation = Math.atan(z / x) + Math.PI;
+  } else if (z > 0) {
+    rotation = Math.PI / 2;
+  } else if (z < 0) {
+    rotation = -Math.PI / 2;
+  }
+
+  return rotation;
 }
