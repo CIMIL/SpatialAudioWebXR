@@ -7,6 +7,7 @@ export default {
       input: {
         main: "index.html",
         A1: "A1.html",
+        A2: "A2.html",
       },
     },
   },

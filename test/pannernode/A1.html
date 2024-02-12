@@ -8,6 +8,8 @@
     <!-- Click and hands -->
     <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
     <script src="https://rawgit.com/caseyyee/aframe-ui-widgets/master/dist/aframe-ui-widgets.min.js"></script>
+    <script src="a1.js" type="module"></script>
+    <script src="utils/look-at.js" type="module"></script>
   </head>
   <body>
     <a-scene
@@ -111,9 +113,6 @@
           raycaster="objects: [data-clickable]"
         ></a-entity>
       </a-entity>
-
-      <script src="a1.js" type="module"></script>
-      <script src="look-at.js" type="module"></script>
     </a-scene>
   </body>
 </html>
