@@ -3,3 +3,7 @@ node_modules
 
 # remove every file in audio folders in every subfolder
 **/audio/*
+PannerNode/dist/audio/crowd.mp3:Zone.Identifier
+PannerNode/dist/audio/music.mp3:Zone.Identifier
+PannerNode/dist/audio/music.mp3:Zone.Identifier
+PannerNode/dist/audio/waterfall.mp3:Zone.Identifier
