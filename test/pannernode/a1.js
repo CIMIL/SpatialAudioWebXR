@@ -18,14 +18,6 @@ AFRAME.registerComponent("gamelogic", {
   },
 });
 
-AFRAME.registerComponent("back-button", {
-  init: function () {
-    this.el.addEventListener("click", () => {
-      window.location.href = "/";
-    });
-  },
-});
-
 function distributeSpeakers(radius = 10) {
   let numberOfLayers = 8;
   let numberOfBoxesForLine = 0;
