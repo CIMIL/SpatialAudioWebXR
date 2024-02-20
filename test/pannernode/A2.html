@@ -15,7 +15,8 @@
     <script src="utils/back-button.js" type="module"></script>
     <script>
       const TIME_BETWEEN_LEVELS = 3000;
-      const LEVELS = 3;
+      const PLAY_INTERVAL = 5000;
+      const LEVELS = 1;
 
       const speakerPositions = distributeSpeakers(10);
       function distributeSpeakers(radius) {
@@ -88,16 +89,32 @@
           score: 0,
           messageBox: "What speaker is playing?",
           currentLevel: 0,
+          isPLaying: false,
         },
 
         handlers: {
+          playLoop: function (state, action) {
+            if (state.isPLaying === false) {
+              playingSpeaker.pause();
+            }
+            const playingSpeaker = document.querySelector(
+              `#src-${action.speaker}`
+            );
+            playingSpeaker.play();
+            setInterval(() => {
+              if (playingSpeaker.ended) {
+                AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
+              }
+            }, PLAY_INTERVAL);
+          },
           playFromRandomSpeaker: function (state, action) {
             // random number from 0 to 63
             const rand = Math.floor(Math.random() * (63 + 1));
             console.log("Speaker playing =", rand);
             // play audio from random speaker
-            const playingSpeaker = document.querySelector(`#src-${rand}`);
-            playingSpeaker.play();
+            state.isPLaying = true;
+            AFRAME.scenes[0].emit("playLoop", { speaker: rand });
+
             // update currentPlayingSpeaker
             state.currentPlayingSpeaker = `${rand}`;
             console.log("State:", state);
@@ -117,6 +134,7 @@
             var playingSpeaker = document.querySelector(
               `#src-${state.currentPlayingSpeaker}`
             );
+            state.isPLaying = false;
             playingSpeaker.pause();
             console.log("stop");
             // check if clicked speaker is equal to current playing speaker
@@ -197,7 +215,8 @@
               id="{{id}}"
               crossorigin="anonymous"
               preload="auto"
-              src="/sound.wav"
+              src="/cow.mp3"
+              loop="false"
             ></audio>
           </template>
         </a-entity>
@@ -227,7 +246,7 @@
                 player
                 id="{{id}}"
                 position="{{position}}"
-                resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: true;"
+                resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: false;"
               >
                 <a-box look-at="#player" data-clickable></a-box>
               </a-resonance-audio-src>
