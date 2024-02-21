@@ -124,8 +124,26 @@ AFRAME.registerComponent("wait-for-room", {
   },
 });
 
+AFRAME.registerComponent("play-random-sound", {
+  init: function () {
+    AFRAME.scenes[0].emit("playFromRandomSpeaker");
+  },
+});
+
 AFRAME.registerComponent("player", {
   dependencies: ["resonance-audio-src"],
+  init: function () {
+    this.el.addEventListener("click", () => {
+      console.log(this.el.id);
+      AFRAME.scenes[0].emit("speakerClicked", {
+        speakerClicked: this.el.id.split("-")[1],
+      });
+    });
+  },
+});
+
+AFRAME.registerComponent("playerb", {
+  dependencies: ["sound"],
   init: function () {
     this.el.addEventListener("click", () => {
       console.log(this.el.id);
