@@ -1,8 +1,13 @@
-import { TIME_BETWEEN_LEVELS, LEVELS, PLAY_INTERVAL } from "./constants.js";
+import {
+  TIME_BETWEEN_LEVELS,
+  LEVELS,
+  PLAY_INTERVAL,
+  SPEAKER_RADIUS,
+} from "./constants.js";
 import { distributeSpeakers } from "./utils/distribute-speakers.js";
 import "./utils/back-button.js";
 
-const speakerPositions = distributeSpeakers(10);
+const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
 AFRAME.registerState({
   initialState: {
@@ -18,12 +23,13 @@ AFRAME.registerState({
     score: 0,
     messageBox: "What speaker is playing?",
     currentLevel: 0,
-    isPLaying: false,
+    isPlaying: null,
+    sphereRadius: SPEAKER_RADIUS,
   },
 
   handlers: {
     playLoop: function (state, action) {
-      if (state.isPLaying === false) {
+      if (state.isPlaying === false) {
         playingSpeaker.pause();
       }
       const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
@@ -121,12 +127,10 @@ AFRAME.registerComponent("wait-for-room", {
 AFRAME.registerComponent("player", {
   dependencies: ["resonance-audio-src"],
   init: function () {
-    this.el.addEventListener("audioroom-entered", () => {
-      this.el.addEventListener("click", () => {
-        console.log(this.el.id);
-        AFRAME.scenes[0].emit("speakerClicked", {
-          speakerClicked: this.el.id.split("-")[1],
-        });
+    this.el.addEventListener("click", () => {
+      console.log(this.el.id);
+      AFRAME.scenes[0].emit("speakerClicked", {
+        speakerClicked: this.el.id.split("-")[1],
       });
     });
   },
