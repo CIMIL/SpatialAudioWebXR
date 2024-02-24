@@ -34,17 +34,18 @@ AFRAME.registerState({
         `#src-${state.lastPlayingSpeaker}`
       );
       const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
+
       if (
-        state.lastPlayingSpeaker !== action.speaker &&
+        state.lastPlayingSpeaker === state.currentPlayingSpeaker &&
         state.lastPlayingSpeaker !== ""
       ) {
-        lastSpeaker.stop();
+        lastSpeaker.pause();
+        return;
       }
+
       playingSpeaker.play();
       setInterval(() => {
-        if (playingSpeaker.ended) {
-          AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
-        }
+        AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
       }, PLAY_INTERVAL);
     },
     playFromRandomSpeaker: function (state, action) {
@@ -62,10 +63,14 @@ AFRAME.registerState({
 
     updateScore: function (state, action) {
       state.score += 1;
+      const score = document.querySelector("#score-box");
+      score.setAttribute("text", { value: state.score });
     },
 
     updateMessageBox: function (state, action) {
       state.messageBox = action.message;
+      const messageBox = document.querySelector("#message-box");
+      messageBox.setAttribute("text", { value: state.messageBox });
     },
 
     speakerClicked: function (state, action) {
@@ -77,7 +82,7 @@ AFRAME.registerState({
         `#src-${state.currentPlayingSpeaker}`
       );
       state.isPlaying = false;
-      playingSpeaker.stop();
+      playingSpeaker.pause();
       console.log("stop");
       // check if clicked speaker is equal to current playing speaker
       console.log(`speaker-${action.speakerClicked}`);
