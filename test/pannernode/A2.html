@@ -9,11 +9,11 @@
     <!-- Click and hands -->
     <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
     <!-- State -->
-    <script src="https://unpkg.com/aframe-state-component@7.1.0/dist/aframe-state-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-state-component@7.0.0/dist/aframe-state-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/aframe-resonance-audio-component@1.1.0/dist/aframe-resonance-audio-component.min.js"></script>
-    <script src="main.js" type="module"></script>
+    <script src="main2.js" type="module"></script>
   </head>
   <body>
     <a-scene background="color: #242424">
@@ -51,14 +51,14 @@
         >
           <a-entity wait-for-room bind-for="for: item; in: speakers; key: id">
             <template>
-              <a-resonance-audio-src
+              <a-entity
                 player
                 id="{{id}}"
                 position="{{position}}"
                 resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: false;"
               >
                 <a-box look-at="#player" data-clickable></a-box>
-              </a-resonance-audio-src>
+              </a-entity>
             </template>
           </a-entity>
         </a-resonance-audio-room>
@@ -122,6 +122,23 @@
             >
               <a-text
                 value="Back"
+                align="center"
+                position="0 0 0.01"
+                scale="0.1 0.1 0.1"
+                color="white"
+              ></a-text>
+            </a-box>
+            <a-box
+              position="0 0.15 0.01"
+              color="black"
+              width="0.1"
+              height="0.1"
+              depth="0.01"
+              start-button
+              data-clickable
+            >
+              <a-text
+                value="Start"
                 align="center"
                 position="0 0 0.01"
                 scale="0.1 0.1 0.1"

@@ -20,6 +20,7 @@ AFRAME.registerState({
       position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
     })),
     currentPlayingSpeaker: "",
+    lastPlayingSpeaker: "",
     score: 0,
     messageBox: "What speaker is playing?",
     currentLevel: 0,
@@ -29,10 +30,16 @@ AFRAME.registerState({
 
   handlers: {
     playLoop: function (state, action) {
-      if (state.isPlaying === false) {
-        playingSpeaker.pause();
-      }
+      const lastSpeaker = document.querySelector(
+        `#src-${state.lastPlayingSpeaker}`
+      );
       const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
+      if (
+        state.lastPlayingSpeaker !== action.speaker &&
+        state.lastPlayingSpeaker !== ""
+      ) {
+        lastSpeaker.stop();
+      }
       playingSpeaker.play();
       setInterval(() => {
         if (playingSpeaker.ended) {
@@ -45,7 +52,7 @@ AFRAME.registerState({
       const rand = Math.floor(Math.random() * (63 + 1));
       console.log("Speaker playing =", rand);
       // play audio from random speaker
-      state.isPLaying = true;
+      state.isPlaying = true;
       AFRAME.scenes[0].emit("playLoop", { speaker: rand });
 
       // update currentPlayingSpeaker
@@ -63,12 +70,14 @@ AFRAME.registerState({
 
     speakerClicked: function (state, action) {
       console.log("clicked");
+      state.lastPlayingSpeaker = state.currentPlayingSpeaker;
+      console.log("lastPlayingSpeaker", state.lastPlayingSpeaker);
       // stop sound from current speaker
-      var playingSpeaker = document.querySelector(
+      const playingSpeaker = document.querySelector(
         `#src-${state.currentPlayingSpeaker}`
       );
-      state.isPLaying = false;
-      playingSpeaker.pause();
+      state.isPlaying = false;
+      playingSpeaker.stop();
       console.log("stop");
       // check if clicked speaker is equal to current playing speaker
       console.log(`speaker-${action.speakerClicked}`);
@@ -120,30 +129,20 @@ AFRAME.registerState({
 AFRAME.registerComponent("wait-for-room", {
   dependencies: ["resonance-audio-room"],
   init: function () {
-    AFRAME.scenes[0].emit("playFromRandomSpeaker");
+    // AFRAME.scenes[0].emit("playFromRandomSpeaker");
   },
 });
 
-AFRAME.registerComponent("play-random-sound", {
+AFRAME.registerComponent("start-button", {
   init: function () {
-    AFRAME.scenes[0].emit("playFromRandomSpeaker");
+    this.el.addEventListener("click", () => {
+      AFRAME.scenes[0].emit("playFromRandomSpeaker");
+    });
   },
 });
 
 AFRAME.registerComponent("player", {
   dependencies: ["resonance-audio-src"],
-  init: function () {
-    this.el.addEventListener("click", () => {
-      console.log(this.el.id);
-      AFRAME.scenes[0].emit("speakerClicked", {
-        speakerClicked: this.el.id.split("-")[1],
-      });
-    });
-  },
-});
-
-AFRAME.registerComponent("playerb", {
-  dependencies: ["sound"],
   init: function () {
     this.el.addEventListener("click", () => {
       console.log(this.el.id);
