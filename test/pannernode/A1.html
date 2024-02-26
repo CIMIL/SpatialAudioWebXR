@@ -10,13 +10,10 @@
     <!-- State -->
     <script src="https://unpkg.com/aframe-state-component@7.1.0/dist/aframe-state-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="main.js" type="module"></script>
+    <script src="main1.js" type="module"></script>
   </head>
   <body>
-    <a-scene
-      loading-screen="dotsColor: green; backgroundColor: black"
-      background="color: #242424"
-    >
+    <a-scene background="color: #242424">
       <a-assets>
         <a-entity bind-for="for: item; in: audioSources; key: id">
           <template>
@@ -24,34 +21,37 @@
               id="{{id}}"
               crossorigin="anonymous"
               preload="auto"
-              src="/cow.mp3"
+              src="/sound.wav"
             ></audio>
           </template>
         </a-entity>
       </a-assets>
-
       <a-sphere
         bind="radius: sphereRadius"
         segments-width="36"
         segments-height="18"
         wireframe="true"
       >
-        <a-entity id="bro">
-          <a-entity
-            play-random-sound
-            bind-for="for: item; in: speakers; key: id"
-          >
-            <template>
-              <a-entity
-                playerb
-                id="{{id}}"
-                position="{{position}}"
-                sound="src: {{audioSrc}}; autoplay: false; loop: false;"
-              >
-                <a-box look-at="#player" data-clickable></a-box>
-              </a-entity>
-            </template>
-          </a-entity>
+        <a-entity bind-for="for: item; in: speakers; key: id">
+          <template>
+            <a-sound
+              player
+              id="{{id}}"
+              src="{{audioSrc}}"
+              position="{{position}}"
+              volume="10"
+            >
+              <a-box look-at="#player" data-clickable>
+                <a-text
+                  value="{{id}}"
+                  align="center"
+                  position="0 0.200 1.25"
+                  scale="0.5 0.5 0.5"
+                  color="blue"
+                ></a-text>
+              </a-box>
+            </a-sound>
+          </template>
         </a-entity>
       </a-sphere>
 
@@ -59,7 +59,6 @@
         <!-- camera -->
         <a-entity
           id="camera"
-          camera
           position="0 1.6 0"
           wasd-controls
           look-controls
@@ -67,7 +66,7 @@
           raycaster="objects: [data-clickable]"
         >
           <a-text
-            id="messageBox"
+            id="message-box"
             bind="value: messageBox"
             color="white"
             position="-0.7 -0.7 -2"
@@ -75,7 +74,6 @@
             align="center"
           ></a-text>
           <a-text
-            id="scoreBox"
             value="Score"
             color="white"
             position="0.7 -0.6 -2"
@@ -83,7 +81,7 @@
             align="center"
           ></a-text>
           <a-text
-            id="scoreBox"
+            id="score-box"
             bind="value: score"
             color="white"
             position="0.7 -0.7 -2"
@@ -114,6 +112,23 @@
             >
               <a-text
                 value="Back"
+                align="center"
+                position="0 0 0.01"
+                scale="0.1 0.1 0.1"
+                color="white"
+              ></a-text>
+            </a-box>
+            <a-box
+              position="0 0.15 0.01"
+              color="black"
+              width="0.1"
+              height="0.1"
+              depth="0.01"
+              start-button
+              data-clickable
+            >
+              <a-text
+                value="Start"
                 align="center"
                 position="0 0 0.01"
                 scale="0.1 0.1 0.1"
