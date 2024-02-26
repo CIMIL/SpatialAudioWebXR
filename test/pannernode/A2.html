@@ -24,7 +24,7 @@
               id="{{id}}"
               crossorigin="anonymous"
               preload="auto"
-              src="/cow.mp3"
+              src="/sound.wav"
               loop="false"
             ></audio>
           </template>
@@ -55,7 +55,7 @@
                 player
                 id="{{id}}"
                 position="{{position}}"
-                resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: false;"
+                resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: false; gain: 10"
               >
                 <a-box look-at="#player" data-clickable></a-box>
               </a-entity>
