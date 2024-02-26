@@ -30,7 +30,6 @@ AFRAME.registerState({
 
   handlers: {
     playLoop: function (state, action) {
-      console.log(state.currentPlayingSpeaker, action.speaker);
       console.log(state);
       if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
       const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
@@ -42,18 +41,15 @@ AFRAME.registerState({
       }, PLAY_INTERVAL);
     },
     playFromRandomSpeaker: function (state, action) {
-      console.log("Play from random speaker");
       // activate clicks
       state.clickActive = true;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
-      console.log("Speaker playing =", rand);
       // update currentPlayingSpeaker
       state.currentPlayingSpeaker = `${rand}`;
       // play audio from random speaker
       state.isPlaying = true;
       AFRAME.scenes[0].emit("playLoop", { speaker: rand });
-      console.log("State:", state);
     },
 
     updateScore: function (state, action) {
@@ -89,15 +85,12 @@ AFRAME.registerState({
       ) {
         // id yes increment score and write Correct in message box
         AFRAME.scenes[0].emit("updateScore");
-        console.log("score++");
-        console.log("correct");
 
         AFRAME.scenes[0].emit("updateMessageBox", {
           message: "Correct!",
         });
       } else {
         // if not write Wrong in message box
-        console.log("wrong");
         AFRAME.scenes[0].emit("updateMessageBox", {
           message: "Wrong",
         });
@@ -116,7 +109,6 @@ AFRAME.registerState({
           AFRAME.scenes[0].emit("playFromRandomSpeaker");
         } else {
           // else set messagebox to "Game Over"
-          console.log("Game Over");
           state.currentPlayingSpeaker = "";
           AFRAME.scenes[0].emit("updateMessageBox", {
             message: "Game Over. Return to menu",
