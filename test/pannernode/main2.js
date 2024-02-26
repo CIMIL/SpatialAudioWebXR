@@ -20,44 +20,39 @@ AFRAME.registerState({
       position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
     })),
     currentPlayingSpeaker: "",
-    lastPlayingSpeaker: "",
     score: 0,
     messageBox: "What speaker is playing?",
     currentLevel: 0,
     isPlaying: null,
     sphereRadius: SPEAKER_RADIUS,
+    clickActive: false,
   },
 
   handlers: {
     playLoop: function (state, action) {
-      const lastSpeaker = document.querySelector(
-        `#src-${state.lastPlayingSpeaker}`
-      );
+      console.log(state.currentPlayingSpeaker, action.speaker);
+      console.log(state);
+      if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
       const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
-
-      if (
-        state.lastPlayingSpeaker === state.currentPlayingSpeaker &&
-        state.lastPlayingSpeaker !== ""
-      ) {
-        lastSpeaker.pause();
-        return;
-      }
-
       playingSpeaker.play();
-      setInterval(() => {
-        AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
+
+      setTimeout(() => {
+        if (state.currentPlayingSpeaker === `${action.speaker}`)
+          AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
       }, PLAY_INTERVAL);
     },
     playFromRandomSpeaker: function (state, action) {
+      console.log("Play from random speaker");
+      // activate clicks
+      state.clickActive = true;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
       console.log("Speaker playing =", rand);
+      // update currentPlayingSpeaker
+      state.currentPlayingSpeaker = `${rand}`;
       // play audio from random speaker
       state.isPlaying = true;
       AFRAME.scenes[0].emit("playLoop", { speaker: rand });
-
-      // update currentPlayingSpeaker
-      state.currentPlayingSpeaker = `${rand}`;
       console.log("State:", state);
     },
 
@@ -74,19 +69,20 @@ AFRAME.registerState({
     },
 
     speakerClicked: function (state, action) {
-      console.log("clicked");
-      state.lastPlayingSpeaker = state.currentPlayingSpeaker;
-      console.log("lastPlayingSpeaker", state.lastPlayingSpeaker);
+      // if clicks are not active, ignore
+      if (!state.clickActive) return;
+
+      // deactivate clicks
+      state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
         `#src-${state.currentPlayingSpeaker}`
       );
       state.isPlaying = false;
+      state.currentPlayingSpeaker = "";
       playingSpeaker.pause();
-      console.log("stop");
+
       // check if clicked speaker is equal to current playing speaker
-      console.log(`speaker-${action.speakerClicked}`);
-      console.log(`speaker-${state.currentPlayingSpeaker}`);
       if (
         `speaker-${action.speakerClicked}` ===
         `speaker-${state.currentPlayingSpeaker}`
@@ -107,7 +103,6 @@ AFRAME.registerState({
         });
       }
 
-      console.log("State:", state);
       // increment level
       state.currentLevel += 1;
       //  wait for n seconds
@@ -122,6 +117,7 @@ AFRAME.registerState({
         } else {
           // else set messagebox to "Game Over"
           console.log("Game Over");
+          state.currentPlayingSpeaker = "";
           AFRAME.scenes[0].emit("updateMessageBox", {
             message: "Game Over. Return to menu",
           });
@@ -134,7 +130,7 @@ AFRAME.registerState({
 AFRAME.registerComponent("wait-for-room", {
   dependencies: ["resonance-audio-room"],
   init: function () {
-    // AFRAME.scenes[0].emit("playFromRandomSpeaker");
+    AFRAME.scenes[0].emit("playFromRandomSpeaker");
   },
 });
 
@@ -150,7 +146,6 @@ AFRAME.registerComponent("player", {
   dependencies: ["resonance-audio-src"],
   init: function () {
     this.el.addEventListener("click", () => {
-      console.log(this.el.id);
       AFRAME.scenes[0].emit("speakerClicked", {
         speakerClicked: this.el.id.split("-")[1],
       });
