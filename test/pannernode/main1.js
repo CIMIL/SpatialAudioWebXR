@@ -1,62 +1,13 @@
-const TIME_BETWEEN_LEVELS = 3000;
-const LEVELS = 10;
+import {
+  TIME_BETWEEN_LEVELS,
+  LEVELS,
+  PLAY_INTERVAL,
+  SPEAKER_RADIUS,
+} from "./constants.js";
+import { distributeSpeakers } from "./utils/distribute-speakers.js";
+import "./utils/back-button.js";
 
-const speakerPositions = distributeSpeakers(10);
-function distributeSpeakers(radius) {
-  const positions = [];
-  const numberOfLayers = 8;
-  let numberOfBoxesForLine = 0;
-
-  for (let layer = 0; layer < numberOfLayers; layer++) {
-    switch (layer) {
-      case 0:
-        numberOfBoxesForLine = 1;
-        break;
-      case 1:
-        numberOfBoxesForLine = 7;
-        break;
-      case 2:
-        numberOfBoxesForLine = 11;
-        break;
-      case 3:
-        numberOfBoxesForLine = 13;
-        break;
-      case 4:
-        numberOfBoxesForLine = 13;
-        break;
-      case 5:
-        numberOfBoxesForLine = 11;
-        break;
-      case 6:
-        numberOfBoxesForLine = 7;
-        break;
-      case 7:
-        numberOfBoxesForLine = 1;
-        break;
-    }
-
-    for (let j = 0; j < numberOfBoxesForLine; j++) {
-      const position = {
-        x:
-          radius *
-          Math.sin((2 * Math.PI * j) / numberOfBoxesForLine) *
-          Math.sin((Math.PI * layer) / numberOfLayers),
-        y: radius * Math.cos((Math.PI * layer) / numberOfLayers),
-        z:
-          radius *
-          Math.cos((2 * Math.PI * j) / numberOfBoxesForLine) *
-          Math.sin((Math.PI * layer) / numberOfLayers),
-      };
-
-      if (layer === 7) {
-        position.z = 0;
-      }
-
-      positions.push(position);
-    }
-  }
-  return positions;
-}
+const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
 AFRAME.registerState({
   initialState: {
@@ -72,39 +23,63 @@ AFRAME.registerState({
     score: 0,
     messageBox: "What speaker is playing?",
     currentLevel: 0,
+    isPlaying: null,
+    sphereRadius: SPEAKER_RADIUS,
+    clickActive: false,
   },
 
   handlers: {
+    playLoop: function (state, action) {
+      console.log(state);
+      if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
+      const playingSpeaker = document.querySelector(
+        `#speaker-${action.speaker}`
+      );
+      playingSpeaker.components["sound"].playSound();
+
+      setTimeout(() => {
+        if (state.currentPlayingSpeaker === `${action.speaker}`)
+          AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
+      }, PLAY_INTERVAL);
+    },
     playFromRandomSpeaker: function (state, action) {
+      // activate clicks
+      state.clickActive = true;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
-      console.log("rand", rand);
-      // play audio from random speaker
-      const playingSpeaker = document.querySelector(`#src-${rand}`);
-      playingSpeaker.play();
       // update currentPlayingSpeaker
       state.currentPlayingSpeaker = `${rand}`;
-      console.log("play random", state);
+      // play audio from random speaker
+      state.isPlaying = true;
+      AFRAME.scenes[0].emit("playLoop", { speaker: rand });
     },
 
     updateScore: function (state, action) {
       state.score += 1;
+      const score = document.querySelector("#score-box");
+      score.setAttribute("text", { value: state.score });
     },
 
     updateMessageBox: function (state, action) {
       state.messageBox = action.message;
+      const messageBox = document.querySelector("#message-box");
+      messageBox.setAttribute("text", { value: state.messageBox });
     },
 
     speakerClicked: function (state, action) {
-      console.log("clicked");
+      // if clicks are not active, ignore
+      if (!state.clickActive) return;
+
+      // deactivate clicks
+      state.clickActive = false;
       // stop sound from current speaker
-      var playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`
+      const playingSpeaker = document.querySelector(
+        `#speaker-${state.currentPlayingSpeaker}`
       );
-      console.log(playingSpeaker);
-      playingSpeaker.pause();
-      console.log("stop");
-      console.log(state);
+      state.isPlaying = false;
+      state.currentPlayingSpeaker = "";
+      playingSpeaker.components["sound"].stopSound();
+
       // check if clicked speaker is equal to current playing speaker
       if (
         `speaker-${action.speakerClicked}` ===
@@ -112,19 +87,19 @@ AFRAME.registerState({
       ) {
         // id yes increment score and write Correct in message box
         AFRAME.scenes[0].emit("updateScore");
-        console.log("score++");
-        console.log("correct");
 
         AFRAME.scenes[0].emit("updateMessageBox", {
           message: "Correct!",
         });
       } else {
         // if not write Wrong in message box
-        console.log("wrong");
         AFRAME.scenes[0].emit("updateMessageBox", {
           message: "Wrong",
         });
       }
+
+      // increment level
+      state.currentLevel += 1;
       //  wait for n seconds
       setTimeout(() => {
         // check if levels < 10
@@ -136,6 +111,7 @@ AFRAME.registerState({
           AFRAME.scenes[0].emit("playFromRandomSpeaker");
         } else {
           // else set messagebox to "Game Over"
+          state.currentPlayingSpeaker = "";
           AFRAME.scenes[0].emit("updateMessageBox", {
             message: "Game Over. Return to menu",
           });
@@ -152,14 +128,20 @@ AFRAME.registerComponent("wait-for-room", {
   },
 });
 
+AFRAME.registerComponent("start-button", {
+  init: function () {
+    this.el.addEventListener("click", () => {
+      AFRAME.scenes[0].emit("playFromRandomSpeaker");
+    });
+  },
+});
+
 AFRAME.registerComponent("player", {
   dependencies: ["resonance-audio-src"],
   init: function () {
-    this.el.addEventListener("audioroom-entered", () => {
-      this.el.addEventListener("click", () => {
-        AFRAME.scenes[0].emit("speakerClicked", {
-          speakerClicked: this.el.getAttribute("id").split("-")[1],
-        });
+    this.el.addEventListener("click", () => {
+      AFRAME.scenes[0].emit("speakerClicked", {
+        speakerClicked: this.el.id.split("-")[1],
       });
     });
   },

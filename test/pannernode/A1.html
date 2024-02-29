@@ -7,42 +7,53 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <!-- Click and hands -->
     <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
-    <script src="https://rawgit.com/caseyyee/aframe-ui-widgets/master/dist/aframe-ui-widgets.min.js"></script>
-    <script src="a1.js" type="module"></script>
-    <script src="utils/look-at.js" type="module"></script>
-    <script src="utils/back-button.js" type="module"></script>
+    <!-- State -->
+    <script src="https://unpkg.com/aframe-state-component@7.1.0/dist/aframe-state-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="main1.js" type="module"></script>
   </head>
   <body>
-    <a-scene
-      loading-screen="dotsColor: red; backgroundColor: black"
-      dome
-      gamelogic
-    >
+    <a-scene background="color: #242424">
       <a-assets>
-        <audio
-          id="music"
-          src="/sound.wav"
-          crossorigin="anonymous"
-          preload="auto"
-        ></audio>
-        <a-box
-          id="speaker"
-          look-at
-          sound="src: #music; poolSize: 1; loop: true"
-          data-clickable
-        >
-        </a-box>
-        <a-text
-          id="overSpeakerText"
-          value=""
-          align="center"
-          position="0 1 0"
-          scale="1 1 1"
-          color="black"
-          visible="true"
-        ></a-text>
+        <a-entity bind-for="for: item; in: audioSources; key: id">
+          <template>
+            <audio
+              id="{{id}}"
+              crossorigin="anonymous"
+              preload="auto"
+              src="/sound.wav"
+            ></audio>
+          </template>
+        </a-entity>
       </a-assets>
-      <a-sky color="#81D4BD"></a-sky>
+      <a-sphere
+        bind="radius: sphereRadius"
+        segments-width="36"
+        segments-height="18"
+        wireframe="true"
+      >
+        <a-entity bind-for="for: item; in: speakers; key: id">
+          <template>
+            <a-sound
+              player
+              id="{{id}}"
+              src="{{audioSrc}}"
+              position="{{position}}"
+              volume="10"
+            >
+              <a-box look-at="#player" data-clickable>
+                <a-text
+                  value="{{id}}"
+                  align="center"
+                  position="0 0.200 1.25"
+                  scale="0.5 0.5 0.5"
+                  color="blue"
+                ></a-text>
+              </a-box>
+            </a-sound>
+          </template>
+        </a-entity>
+      </a-sphere>
 
       <a-entity id="player">
         <!-- camera -->
@@ -56,16 +67,23 @@
           raycaster="objects: [data-clickable]"
         >
           <a-text
-            id="messageBox"
-            value=""
+            id="message-box"
+            bind="value: messageBox"
             color="white"
             position="-0.7 -0.7 -2"
             scale="0.3 0.3 0.3 "
             align="center"
           ></a-text>
           <a-text
-            id="scoreBox"
-            value="Score: 0"
+            value="Score"
+            color="white"
+            position="0.7 -0.6 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+          <a-text
+            id="score-box"
+            bind="value: score"
             color="white"
             position="0.7 -0.7 -2"
             scale="0.3 0.3 0.3 "
@@ -95,6 +113,23 @@
             >
               <a-text
                 value="Back"
+                align="center"
+                position="0 0 0.01"
+                scale="0.1 0.1 0.1"
+                color="white"
+              ></a-text>
+            </a-box>
+            <a-box
+              position="0 0.15 0.01"
+              color="black"
+              width="0.1"
+              height="0.1"
+              depth="0.01"
+              start-button
+              data-clickable
+            >
+              <a-text
+                value="Start"
                 align="center"
                 position="0 0 0.01"
                 scale="0.1 0.1 0.1"
