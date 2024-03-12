@@ -1,7 +1,10 @@
 import basicSsl from "@vitejs/plugin-basic-ssl";
 
+/** @type {import('vite').UserConfig} */
 export default {
   plugins: [basicSsl()],
+  root: "src",
+  publicDir: "../public",
   build: {
     rollupOptions: {
       input: {

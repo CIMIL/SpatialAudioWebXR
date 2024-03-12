@@ -3,9 +3,9 @@ import {
   LEVELS,
   PLAY_INTERVAL,
   SPEAKER_RADIUS,
-} from "./constants.js";
-import { distributeSpeakers } from "./utils/distribute-speakers.js";
-import "./utils/back-button.js";
+} from "../utils/constants.js";
+import { distributeSpeakers } from "../utils/distribute-speakers.js";
+import "../utils/back-button.js";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
@@ -32,8 +32,10 @@ AFRAME.registerState({
     playLoop: function (state, action) {
       console.log(state);
       if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
-      const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
-      playingSpeaker.play();
+      const playingSpeaker = document.querySelector(
+        `#speaker-${action.speaker}`
+      );
+      playingSpeaker.components["sound"].playSound();
 
       setTimeout(() => {
         if (state.currentPlayingSpeaker === `${action.speaker}`)
@@ -72,11 +74,11 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`
+        `#speaker-${state.currentPlayingSpeaker}`
       );
       state.isPlaying = false;
       state.currentPlayingSpeaker = "";
-      playingSpeaker.pause();
+      playingSpeaker.components["sound"].stopSound();
 
       // check if clicked speaker is equal to current playing speaker
       if (

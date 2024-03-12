@@ -1,25 +1,24 @@
-# SpatialAudioWebXR
-
-## Try the demo
-
-To try a demo enter a folder, for example `PannerNode`. I used ViteJS as a web server.
+## Development
 
 ```sh
-cd PannerNode
+npm i
+
+# add your sound files to the public folder
+public/cow.wav
+# change the path in the html
+audio src="/cow.wav"
+
+npm run build
+npm run preview -- --host
+
+# use the network ip address to access the preview on the Quest
+
+# expected output:
+ VITE v4.5.0  ready in 224 ms
+
+  ➜  Local:   https://localhost:5173/
+  ➜  Network: https://192.168.1.114:5173/
 ```
 
-Install node_modules
-
-```sh
-npm install
-```
-
-Run in dev mode
-
-```sh
-npm run dev --host
-```
-
-The `--host` option opens it on the local network using the ip of the computer so there is no need to use ngrok.
-
-You then can open on the Oculus `https://<ip>:5173`
+A deployed version can be found here:
+[https://pannernode-aframe.netlify.app/](https://pannernode-aframe.netlify.app/)
