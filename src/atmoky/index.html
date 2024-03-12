@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/aframe-logo-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atmoky</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Click and hands -->
+    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
+    <!-- State -->
+    <script src="https://unpkg.com/aframe-state-component@7.0.0/dist/aframe-state-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.atmoky.com/atmoky-aframe-1.0.1.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js" type="module"></script>
+  </head>
+  <body>
+    <a-scene background="color: #242424">
+      <a-assets>
+        <a-entity bind-for="for: item; in: audioSources; key: id">
+          <template>
+            <audio
+              id="{{id}}"
+              crossorigin="anonymous"
+              preload="auto"
+              src="/sound.wav"
+              loop="false"
+            ></audio>
+          </template>
+        </a-entity>
+      </a-assets>
+      <a-entity id="player">
+        <!-- camera -->
+        <a-entity
+          id="camera"
+          atmoky-camera-listener
+          position="0 1.6 0"
+          wasd-controls
+          look-controls
+          cursor="rayOrigin: mouse"
+          raycaster="objects: [data-clickable]"
+        >
+          <a-text
+            id="message-box"
+            bind="value: messageBox"
+            color="white"
+            position="-0.7 -0.7 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+          <a-text
+            value="Score"
+            color="white"
+            position="0.7 -0.6 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+          <a-text
+            id="score-box"
+            bind="value: score"
+            color="white"
+            position="0.7 -0.7 -2"
+            scale="0.3 0.3 0.3 "
+            align="center"
+          ></a-text>
+        </a-entity>
+
+        <!-- hand controls -->
+        <a-entity id="left-hand" super-hands oculus-touch-controls="hand: left">
+          <!-- show a plane oriented as the controller -->
+          <a-plane
+            position="0 0.04 -0.15"
+            rotation="-45 0 0"
+            color="red"
+            width="0.1"
+            height="0.1"
+          >
+            <!-- box with text back -->
+            <a-box
+              position="0 0 0.01"
+              color="black"
+              width="0.1"
+              height="0.1"
+              depth="0.01"
+              back-button
+              data-clickable
+            >
+              <a-text
+                value="Back"
+                align="center"
+                position="0 0 0.01"
+                scale="0.1 0.1 0.1"
+                color="white"
+              ></a-text>
+            </a-box>
+            <a-box
+              position="0 0.15 0.01"
+              color="black"
+              width="0.1"
+              height="0.1"
+              depth="0.01"
+              start-button
+              data-clickable
+            >
+              <a-text
+                value="Start"
+                align="center"
+                position="0 0 0.01"
+                scale="0.1 0.1 0.1"
+                color="white"
+              ></a-text>
+            </a-box>
+          </a-plane>
+        </a-entity>
+        <a-entity
+          id="right-hand"
+          super-hands="colliderEvent: raycaster-intersection;
+             colliderEventProperty: els;
+             colliderEndEvent: raycaster-intersection-cleared;
+             colliderEndEventProperty: clearedEls"
+          oculus-touch-controls="hand: right"
+          laser-controls="hand: right; model: true"
+          raycaster="objects: [data-clickable]"
+        ></a-entity>
+      </a-entity>
+      <a-entity atmoky-spatial-audio="numberOfSources: 64"></a-entity>
+      <a-sphere
+        bind="radius: sphereRadius"
+        segments-width="36"
+        segments-height="18"
+        wireframe="true"
+      >
+        <a-entity width="20" height="20" depth="20">
+          <a-entity bind-for="for: item; in: speakers; key: id">
+            <template>
+              <a-entity
+                player
+                id="{{id}}"
+                position="{{position}}"
+                atmoky-source="src: {{audioSrc}}; autoplay: false; loop: false"
+              >
+                <a-box look-at="#player" data-clickable>
+                  <a-text
+                    value="{{id}}"
+                    align="center"
+                    position="0 0.200 1.25"
+                    scale="0.5 0.5 0.5"
+                    color="blue"
+                  ></a-text>
+                </a-box>
+              </a-entity>
+            </template>
+          </a-entity>
+        </a-entity>
+      </a-sphere>
+    </a-scene>
+  </body>
+</html>
