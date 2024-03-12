@@ -5,6 +5,13 @@ export default {
   plugins: [basicSsl()],
   root: "src",
   publicDir: "../public",
+  resolve: {
+    alias: {
+      "@": "./src",
+      "@public": "./public",
+      "@utils": "./src/utils",
+    },
+  },
   build: {
     rollupOptions: {
       input: {

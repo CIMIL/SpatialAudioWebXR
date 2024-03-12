@@ -3,9 +3,9 @@ import {
   LEVELS,
   PLAY_INTERVAL,
   SPEAKER_RADIUS,
-} from "../utils/constants.js";
-import { distributeSpeakers } from "../utils/distribute-speakers.js";
-import "../utils/back-button.js";
+} from "@utils/constants.js";
+import { distributeSpeakers } from "@utils/distribute-speakers.js";
+import "@utils/back-button.js";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 

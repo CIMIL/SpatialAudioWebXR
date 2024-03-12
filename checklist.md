@@ -4,4 +4,4 @@
 - [X] Implementazione `PannerNode`
 - [X] Implementazione `A-Frame-resonance-audio-component`
 - [] Implementazione `Atmoky`
-- [] Implementazione `JS Ambisonics`
+- [] Implementazione `JS Ambisonics`?

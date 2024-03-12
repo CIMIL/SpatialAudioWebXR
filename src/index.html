@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/aframe-logo-192.png" />
+    <link rel="icon" type="image/png" href="/aframe-logo-192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A-Frame + Vite App</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
@@ -14,7 +14,7 @@
   <body>
     <a-scene environment="preset: starry">
       <a-assets>
-        <img id="portalPicture"  src="/portalPicture.webp" />
+        <img id="portalPicture"  src="/portal-preview.webp" />
         <script id="portalTemplate" type="text/html">
           <a-link 
             href="${link}" 
@@ -37,12 +37,10 @@
           <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
           <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
           <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
         </a-entity>
         <a-entity layout="type: line; align: center; margin: 3;">
           <a-entity template="src: #portalTemplate;" data-link="/panner-node/" data-title="Panner Node"></a-entity>
           <a-entity template="src: #portalTemplate;" data-link="/resonance-audio/" data-title="Resonance Audio"></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
           <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
         </a-entity>
       </a-entity>

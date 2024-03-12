@@ -1,3 +1,4 @@
+// Original code https://github.com/supermedium/superframe/tree/master/components/look-at/
 !(function (e) {
   function t(n) {
     if (o[n]) return o[n].exports;
