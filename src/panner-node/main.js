@@ -6,7 +6,6 @@ import {
 } from "@utils/constants.js";
 import { distributeSpeakers } from "@utils/distribute-speakers.js";
 import "@utils/back-button.js";
-import "@utils/hidden.js";
 import { DELAY_AFTER_START } from "../utils/constants";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
