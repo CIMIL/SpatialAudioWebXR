@@ -3,6 +3,7 @@ import {
   LEVELS,
   PLAY_INTERVAL,
   SPEAKER_RADIUS,
+  DEBUG,
 } from "@utils/constants.js";
 import { distributeSpeakers } from "@utils/distribute-speakers.js";
 import "@utils/back-button.js";
@@ -21,7 +22,7 @@ AFRAME.registerState({
     })),
     currentPlayingSpeaker: "",
     score: 0,
-    messageBox: "What speaker is playing?",
+    messageBox: "Press Start to play",
     currentLevel: 0,
     isPlaying: null,
     sphereRadius: SPEAKER_RADIUS,
@@ -30,10 +31,16 @@ AFRAME.registerState({
 
   handlers: {
     playLoop: function (state, action) {
-      console.log(state);
       if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
       const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
       playingSpeaker.play();
+
+      if (DEBUG) {
+        const speakerBox = document.querySelector(
+          `#speaker-${action.speaker}-box`
+        );
+        speakerBox.setAttribute("material", { color: "red" });
+      }
 
       setTimeout(() => {
         if (state.currentPlayingSpeaker === `${action.speaker}`)
@@ -47,6 +54,10 @@ AFRAME.registerState({
       const rand = Math.floor(Math.random() * (63 + 1));
       // update currentPlayingSpeaker
       state.currentPlayingSpeaker = `${rand}`;
+      // update message box
+      AFRAME.scenes[0].emit("updateMessageBox", {
+        message: "What Speaker is playing?",
+      });
       // play audio from random speaker
       state.isPlaying = true;
       AFRAME.scenes[0].emit("playLoop", { speaker: rand });
@@ -75,7 +86,6 @@ AFRAME.registerState({
         `#src-${state.currentPlayingSpeaker}`
       );
       state.isPlaying = false;
-      state.currentPlayingSpeaker = "";
       playingSpeaker.pause();
 
       // check if clicked speaker is equal to current playing speaker
@@ -96,16 +106,21 @@ AFRAME.registerState({
         });
       }
 
+      // empty currentPlayingSpeaker
+      state.currentPlayingSpeaker = "";
       // increment level
       state.currentLevel += 1;
       //  wait for n seconds
       setTimeout(() => {
+        if (DEBUG) {
+          const speakerBox = document.querySelector(
+            `#speaker-${action.speakerClicked}-box`
+          );
+          speakerBox.setAttribute("material", { color: "white" });
+        }
         // check if levels < 10
         if (state.currentLevel < LEVELS) {
           // if yes, emit new playFromRandomSpeaker
-          AFRAME.scenes[0].emit("updateMessageBox", {
-            message: "What Speaker is playing?",
-          });
           AFRAME.scenes[0].emit("playFromRandomSpeaker");
         } else {
           // else set messagebox to "Game Over"
@@ -121,9 +136,6 @@ AFRAME.registerState({
 
 AFRAME.registerComponent("wait-for-room", {
   dependencies: ["resonance-audio-room"],
-  init: function () {
-    AFRAME.scenes[0].emit("playFromRandomSpeaker");
-  },
 });
 
 AFRAME.registerComponent("start-button", {
