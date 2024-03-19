@@ -18,6 +18,7 @@ AFRAME.registerState({
     speakers: Array.from({ length: 64 }, (_, i) => ({
       id: `speaker-${i}`,
       audioSrc: `#src-${i}`,
+      // eslint-disable-next-line max-len
       position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
     })),
     currentPlayingSpeaker: "",

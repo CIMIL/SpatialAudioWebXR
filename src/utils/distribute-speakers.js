@@ -1,3 +1,8 @@
+/**
+ * Distributes speakers in a spherical pattern.
+ * @param {number} radius - The radius of the sphere.
+ * @return {Array} An array of speaker positions.
+ */
 export function distributeSpeakers(radius) {
   const positions = [];
   const numberOfLayers = 8;

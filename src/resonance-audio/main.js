@@ -18,6 +18,7 @@ AFRAME.registerState({
     speakers: Array.from({ length: 64 }, (_, i) => ({
       id: `speaker-${i}`,
       audioSrc: `#src-${i}`,
+      // eslint-disable-next-line max-len
       position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
     })),
     currentPlayingSpeaker: "",
@@ -36,7 +37,7 @@ AFRAME.registerState({
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`
+          `#speaker-${action.speaker}-box`,
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
@@ -81,7 +82,7 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`
+        `#src-${state.currentPlayingSpeaker}`,
       );
       playingSpeaker.pause();
 
@@ -111,7 +112,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`
+            `#speaker-${action.speakerClicked}-box`,
           );
           speakerBox.setAttribute("material", { color: "white" });
         }
