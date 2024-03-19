@@ -1,12 +1,12 @@
 import {
   TIME_BETWEEN_LEVELS,
   LEVELS,
-  PLAY_INTERVAL,
   SPEAKER_RADIUS,
   DEBUG,
 } from "@utils/constants.js";
 import { distributeSpeakers } from "@utils/distribute-speakers.js";
 import "@utils/back-button.js";
+import { DELAY_AFTER_START } from "../utils/constants";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
@@ -18,13 +18,13 @@ AFRAME.registerState({
     speakers: Array.from({ length: 64 }, (_, i) => ({
       id: `speaker-${i}`,
       audioSrc: `#src-${i}`,
+      // eslint-disable-next-line max-len
       position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
     })),
     currentPlayingSpeaker: "",
     score: 0,
     messageBox: "Press Start to play",
     currentLevel: 0,
-    isPlaying: null,
     sphereRadius: SPEAKER_RADIUS,
     clickActive: false,
   },
@@ -37,15 +37,10 @@ AFRAME.registerState({
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`
+          `#speaker-${action.speaker}-box`,
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
-
-      setTimeout(() => {
-        if (state.currentPlayingSpeaker === `${action.speaker}`)
-          AFRAME.scenes[0].emit("playLoop", { speaker: action.speaker });
-      }, PLAY_INTERVAL);
     },
     playFromRandomSpeaker: function (state, action) {
       // activate clicks
@@ -56,11 +51,15 @@ AFRAME.registerState({
       state.currentPlayingSpeaker = `${rand}`;
       // update message box
       AFRAME.scenes[0].emit("updateMessageBox", {
-        message: "What Speaker is playing?",
+        message: "Listen carefully...(3 sec)",
       });
-      // play audio from random speaker
-      state.isPlaying = true;
-      AFRAME.scenes[0].emit("playLoop", { speaker: rand });
+      setTimeout(() => {
+        // play audio from random speaker
+        AFRAME.scenes[0].emit("updateMessageBox", {
+          message: "What Speaker is playing?",
+        });
+        AFRAME.scenes[0].emit("playLoop", { speaker: rand });
+      }, DELAY_AFTER_START);
     },
 
     updateScore: function (state, action) {
@@ -83,9 +82,8 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`
+        `#src-${state.currentPlayingSpeaker}`,
       );
-      state.isPlaying = false;
       playingSpeaker.pause();
 
       // check if clicked speaker is equal to current playing speaker
@@ -114,7 +112,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`
+            `#speaker-${action.speakerClicked}-box`,
           );
           speakerBox.setAttribute("material", { color: "white" });
         }

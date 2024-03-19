@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,80 +14,114 @@
   <body>
     <a-scene environment="preset: starry">
       <a-assets>
-        <img id="portalPicture"  src="/portal-preview.webp" />
+        <img id="portalPicture" src="/portal-preview.webp" />
         <script id="portalTemplate" type="text/html">
-          <a-link 
-            href="${link}" 
-            title="${title}" 
-            image="#portalPicture" 
-            highlighted="true" 
-            titleColor="#000000" 
-            borderColor="green" 
+          <a-link
+            href="${link}"
+            title="${title}"
+            image="#portalPicture"
+            highlighted="true"
+            titleColor="#000000"
+            borderColor="green"
             visualAspectEnabled="true"
-            data-clickable>
+            data-clickable
+          >
           </a-link>
         </script>
       </a-assets>
-  </a-entity>
+
       <a-entity
         position="0 2.5 -7"
         layout="type: line; plane: yz; margin: 3; align: center;"
       >
         <a-entity layout="type: line; align: center; margin: 3;">
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="#"
+            data-title=""
+          ></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="#"
+            data-title=""
+          ></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="#"
+            data-title=""
+          ></a-entity>
         </a-entity>
         <a-entity layout="type: line; align: center; margin: 3;">
-          <a-entity template="src: #portalTemplate;" data-link="/panner-node/" data-title="Panner Node"></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="/resonance-audio/" data-title="Resonance Audio"></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="/panner-node/"
+            data-title="Panner Node"
+          ></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="/resonance-audio/"
+            data-title="Resonance Audio"
+          ></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="#"
+            data-title=""
+          ></a-entity>
         </a-entity>
       </a-entity>
 
-      <a-entity id="camera" look-controls cursor="rayOrigin: mouse" raycaster="objects: [data-clickable]"></a-entity>
+      <a-entity
+        id="camera"
+        look-controls
+        cursor="rayOrigin: mouse"
+        raycaster="objects: [data-clickable]"
+      ></a-entity>
 
-       <!-- hand controls -->
-        <a-entity id="left-hand" super-hands oculus-touch-controls="hand: left" position="0 1.40 -0.5">
-          <!-- show a plane oriented as the controller -->
-          <a-plane
-            position="0 0.04 -0.15"
-            rotation="-45 0 0"
-            color="red"
+      <!-- hand controls -->
+      <a-entity
+        id="left-hand"
+        super-hands
+        oculus-touch-controls="hand: left"
+        position="0 1.40 -0.5"
+      >
+        <!-- show a plane oriented as the controller -->
+        <a-plane
+          position="0 0.04 -0.15"
+          rotation="-45 0 0"
+          color="red"
+          width="0.1"
+          height="0.1"
+        >
+          <!-- box with text back -->
+          <a-box
+            position="0 0 0.01"
+            color="black"
             width="0.1"
             height="0.1"
+            depth="0.01"
+            back-button
+            data-clickable
           >
-            <!-- box with text back -->
-            <a-box
-              position="0 0 0.01"
-              color="black"
-              width="0.1"
-              height="0.1"
-              depth="0.01"
-              back-button
-              data-clickable
-              >
-              <a-text
+            <a-text
               value="Back"
               align="center"
               position="0 0 0.01"
               scale="0.1 0.1 0.1"
               color="white"
-              ></a-text>
-            </a-box>
-          </a-plane>
-        </a-entity>
-        <a-entity
-          id="right-hand"
-          oculus-touch-controls="hand: right"
-          laser-controls="hand: right; model: true"
-          raycaster="objects: [data-clickable]"
-          super-hands="colliderEvent: raycaster-intersection;
+            ></a-text>
+          </a-box>
+        </a-plane>
+      </a-entity>
+      <a-entity
+        id="right-hand"
+        oculus-touch-controls="hand: right"
+        laser-controls="hand: right; model: true"
+        raycaster="objects: [data-clickable]"
+        super-hands="colliderEvent: raycaster-intersection;
              colliderEventProperty: els;
              colliderEndEvent: raycaster-intersection-cleared;
              colliderEndEventProperty: clearedEls"
-        >
-      </a-entity>
+      >
       </a-entity>
     </a-scene>
   </body>
