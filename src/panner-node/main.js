@@ -6,6 +6,7 @@ import {
 } from "@utils/constants.js";
 import { distributeSpeakers } from "@utils/distribute-speakers.js";
 import "@utils/back-button.js";
+import "@utils/hidden.js";
 import { DELAY_AFTER_START } from "../utils/constants";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
@@ -33,20 +34,21 @@ AFRAME.registerState({
     playLoop: function (state, action) {
       if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
       const playingSpeaker = document.querySelector(
-        `#speaker-${action.speaker}`,
+        `#speaker-${action.speaker}`
       );
       playingSpeaker.components["sound"].playSound();
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`,
+          `#speaker-${action.speaker}-box`
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
     },
     playFromRandomSpeaker: function (state, action) {
-      // activate clicks
-      state.clickActive = true;
+      // disable menu
+      const menu = document.querySelector("#menu");
+      menu.object3D.visible = false;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
       // update currentPlayingSpeaker
@@ -56,6 +58,8 @@ AFRAME.registerState({
         message: "Listen carefully...(3 sec)",
       });
       setTimeout(() => {
+        // activate clicks
+        state.clickActive = true;
         // play audio from random speaker
         AFRAME.scenes[0].emit("updateMessageBox", {
           message: "What Speaker is playing?",
@@ -84,7 +88,7 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#speaker-${state.currentPlayingSpeaker}`,
+        `#speaker-${state.currentPlayingSpeaker}`
       );
       playingSpeaker.components["sound"].stopSound();
 
@@ -114,7 +118,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`,
+            `#speaker-${action.speakerClicked}-box`
           );
           speakerBox.setAttribute("material", { color: "white" });
         }
@@ -127,8 +131,11 @@ AFRAME.registerState({
           // else set messagebox to "Game Over"
           state.currentPlayingSpeaker = "";
           AFRAME.scenes[0].emit("updateMessageBox", {
-            message: "Game Over. Return to menu",
+            message: "End of the Experience",
           });
+          // show menu
+          const menu = document.querySelector("#menu");
+          menu.object3D.visible = true;
         }
       }, TIME_BETWEEN_LEVELS);
     },

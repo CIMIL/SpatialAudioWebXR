@@ -37,14 +37,15 @@ AFRAME.registerState({
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`,
+          `#speaker-${action.speaker}-box`
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
     },
     playFromRandomSpeaker: function (state, action) {
-      // activate clicks
-      state.clickActive = true;
+      // disable menu
+      const menu = document.querySelector("#menu");
+      menu.object3D.visible = false;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
       // update currentPlayingSpeaker
@@ -54,6 +55,8 @@ AFRAME.registerState({
         message: "Listen carefully...(3 sec)",
       });
       setTimeout(() => {
+        // activate clicks
+        state.clickActive = true;
         // play audio from random speaker
         AFRAME.scenes[0].emit("updateMessageBox", {
           message: "What Speaker is playing?",
@@ -82,7 +85,7 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`,
+        `#src-${state.currentPlayingSpeaker}`
       );
       playingSpeaker.pause();
 
@@ -112,7 +115,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`,
+            `#speaker-${action.speakerClicked}-box`
           );
           speakerBox.setAttribute("material", { color: "white" });
         }
@@ -124,8 +127,11 @@ AFRAME.registerState({
           // else set messagebox to "Game Over"
           state.currentPlayingSpeaker = "";
           AFRAME.scenes[0].emit("updateMessageBox", {
-            message: "Game Over. Return to menu",
+            message: "End of the Experience",
           });
+          // show menu
+          const menu = document.querySelector("#menu");
+          menu.object3D.visible = true;
         }
       }, TIME_BETWEEN_LEVELS);
     },
@@ -139,6 +145,7 @@ AFRAME.registerComponent("wait-for-room", {
 AFRAME.registerComponent("start-button", {
   init: function () {
     this.el.addEventListener("click", () => {
+      console.log("playFromRandomSpeaker");
       AFRAME.scenes[0].emit("playFromRandomSpeaker");
     });
   },
