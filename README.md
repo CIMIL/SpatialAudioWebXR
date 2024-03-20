@@ -9,7 +9,14 @@ public/cow.wav
 audio src="/cow.wav"
 
 npm run build
+
+Preview:
+
 npm run preview -- --host
+
+Test:
+
+npm run dev -- --host
 
 # use the network ip address to access the preview on the Quest
 
