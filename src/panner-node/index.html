@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panner Node</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <!-- Click and hands -->
-    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
     <!-- State -->
     <script src="https://unpkg.com/aframe-state-component@7.1.0/dist/aframe-state-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
@@ -36,7 +34,7 @@
         rotation="0 0 0"
         width="1"
         height="0.5"
-        color="red"
+        color="#fea3aa"
         data-clickable
         visible="false"
       >
@@ -92,7 +90,6 @@
           wasd-controls
           look-controls
           cursor="rayOrigin: mouse"
-          raycaster="objects: [data-clickable]; showLine:true; far: 100; lineColor: red; lineOpacity: 0.5"
         >
           <a-text
             id="message-box"
@@ -120,13 +117,13 @@
         </a-entity>
 
         <!-- hand controls -->
-        <a-entity id="left-hand" super-hands oculus-touch-controls="hand: left">
+        <a-entity id="left-hand" oculus-touch-controls="hand: left">
           <!-- show a plane oriented as the controller -->
           <a-plane
             id="menu"
             position="0 0.04 -0.15"
             rotation="-45 0 0"
-            color="red"
+            color="#fea3aa"
             width="0.1"
             height="0.1"
           >
@@ -169,7 +166,6 @@
         </a-entity>
         <a-entity
           id="right-hand"
-        
           oculus-touch-controls="hand: right"
           laser-controls="hand: right; model: true"
           raycaster="objects: [data-clickable]"

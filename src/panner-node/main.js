@@ -225,13 +225,13 @@ AFRAME.registerComponent("collider-check", {
   init: function () {
     // check if raycaster intersection is held for 30 seconds
     this.el.addEventListener("raycaster-intersected", (e) => {
-      this.el.setAttribute("color", "#7BC8A4");
+      this.el.setAttribute("color", "#bbed91");
       console.log("intersected");
       AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: true });
     });
 
     this.el.addEventListener("raycaster-intersected-cleared", (e) => {
-      this.el.setAttribute("color", "red");
+      this.el.setAttribute("color", "#fea3aa");
       AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: false });
     });
   },
