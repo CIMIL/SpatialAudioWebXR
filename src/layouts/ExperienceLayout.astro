@@ -1,0 +1,26 @@
+---
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/aframe-logo-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js" is:inline
+    ></script>
+    <!-- State -->
+    <script
+      src="https://unpkg.com/aframe-state-component@7.1.0/dist/aframe-state-component.min.js"
+      is:inline></script>
+    <script
+      src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"
+      is:inline></script>
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
