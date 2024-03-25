@@ -1,20 +1,20 @@
 ---
 import HUD from "./HUD.astro";
 import Menu from "./Menu.astro";
-const { menu } = Astro.props;
+const { firstPage } = Astro.props;
 ---
 
 <a-entity id="player">
   <!-- camera -->
   <a-camera
     id="camera"
-    position={`${menu ? "0 1.6 0" : "0 0 0"}`}
+    position={`${firstPage ? "0 1.6 0" : "0 0 0"}`}
     wasd-controls
     look-controls
     cursor="rayOrigin: mouse"
     raycaster="objects: [data-clickable]"
   >
-    <HUD />
+    {!firstPage && <HUD />}
   </a-camera>
 
   <!-- hand controls -->
