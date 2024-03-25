@@ -30,6 +30,27 @@
           </template>
         </a-entity>
       </a-assets>
+
+      <!-- spawn a vertical plane at 2 meters from the player -->
+      <a-plane
+        id="baseline-slide"
+        position="0 0 -1.5"
+        rotation="0 0 0"
+        width="1"
+        height="0.5"
+        color="red"
+        data-clickable
+        visible="false"
+      >
+        <a-text
+          id="baseline-slide-text"
+          align="center"
+          value="Look here for 30 seconds"
+          width="1"
+        >
+        </a-text>
+      </a-plane>
+
       <a-sphere
         bind="radius: sphereRadius"
         segments-width="36"
@@ -57,7 +78,12 @@
                 position="{{position}}"
                 resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: false; gain: 10"
               >
-                <a-box id="{{id}}-box" look-at="#player" data-clickable>
+                <a-box
+                  id="{{id}}-box"
+                  look-at="#player"
+                  data-clickable
+                  scale="0.2 0.2 0.2"
+                >
                   <a-text
                     value="{{id}}"
                     align="center"
@@ -77,7 +103,7 @@
         <a-entity
           id="camera"
           camera
-          position="0 1.6 0"
+          position="0 0 0"
           wasd-controls
           look-controls
           cursor="rayOrigin: mouse"
@@ -158,10 +184,6 @@
         </a-entity>
         <a-entity
           id="right-hand"
-          super-hands="colliderEvent: raycaster-intersection;
-             colliderEventProperty: els;
-             colliderEndEvent: raycaster-intersection-cleared;
-             colliderEndEventProperty: clearedEls"
           oculus-touch-controls="hand: right"
           laser-controls="hand: right; model: true"
           raycaster="objects: [data-clickable]"

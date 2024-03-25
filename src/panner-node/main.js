@@ -52,10 +52,6 @@ AFRAME.registerState({
       const rand = Math.floor(Math.random() * (63 + 1));
       // update currentPlayingSpeaker
       state.currentPlayingSpeaker = `${rand}`;
-      // update message box
-      AFRAME.scenes[0].emit("updateMessageBox", {
-        message: "Listen carefully...(3 sec)",
-      });
       setTimeout(() => {
         // activate clicks
         state.clickActive = true;
@@ -226,7 +222,7 @@ AFRAME.registerComponent("player", {
 AFRAME.registerComponent("collider-check", {
   dependencies: ["raycaster"],
 
-  update: function () {
+  init: function () {
     // check if raycaster intersection is held for 30 seconds
     this.el.addEventListener("raycaster-intersected", (e) => {
       this.el.setAttribute("color", "#7BC8A4");
@@ -238,6 +234,14 @@ AFRAME.registerComponent("collider-check", {
       this.el.setAttribute("color", "red");
       AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: false });
     });
+  },
+
+  remove: function () {
+    this.el.removeEventListener("raycaster-intersected", this.onIntersected);
+    this.el.removeEventListener(
+      "raycaster-intersected-cleared",
+      this.onIntersectedCleared
+    );
   },
 
   tick: function (_, timeDelta) {

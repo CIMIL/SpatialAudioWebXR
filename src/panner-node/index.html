@@ -91,10 +91,9 @@
           position="0 0 0"
           wasd-controls
           look-controls
-          cursor="rayOrigin: camera"
+          cursor="rayOrigin: mouse"
           raycaster="objects: [data-clickable]; showLine:true; far: 100; lineColor: red; lineOpacity: 0.5"
         >
-          <a-cursor></a-cursor>
           <a-text
             id="message-box"
             bind="value: messageBox"
@@ -170,10 +169,7 @@
         </a-entity>
         <a-entity
           id="right-hand"
-          super-hands="colliderEvent: raycaster-intersection;
-             colliderEventProperty: els;
-             colliderEndEvent: raycaster-intersection-cleared;
-             colliderEndEventProperty: clearedEls"
+        
           oculus-touch-controls="hand: right"
           laser-controls="hand: right; model: true"
           raycaster="objects: [data-clickable]"
