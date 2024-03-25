@@ -1,3 +1,7 @@
+---
+import Player from "../components/player/Player.astro";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +20,7 @@
     <script
       src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"
       is:inline></script>
-    <script src="utils/back-button.js" type="module" is:inline></script>
+    <script src="../utils/back-button.js" type="module" is:inline></script>
   </head>
   <body>
     <a-scene environment="preset: starry">
@@ -63,26 +67,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity
-        id="camera"
-        look-controls
-        position="0 0 0"
-        cursor="rayOrigin: mouse"
-        raycaster="objects: [data-clickable]"></a-entity>
-
-      <!-- hand controls -->
-      <a-entity
-        id="left-hand"
-        super-hands
-        oculus-touch-controls="hand: left"
-        position="0 1.40 -0.5"
-      >
-      </a-entity>
-      <a-entity
-        id="right-hand"
-        oculus-touch-controls="hand: right"
-        laser-controls="hand: right; model: true"
-        raycaster="objects: [data-clickable]"></a-entity>
+      <Player menu="true" />
     </a-scene>
   </body>
 </html>
