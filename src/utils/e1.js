@@ -5,8 +5,8 @@ import {
   DEBUG,
   DELAY_AFTER_START,
   BASELINE_WAIT_TIME,
-} from "../src/utils/constants.js";
-import "../src/utils/back-button.js";
+} from "./constants.js";
+import "./back-button.js";
 
 
 AFRAME.registerState({
