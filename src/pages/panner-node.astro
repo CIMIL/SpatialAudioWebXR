@@ -34,38 +34,38 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
           />
         ))
       }
-
-      <BaselineSlide />
-      <Sphere>
-        {
-          speakers.map((speaker) => (
-            <a-sound
-              player
-              id={speaker.id}
-              src={speaker.audioSrc}
-              position={speaker.position}
-              volume="10"
-            >
-              <a-box
-                id={`${speaker.id}-box`}
-                look-at="#player"
-                scale="0.2 0.2 0.2"
-                data-clickable
-              >
-                <a-text
-                  value={speaker.id}
-                  align="center"
-                  position="0 0 1.25"
-                  scale="0.5 0.5 0.5"
-                  color="blue"
-                />
-              </a-box>
-            </a-sound>
-          ))
-        }
-      </Sphere>
-
-      <Player />
     </a-assets>
+
+    <BaselineSlide />
+    <Sphere>
+      {
+        speakers.map((speaker) => (
+          <a-sound
+            player
+            id={speaker.id}
+            src={speaker.audioSrc}
+            position={speaker.position}
+            volume="10"
+          >
+            <a-box
+              id={`${speaker.id}-box`}
+              look-at="#player"
+              scale="0.2 0.2 0.2"
+              data-clickable
+            >
+              <a-text
+                value={speaker.id}
+                align="center"
+                position="0 0 1.25"
+                scale="0.5 0.5 0.5"
+                color="blue"
+              />
+            </a-box>
+          </a-sound>
+        ))
+      }
+    </Sphere>
+
+    <Player />
   </a-scene>
 </ExperienceLayout>
