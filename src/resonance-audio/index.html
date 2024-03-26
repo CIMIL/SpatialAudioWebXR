@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resonance Audio</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <!-- Click and hands -->
-    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
     <!-- State -->
     <script src="https://unpkg.com/aframe-state-component@7.0.0/dist/aframe-state-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
@@ -30,6 +28,27 @@
           </template>
         </a-entity>
       </a-assets>
+
+      <!-- spawn a vertical plane at 2 meters from the player -->
+      <a-plane
+        id="baseline-slide"
+        position="0 0 -1.5"
+        rotation="0 0 0"
+        width="1"
+        height="0.5"
+        color="#fea3aa"
+        data-clickable
+        visible="false"
+      >
+        <a-text
+          id="baseline-slide-text"
+          align="center"
+          value="Look here for 30 seconds"
+          width="1"
+        >
+        </a-text>
+      </a-plane>
+
       <a-sphere
         bind="radius: sphereRadius"
         segments-width="36"
@@ -57,7 +76,12 @@
                 position="{{position}}"
                 resonance-audio-src="src: {{audioSrc}}; autoplay: false; loop: false; gain: 10"
               >
-                <a-box id="{{id}}-box" look-at="#player" data-clickable>
+                <a-box
+                  id="{{id}}-box"
+                  look-at="#player"
+                  data-clickable
+                  scale="0.2 0.2 0.2"
+                >
                   <a-text
                     value="{{id}}"
                     align="center"
@@ -76,7 +100,8 @@
         <!-- camera -->
         <a-entity
           id="camera"
-          position="0 1.6 0"
+          camera
+          position="0 0 0"
           wasd-controls
           look-controls
           cursor="rayOrigin: mouse"
@@ -108,9 +133,10 @@
         </a-entity>
 
         <!-- hand controls -->
-        <a-entity id="left-hand" super-hands oculus-touch-controls="hand: left">
+        <a-entity id="left-hand" oculus-touch-controls="hand: left">
           <!-- show a plane oriented as the controller -->
           <a-plane
+            id="menu"
             position="0 0.04 -0.15"
             rotation="-45 0 0"
             color="red"
@@ -156,10 +182,6 @@
         </a-entity>
         <a-entity
           id="right-hand"
-          super-hands="colliderEvent: raycaster-intersection;
-             colliderEventProperty: els;
-             colliderEndEvent: raycaster-intersection-cleared;
-             colliderEndEventProperty: clearedEls"
           oculus-touch-controls="hand: right"
           laser-controls="hand: right; model: true"
           raycaster="objects: [data-clickable]"
