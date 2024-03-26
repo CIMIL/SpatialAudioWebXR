@@ -3,6 +3,19 @@ import BaselineSlide from "../components/BaselineSlide.astro";
 import Sphere from "../components/Sphere.astro";
 import Player from "../components/player/Player.astro";
 import ExperienceLayout from "../layouts/ExperienceLayout.astro";
+
+import { distributeSpeakers } from "../utils/distribute-speakers";
+import { SPEAKER_RADIUS } from "../utils/constants";
+
+const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
+const audioSources = Array.from({ length: 64 }, (_, i) => ({
+  id: `src-${i}`,
+}));
+const speakers = Array.from({ length: 64 }, (_, i) => ({
+  id: `speaker-${i}`,
+  audioSrc: `#src-${i}`,
+  position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
+}));
 ---
 
 <ExperienceLayout title="Panner Node">
@@ -11,46 +24,48 @@ import ExperienceLayout from "../layouts/ExperienceLayout.astro";
   </Fragment>
   <a-scene background="color: #242424">
     <a-assets>
-      <a-entity bind-for="for: item; in: audioSources; key: id">
-        <template>
+      {
+        audioSources.map((source) => (
           <audio
-            id="{{id}}"
+            id={source.id}
             crossorigin="anonymous"
             preload="auto"
-            src="/sound.wav"></audio>
-        </template>
-      </a-entity>
-    </a-assets>
+            src="/sound.wav"
+          />
+        ))
+      }
 
-    <BaselineSlide />
-    <Sphere>
-      <a-entity bind-for="for: item; in: speakers; key: id">
-        <template>
-          <a-sound
-            player
-            id="{{id}}"
-            src="{{audioSrc}}"
-            position="{{position}}"
-            volume="10"
-          >
-            <a-box
-              id="{{id}}-box"
-              look-at="#player"
-              scale="0.2 0.2 0.2"
-              data-clickable
+      <BaselineSlide />
+      <Sphere>
+        {
+          speakers.map((speaker) => (
+            <a-sound
+              player
+              id={speaker.id}
+              src={speaker.audioSrc}
+              position={speaker.position}
+              volume="10"
             >
-              <a-text
-                value="{{id}}"
-                align="center"
-                position="0 0 1.25"
-                scale="0.5 0.5 0.5"
-                color="blue"></a-text>
-            </a-box>
-          </a-sound>
-        </template>
-      </a-entity>
-    </Sphere>
+              <a-box
+                id={`${speaker.id}-box`}
+                look-at="#player"
+                scale="0.2 0.2 0.2"
+                data-clickable
+              >
+                <a-text
+                  value={speaker.id}
+                  align="center"
+                  position="0 0 1.25"
+                  scale="0.5 0.5 0.5"
+                  color="blue"
+                />
+              </a-box>
+            </a-sound>
+          ))
+        }
+      </Sphere>
 
-    <Player />
+      <Player />
+    </a-assets>
   </a-scene>
 </ExperienceLayout>

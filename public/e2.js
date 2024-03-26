@@ -6,22 +6,10 @@ import {
   DELAY_AFTER_START,
   BASELINE_WAIT_TIME,
 } from "../src/utils/constants.js";
-import { distributeSpeakers } from "../src/utils/distribute-speakers.js";
 import "../src/utils/back-button.js";
-
-const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
 AFRAME.registerState({
   initialState: {
-    audioSources: Array.from({ length: 64 }, (_, i) => ({
-      id: `src-${i}`,
-    })),
-    speakers: Array.from({ length: 64 }, (_, i) => ({
-      id: `speaker-${i}`,
-      audioSrc: `#src-${i}`,
-      // eslint-disable-next-line max-len
-      position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
-    })),
     currentPlayingSpeaker: "",
     score: 0,
     messageBox: "Press Start to play",
