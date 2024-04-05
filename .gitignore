@@ -26,3 +26,6 @@ dist-ssr
 #exclude audio
 *.mp3
 *.wav
+
+# Local Netlify folder
+.netlify
