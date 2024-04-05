@@ -7,6 +7,7 @@ import Scene from "../components/Scene.astro";
 
 import { distributeSpeakers } from "../utils/distribute-speakers";
 import { SPEAKER_RADIUS } from "../utils/constants";
+import AudioSrc from "../components/AudioSrc.astro";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
@@ -30,17 +31,7 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
   </Fragment>
   <Scene>
     <a-assets>
-      {
-        audioSources.map((source) => (
-          <audio
-            id={source.id}
-            crossorigin="anonymous"
-            preload="auto"
-            src="/sound.wav"
-            loop="false"
-          />
-        ))
-      }
+      {audioSources.map((source) => <AudioSrc id={source.id} />)}
     </a-assets>
 
     <BaselineSlide />

@@ -1,0 +1,7 @@
+---
+const { id } = Astro.props;
+// change the src to the path of the sound file in the public folder
+const src = "/sound.wav";
+---
+
+<audio id={id} crossorigin="anonymous" preload="auto" src={src}></audio>
