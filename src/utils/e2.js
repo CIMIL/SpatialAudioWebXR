@@ -26,7 +26,7 @@ AFRAME.registerState({
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`
+          `#speaker-${action.speaker}-box`,
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
@@ -94,7 +94,7 @@ AFRAME.registerState({
       if (state.isIntersected) {
         state.secondsElapsed += action.timeDelta;
         const baselineSlideText = document.querySelector(
-          "#baseline-slide-text"
+          "#baseline-slide-text",
         );
 
         const secondsLeft =
@@ -103,7 +103,7 @@ AFRAME.registerState({
 
         baselineSlideText.setAttribute(
           "value",
-          `Look here for ${secondsLeft} seconds`
+          `Look here for ${secondsLeft} seconds`,
         );
         if (state.secondsElapsed > BASELINE_WAIT_TIME) {
           state.secondsElapsed = 0;
@@ -114,14 +114,14 @@ AFRAME.registerState({
       } else {
         state.secondsElapsed = 0;
         const baselineSlideText = document.querySelector(
-          "#baseline-slide-text"
+          "#baseline-slide-text",
         );
 
         // TODO change message box
 
         baselineSlideText.setAttribute(
           "value",
-          `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`
+          `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`,
         );
       }
     },
@@ -134,7 +134,7 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`
+        `#src-${state.currentPlayingSpeaker}`,
       );
       playingSpeaker.pause();
 
@@ -164,7 +164,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`
+            `#speaker-${action.speakerClicked}-box`,
           );
           speakerBox.setAttribute("material", { color: "white" });
         }
@@ -233,7 +233,7 @@ AFRAME.registerComponent("collider-check", {
     this.el.removeEventListener("raycaster-intersected", this.onIntersected);
     this.el.removeEventListener(
       "raycaster-intersected-cleared",
-      this.onIntersectedCleared
+      this.onIntersectedCleared,
     );
   },
 
