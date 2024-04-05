@@ -1,0 +1,73 @@
+---
+import Player from "../components/player/Player.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/aframe-logo-192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A-Frame + Vite App</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js" is:inline
+    ></script>
+    <script
+      src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"
+      is:inline></script>
+    <script
+      src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"
+      is:inline></script>
+    <script
+      src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"
+      is:inline></script>
+    <script src="../utils/back-button.js" type="module" is:inline></script>
+  </head>
+  <body>
+    <a-scene environment="preset: starry">
+      <a-assets>
+        <img id="portalPicture" src="/portal-preview.webp" />
+        <script id="portalTemplate" type="text/html" is:inline>
+          <a-link
+            href="${link}"
+            title="${title}"
+            image="#portalPicture"
+            highlighted="true"
+            titleColor="#000000"
+            borderColor="green"
+            visualAspectEnabled="true"
+            data-clickable
+          >
+          </a-link>
+        </script>
+      </a-assets>
+
+      <a-entity
+        position="0 2.5 -7"
+        layout="type: line; plane: yz; margin: 3; align: center;"
+      >
+        <a-entity layout="type: line; align: center; margin: 3;">
+          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+          ></a-entity>
+          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+          ></a-entity>
+          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+          ></a-entity>
+        </a-entity>
+        <a-entity layout="type: line; align: center; margin: 3;">
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="panner-node"
+            data-title="Panner Node"></a-entity>
+          <a-entity
+            template="src: #portalTemplate;"
+            data-link="resonance-audio"
+            data-title="Resonance Audio"></a-entity>
+          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+          ></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <Player firstPage="true" />
+    </a-scene>
+  </body>
+</html>

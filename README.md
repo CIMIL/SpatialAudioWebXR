@@ -3,10 +3,10 @@
 ```sh
 npm i
 
-# add your sound files to the public folder
-public/cow.wav
-# change the path in the html
-audio src="/cow.wav"
+# add your sound files in the public folder
+public/sound.wav
+# change the path in src/components/AudioSrc.astro
+const src = "/sound.wav";
 
 npm run build
 
@@ -21,11 +21,11 @@ npm run dev -- --host
 # use the network ip address to access the preview on the Quest
 
 # expected output:
- VITE v4.5.0  ready in 224 ms
+ astro  v4.5.9 ready in 128 ms
 
-  ➜  Local:   https://localhost:5173/
-  ➜  Network: https://192.168.1.114:5173/
+┃ Local    https://localhost:4321/
+┃ Network  https://192.168.1.200:4321/
 ```
 
 A deployed version can be found here:
-[https://pannernode-aframe.netlify.app/](https://pannernode-aframe.netlify.app/)
+[https://spatial-audio-aframe.netlify.app/](https://spatial-audio-aframe.netlify.app/)

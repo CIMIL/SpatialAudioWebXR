@@ -3,50 +3,39 @@ import {
   LEVELS,
   SPEAKER_RADIUS,
   DEBUG,
+  DELAY_AFTER_START,
   BASELINE_WAIT_TIME,
-} from "@utils/constants.js";
-import { distributeSpeakers } from "@utils/distribute-speakers.js";
-import "@utils/back-button.js";
-import { DELAY_AFTER_START } from "../utils/constants";
-
-const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
+} from "./constants.js";
+import "./back-button.js";
 
 AFRAME.registerState({
   initialState: {
-    audioSources: Array.from({ length: 64 }, (_, i) => ({
-      id: `src-${i}`,
-    })),
-    speakers: Array.from({ length: 64 }, (_, i) => ({
-      id: `speaker-${i}`,
-      audioSrc: `#src-${i}`,
-      // eslint-disable-next-line max-len
-      position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
-    })),
     currentPlayingSpeaker: "",
     score: 0,
     messageBox: "Press Start to play",
     currentLevel: 0,
     sphereRadius: SPEAKER_RADIUS,
     clickActive: false,
+    secondsElapsed: 0,
+    isIntersected: false,
   },
 
   handlers: {
     playLoop: function (state, action) {
       if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
-      const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
-      playingSpeaker.play();
+      const playingSpeaker = document.querySelector(
+        `#speaker-${action.speaker}`
+      );
+      playingSpeaker.components["sound"].playSound();
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`,
+          `#speaker-${action.speaker}-box`
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
     },
     playFromRandomSpeaker: function (state, action) {
-      // disable menu
-      const menu = document.querySelector("#menu");
-      menu.object3D.visible = false;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
       // update currentPlayingSpeaker
@@ -106,7 +95,7 @@ AFRAME.registerState({
       if (state.isIntersected) {
         state.secondsElapsed += action.timeDelta;
         const baselineSlideText = document.querySelector(
-          "#baseline-slide-text",
+          "#baseline-slide-text"
         );
 
         const secondsLeft =
@@ -115,7 +104,7 @@ AFRAME.registerState({
 
         baselineSlideText.setAttribute(
           "value",
-          `Look here for ${secondsLeft} seconds`,
+          `Look here for ${secondsLeft} seconds`
         );
         if (state.secondsElapsed > BASELINE_WAIT_TIME) {
           state.secondsElapsed = 0;
@@ -126,14 +115,14 @@ AFRAME.registerState({
       } else {
         state.secondsElapsed = 0;
         const baselineSlideText = document.querySelector(
-          "#baseline-slide-text",
+          "#baseline-slide-text"
         );
 
         // TODO change message box
 
         baselineSlideText.setAttribute(
           "value",
-          `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`,
+          `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`
         );
       }
     },
@@ -146,9 +135,9 @@ AFRAME.registerState({
       state.clickActive = false;
       // stop sound from current speaker
       const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`,
+        `#speaker-${state.currentPlayingSpeaker}`
       );
-      playingSpeaker.pause();
+      playingSpeaker.components["sound"].stopSound();
 
       // check if clicked speaker is equal to current playing speaker
       if (
@@ -176,7 +165,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`,
+            `#speaker-${action.speakerClicked}-box`
           );
           speakerBox.setAttribute("material", { color: "white" });
         }
@@ -197,10 +186,6 @@ AFRAME.registerState({
       }, TIME_BETWEEN_LEVELS);
     },
   },
-});
-
-AFRAME.registerComponent("wait-for-room", {
-  dependencies: ["resonance-audio-room"],
 });
 
 AFRAME.registerComponent("start-button", {
@@ -228,12 +213,14 @@ AFRAME.registerComponent("collider-check", {
   init: function () {
     // check if raycaster intersection is held for 30 seconds
     this.el.addEventListener("raycaster-intersected", (e) => {
+      if (!this.el.hasAttribute("data-watchable")) return;
       this.el.setAttribute("color", "#bbed91");
       console.log("intersected");
       AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: true });
     });
 
     this.el.addEventListener("raycaster-intersected-cleared", (e) => {
+      if (!this.el.hasAttribute("data-watchable")) return;
       this.el.setAttribute("color", "#fea3aa");
       AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: false });
     });
@@ -243,7 +230,7 @@ AFRAME.registerComponent("collider-check", {
     this.el.removeEventListener("raycaster-intersected", this.onIntersected);
     this.el.removeEventListener(
       "raycaster-intersected-cleared",
-      this.onIntersectedCleared,
+      this.onIntersectedCleared
     );
   },
 
