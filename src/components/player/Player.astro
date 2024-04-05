@@ -8,13 +8,13 @@ const { firstPage } = Astro.props;
   <!-- camera -->
   <a-camera
     id="camera"
-    position={`${firstPage ? "0 1.6 0" : "0 0 0"}`}
+    position="0 0 0"
     wasd-controls
     look-controls
     cursor="rayOrigin: mouse"
-    raycaster="objects: [data-clickable]"
+    raycaster="objects: [data-watchable], [data-clickable]"
   >
-    {!firstPage && <HUD />}
+    <a-cursor></a-cursor>
   </a-camera>
 
   <!-- hand controls -->
