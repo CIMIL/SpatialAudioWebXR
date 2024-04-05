@@ -3,6 +3,7 @@ import BaselineSlide from "../components/BaselineSlide.astro";
 import Sphere from "../components/Sphere.astro";
 import Player from "../components/player/Player.astro";
 import ExperienceLayout from "../layouts/ExperienceLayout.astro";
+import Scene from "../components/Scene.astro";
 
 import { distributeSpeakers } from "../utils/distribute-speakers";
 import { SPEAKER_RADIUS } from "../utils/constants";
@@ -27,7 +28,7 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
       is:inline></script>
     <script src="../utils/e2.js"></script>
   </Fragment>
-  <a-scene background="color: #242424" start>
+  <Scene>
     <a-assets>
       {
         audioSources.map((source) => (
@@ -88,5 +89,5 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
     </Sphere>
 
     <Player />
-  </a-scene>
+  </Scene>
 </ExperienceLayout>
