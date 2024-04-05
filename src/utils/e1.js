@@ -68,6 +68,11 @@ AFRAME.registerState({
       const baselineSlide = document.querySelector("#baseline-slide");
       baselineSlide.setAttribute("visible", false);
       baselineSlide.removeAttribute("collider-check");
+
+      const camDir = new THREE.Vector3();
+      const e = cam.matrixWorld.elements;
+      camDir.set(e[8], e[9], e[10]).normalize();
+
       AFRAME.scenes[0].emit("playFromRandomSpeaker");
     },
 
