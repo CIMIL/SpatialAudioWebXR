@@ -84,7 +84,7 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerBox = document.querySelector(
-        `#speaker-${action.speakerClicked}-box`
+        `#speaker-${action.speakerClicked}-box`,
       );
       speakerBox.setAttribute("material", { color: "white" });
     }

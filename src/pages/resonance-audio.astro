@@ -8,6 +8,7 @@ import Scene from "../components/Scene.astro";
 import { distributeSpeakers } from "../utils/distribute-speakers";
 import { SPEAKER_RADIUS } from "../utils/constants";
 import AudioSrc from "../components/AudioSrc.astro";
+import AudioBox from "../components/AudioBox.astro";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
@@ -59,20 +60,7 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
               resonance-audio-src={`src: ${speaker.audioSrc}; autoplay: false; loop: false; gain: 10`}
               player
             >
-              <a-box
-                id={`${speaker.id}-box`}
-                look-at="#player"
-                data-clickable
-                scale="0.2 0.2 0.2"
-              >
-                <a-text
-                  value={speaker.id}
-                  align="center"
-                  position="0 0.200 1.25"
-                  scale="0.5 0.5 0.5"
-                  color="blue"
-                />
-              </a-box>
+              <AudioBox id={speaker.id} />
             </a-entity>
           ))
         }

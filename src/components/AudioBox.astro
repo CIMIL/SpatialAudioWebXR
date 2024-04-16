@@ -1,0 +1,11 @@
+---
+const { id } = Astro.props;
+---
+
+<a-box id={`${id}-box`} look-at="#player" scale="0.2 0.2 0.2" data-clickable>
+  <a-text
+    value={id.split("-")[1]}
+    align="center"
+    position="0 0 0.8"
+    color="blue"></a-text>
+</a-box>

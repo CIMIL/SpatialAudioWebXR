@@ -15,13 +15,16 @@ AFRAME.registerComponent("collider-check", {
       this.el.setAttribute("color", "#fea3aa");
       AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: false });
     });
+
+    // this fix intersection bug in the beginning
+    AFRAME.scenes[0].emit("setIsIntersected", { isIntersected: false });
   },
 
   remove: function () {
     this.el.removeEventListener("raycaster-intersected", this.onIntersected);
     this.el.removeEventListener(
       "raycaster-intersected-cleared",
-      this.onIntersectedCleared
+      this.onIntersectedCleared,
     );
   },
 

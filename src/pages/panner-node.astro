@@ -8,6 +8,7 @@ import { distributeSpeakers } from "../utils/distribute-speakers";
 import { SPEAKER_RADIUS } from "../utils/constants";
 import Scene from "../components/Scene.astro";
 import AudioSrc from "../components/AudioSrc.astro";
+import AudioBox from "../components/AudioBox.astro";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 const audioSources = Array.from({ length: 64 }, (_, i) => ({
@@ -40,20 +41,7 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
             position={speaker.position}
             volume="10"
           >
-            <a-box
-              id={`${speaker.id}-box`}
-              look-at="#player"
-              scale="0.2 0.2 0.2"
-              data-clickable
-            >
-              <a-text
-                value={speaker.id}
-                align="center"
-                position="0 0 0.8"
-                scale="0.5 0.5 0.5"
-                color="blue"
-              />
-            </a-box>
+            <AudioBox id={speaker.id} />
           </a-sound>
         ))
       }

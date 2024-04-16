@@ -40,10 +40,7 @@ export function checkIfIntersected(state, action) {
       parseInt(BASELINE_WAIT_TIME / 1000) -
       parseInt(state.secondsElapsed / 1000);
 
-    baselineSlideText.setAttribute(
-      "value",
-      `Look here for ${secondsLeft} seconds`
-    );
+    baselineSlideText.setAttribute("value", secondsLeft);
     if (state.secondsElapsed > BASELINE_WAIT_TIME) {
       state.secondsElapsed = 0;
       state.isIntersected = false;
@@ -56,10 +53,7 @@ export function checkIfIntersected(state, action) {
 
     // TODO change message box
 
-    baselineSlideText.setAttribute(
-      "value",
-      `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`
-    );
+    baselineSlideText.setAttribute("value", BASELINE_WAIT_TIME / 1000);
   }
 }
 
