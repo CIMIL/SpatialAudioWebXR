@@ -8,8 +8,11 @@ AFRAME.registerComponent("rotation-header", {
     const camDirX = camDir.x;
     const camDirY = camDir.y;
     const camDirZ = camDir.z;
-    const camDirDeg = (Math.atan2(camDirX, camDirZ) * 180) / Math.PI;
+    const camDirDegX = (Math.atan2(camDirX, camDirZ) * 180) / Math.PI;
     const camDirDegY = (Math.atan2(camDirY, camDirZ) * 180) / Math.PI;
-    console.log(camDirDeg.toFixed(), camDirDegY.toFixed());
+    // console.log(camDirDegX.toFixed(), camDirDegY.toFixed());
+    // save the rotation to localStorage
+    const camDirDeg = { x: camDirDegX.toFixed(), y: camDirDegY.toFixed() };
+    localStorage.setItem("camera-rotation", JSON.stringify(camDirDeg));
   },
 });

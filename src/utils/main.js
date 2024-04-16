@@ -16,25 +16,30 @@ AFRAME.registerState({
     currentLevel: 0,
     sphereRadius: SPEAKER_RADIUS,
     clickActive: false,
+    secondsElapsed: 0,
+    isIntersected: false,
   },
 
   handlers: {
     playLoop: function (state, action) {
       if (state.currentPlayingSpeaker !== `${action.speaker}`) return;
-      const playingSpeaker = document.querySelector(`#src-${action.speaker}`);
-      playingSpeaker.play();
+
+      if (document.title === "Panner Node")
+        document
+          .querySelector(`#speaker-${action.speaker}`)
+          .components["sound"].playSound();
+      else if (document.title === "Resonance Audio")
+        document.querySelector(`#src-${action.speaker}`).play();
+      else console.error("Unknown audio context");
 
       if (DEBUG) {
         const speakerBox = document.querySelector(
-          `#speaker-${action.speaker}-box`,
+          `#speaker-${action.speaker}-box`
         );
         speakerBox.setAttribute("material", { color: "red" });
       }
     },
     playFromRandomSpeaker: function (state, action) {
-      // disable menu
-      const menu = document.querySelector("#menu");
-      menu.object3D.visible = false;
       // random number from 0 to 63
       const rand = Math.floor(Math.random() * (63 + 1));
       // update currentPlayingSpeaker
@@ -67,6 +72,7 @@ AFRAME.registerState({
       const baselineSlide = document.querySelector("#baseline-slide");
       baselineSlide.setAttribute("visible", false);
       baselineSlide.removeAttribute("collider-check");
+
       AFRAME.scenes[0].emit("playFromRandomSpeaker");
     },
 
@@ -94,7 +100,7 @@ AFRAME.registerState({
       if (state.isIntersected) {
         state.secondsElapsed += action.timeDelta;
         const baselineSlideText = document.querySelector(
-          "#baseline-slide-text",
+          "#baseline-slide-text"
         );
 
         const secondsLeft =
@@ -103,7 +109,7 @@ AFRAME.registerState({
 
         baselineSlideText.setAttribute(
           "value",
-          `Look here for ${secondsLeft} seconds`,
+          `Look here for ${secondsLeft} seconds`
         );
         if (state.secondsElapsed > BASELINE_WAIT_TIME) {
           state.secondsElapsed = 0;
@@ -114,14 +120,14 @@ AFRAME.registerState({
       } else {
         state.secondsElapsed = 0;
         const baselineSlideText = document.querySelector(
-          "#baseline-slide-text",
+          "#baseline-slide-text"
         );
 
         // TODO change message box
 
         baselineSlideText.setAttribute(
           "value",
-          `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`,
+          `Look here for ${BASELINE_WAIT_TIME / 1000} seconds`
         );
       }
     },
@@ -133,10 +139,13 @@ AFRAME.registerState({
       // deactivate clicks
       state.clickActive = false;
       // stop sound from current speaker
-      const playingSpeaker = document.querySelector(
-        `#src-${state.currentPlayingSpeaker}`,
-      );
-      playingSpeaker.pause();
+      if (document.title === "Panner Node")
+        document
+          .querySelector(`#speaker-${state.currentPlayingSpeaker}`)
+          .components["sound"].stopSound();
+      else if (document.title === "Resonance Audio")
+        document.querySelector(`#src-${state.currentPlayingSpeaker}`).pause();
+      else console.error("Unknown audio context");
 
       // check if clicked speaker is equal to current playing speaker
       if (
@@ -164,7 +173,7 @@ AFRAME.registerState({
       setTimeout(() => {
         if (DEBUG) {
           const speakerBox = document.querySelector(
-            `#speaker-${action.speakerClicked}-box`,
+            `#speaker-${action.speakerClicked}-box`
           );
           speakerBox.setAttribute("material", { color: "white" });
         }
@@ -187,10 +196,6 @@ AFRAME.registerState({
   },
 });
 
-AFRAME.registerComponent("wait-for-room", {
-  dependencies: ["resonance-audio-room"],
-});
-
 AFRAME.registerComponent("start-button", {
   init: function () {
     this.el.addEventListener("click", () => {
@@ -200,7 +205,7 @@ AFRAME.registerComponent("start-button", {
 });
 
 AFRAME.registerComponent("player", {
-  dependencies: ["start", "resonance-audio-src"],
+  dependencies: ["resonance-audio-src"],
   init: function () {
     this.el.addEventListener("click", () => {
       AFRAME.scenes[0].emit("speakerClicked", {
@@ -233,20 +238,12 @@ AFRAME.registerComponent("collider-check", {
     this.el.removeEventListener("raycaster-intersected", this.onIntersected);
     this.el.removeEventListener(
       "raycaster-intersected-cleared",
-      this.onIntersectedCleared,
+      this.onIntersectedCleared
     );
   },
 
   tick: function (_, timeDelta) {
     // check if raycaster intersection is held for 30 seconds
     AFRAME.scenes[0].emit("checkIfIntersected", { timeDelta: timeDelta });
-  },
-});
-
-AFRAME.registerComponent("start", {
-  init: function () {
-    const context = THREE.AudioContext.getContext();
-    console.log(context.state);
-    context.resume();
   },
 });
