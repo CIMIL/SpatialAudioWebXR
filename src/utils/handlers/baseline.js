@@ -1,4 +1,5 @@
 import { BASELINE_WAIT_TIME } from "../constants";
+import { setPropertyOnTurn } from "../logs";
 
 /**
  * Shows the baseline.
@@ -11,6 +12,8 @@ export function showBaseline(state, action) {
   AFRAME.scenes[0].emit("toggleMenu", { visible: false });
   baselineSlide.setAttribute("visible", true);
   baselineSlide.setAttribute("collider-check", {});
+
+  setPropertyOnTurn("headHeadingStart", localStorage.getItem("cameraRotation"));
 }
 
 /**

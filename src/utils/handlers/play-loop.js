@@ -4,6 +4,8 @@ import {
   LEVELS,
   DEBUG,
 } from "../constants.js";
+import { setPropertyOnTurn } from "../logs.js";
+import { getAngle } from "../rotation-header.js";
 
 /**
  * Plays audio from a random speaker.
@@ -35,7 +37,25 @@ export function playFromRandomSpeaker(state, action) {
       const speakerBox = document.querySelector(`#speaker-${rand}-box`);
       speakerBox.setAttribute("material", { color: "red" });
     }
+
+    setPropertyOnTurn(
+      "headHeadingSound",
+      localStorage.getItem("cameraRotation")
+    );
   }, DELAY_AFTER_START);
+
+  setPropertyOnTurn("currentPlayingSpeaker", `speaker-${rand}`);
+  // get rotation of the current speaker relative to the 0 0 0
+  const speakerPosition = document
+    .querySelector(`#speaker-${rand}`)
+    .getAttribute("position");
+
+  const degX = getAngle(-speakerPosition.x, -speakerPosition.z);
+  const degY = getAngle(-speakerPosition.y, -speakerPosition.z);
+  setPropertyOnTurn(
+    "currentPlayingSpeakerPosition",
+    `${degX.toFixed()} ${degY.toFixed()}`
+  );
 }
 
 /**
@@ -69,12 +89,29 @@ export function speakerClicked(state, action) {
     AFRAME.scenes[0].emit("updateMessageBox", {
       message: "Correct!",
     });
+    setPropertyOnTurn("hasClickedRight", true);
   } else {
     // if not write Wrong in message box
     AFRAME.scenes[0].emit("updateMessageBox", {
       message: "Wrong",
     });
+    setPropertyOnTurn("hasClickedRight", false);
   }
+
+  setPropertyOnTurn("speakerClicked", `speaker-${action.speakerClicked}`);
+  setPropertyOnTurn(
+    "speakerClickedPosition",
+    document
+      .querySelector(`#speaker-${action.speakerClicked}`)
+      .getAttribute("position")
+      .x.toFixed(2) +
+      " " +
+      document
+        .querySelector(`#speaker-${action.speakerClicked}`)
+        .getAttribute("position")
+        .z.toFixed(2)
+  );
+  setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
   // empty currentPlayingSpeaker
   state.currentPlayingSpeaker = "";
@@ -84,7 +121,7 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerBox = document.querySelector(
-        `#speaker-${action.speakerClicked}-box`,
+        `#speaker-${action.speakerClicked}-box`
       );
       speakerBox.setAttribute("material", { color: "white" });
     }
