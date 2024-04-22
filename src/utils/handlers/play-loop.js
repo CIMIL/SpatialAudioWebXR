@@ -4,7 +4,7 @@ import {
   LEVELS,
   DEBUG,
 } from "../constants.js";
-import { setPropertyOnTurn } from "../logs.js";
+import { pushTurn, setPropertyOnTurn } from "../logs.js";
 import { getAngle } from "../rotation-header.js";
 
 /**
@@ -46,12 +46,18 @@ export function playFromRandomSpeaker(state, action) {
 
   setPropertyOnTurn("currentPlayingSpeaker", `speaker-${rand}`);
   // get rotation of the current speaker relative to the 0 0 0
-  const speakerPosition = document
+  const currentPlayingSPeakerPosition = document
     .querySelector(`#speaker-${rand}`)
     .getAttribute("position");
 
-  const degX = getAngle(-speakerPosition.x, -speakerPosition.z);
-  const degY = getAngle(-speakerPosition.y, -speakerPosition.z);
+  const degX = getAngle(
+    -currentPlayingSPeakerPosition.x,
+    -currentPlayingSPeakerPosition.z
+  );
+  const degY = getAngle(
+    -currentPlayingSPeakerPosition.y,
+    -currentPlayingSPeakerPosition.z
+  );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
     `${degX.toFixed()} ${degY.toFixed()}`
@@ -99,17 +105,16 @@ export function speakerClicked(state, action) {
   }
 
   setPropertyOnTurn("speakerClicked", `speaker-${action.speakerClicked}`);
+  const speakerClickedPosition = document
+    .querySelector(`#speaker-${action.speakerClicked}`)
+    .getAttribute("position");
+
+  const degX = getAngle(-speakerClickedPosition.x, -speakerClickedPosition.z);
+  const degY = getAngle(-speakerClickedPosition.y, -speakerClickedPosition.z);
+
   setPropertyOnTurn(
     "speakerClickedPosition",
-    document
-      .querySelector(`#speaker-${action.speakerClicked}`)
-      .getAttribute("position")
-      .x.toFixed(2) +
-      " " +
-      document
-        .querySelector(`#speaker-${action.speakerClicked}`)
-        .getAttribute("position")
-        .z.toFixed(2)
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
@@ -117,6 +122,8 @@ export function speakerClicked(state, action) {
   state.currentPlayingSpeaker = "";
   // increment level
   state.currentLevel += 1;
+
+  pushTurn();
   //  wait for n seconds
   setTimeout(() => {
     if (DEBUG) {
