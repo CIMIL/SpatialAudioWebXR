@@ -1,9 +1,4 @@
-import {
-  DELAY_AFTER_START,
-  TIME_BETWEEN_LEVELS,
-  LEVELS,
-  DEBUG,
-} from "../constants.js";
+import { TIME_BETWEEN_TURNS, TURNS, DEBUG } from "../constants.js";
 import { pushTurn, setPropertyOnTurn } from "../logs.js";
 import { getAngle } from "../rotation-header.js";
 
@@ -17,32 +12,26 @@ export function playFromRandomSpeaker(state, action) {
   const rand = Math.floor(Math.random() * (63 + 1));
   // update currentPlayingSpeaker
   state.currentPlayingSpeaker = `${rand}`;
-  setTimeout(() => {
-    // activate clicks
-    state.clickActive = true;
-    // play audio from random speaker
-    AFRAME.scenes[0].emit("updateMessageBox", {
-      message: "What Speaker is playing?",
-    });
 
-    if (document.title === "Panner Node")
-      document
-        .querySelector(`#speaker-${rand}`)
-        .components["sound"].playSound();
-    else if (document.title === "Resonance Audio")
-      document.querySelector(`#src-${rand}`).play();
-    else console.error("Unknown audio context");
+  // activate clicks
+  state.clickActive = true;
+  // play audio from random speaker
+  AFRAME.scenes[0].emit("updateMessageBox", {
+    message: "What Speaker is playing?",
+  });
 
-    if (DEBUG) {
-      const speakerBox = document.querySelector(`#speaker-${rand}-box`);
-      speakerBox.setAttribute("material", { color: "red" });
-    }
+  if (document.title === "Panner Node")
+    document.querySelector(`#speaker-${rand}`).components["sound"].playSound();
+  else if (document.title === "Resonance Audio")
+    document.querySelector(`#src-${rand}`).play();
+  else console.error("Unknown audio context");
 
-    setPropertyOnTurn(
-      "headHeadingSound",
-      localStorage.getItem("cameraRotation")
-    );
-  }, DELAY_AFTER_START);
+  if (DEBUG) {
+    const speakerBox = document.querySelector(`#speaker-${rand}-box`);
+    speakerBox.setAttribute("material", { color: "red" });
+  }
+
+  setPropertyOnTurn("headHeadingSound", localStorage.getItem("cameraRotation"));
 
   setPropertyOnTurn("currentPlayingSpeaker", `speaker-${rand}`);
   // get rotation of the current speaker relative to the 0 0 0
@@ -133,8 +122,8 @@ export function speakerClicked(state, action) {
       speakerBox.setAttribute("material", { color: "white" });
     }
 
-    // check if levels < 10
-    if (state.currentLevel < LEVELS) {
+    // check if TURNS < 10
+    if (state.currentLevel < TURNS) {
       // if yes, emit new playFromRandomSpeaker
       AFRAME.scenes[0].emit("showBaseline");
     } else {
@@ -146,5 +135,5 @@ export function speakerClicked(state, action) {
       // show menu
       AFRAME.scenes[0].emit("toggleMenu", { visible: true });
     }
-  }, TIME_BETWEEN_LEVELS);
+  }, TIME_BETWEEN_TURNS);
 }
