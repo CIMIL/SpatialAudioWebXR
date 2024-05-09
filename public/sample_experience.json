@@ -1,0 +1,72 @@
+[
+  {
+    "experience": "Panner Node",
+    "turns": [
+      {
+        "headHeadingStart": "0 0",
+        "currentPlayingSpeaker": "speaker-2",
+        "currentPlayingSpeakerPosition": "-129 -104",
+        "headHeadingSound": "0 0",
+        "hasClickedRight": false,
+        "speakerClicked": "speaker-24",
+        "speakerClickedPosition": "-42 -29",
+        "headHeadingClick": "0 0"
+      },
+      {
+        "headHeadingStart": "0 0",
+        "currentPlayingSpeaker": "speaker-2",
+        "currentPlayingSpeakerPosition": "-129 -104",
+        "headHeadingSound": "0 0",
+        "hasClickedRight": true,
+        "speakerClicked": "speaker-2",
+        "speakerClickedPosition": "-129 -104",
+        "headHeadingClick": "-116 -106"
+      },
+      {
+        "headHeadingStart": "-12 27",
+        "currentPlayingSpeaker": "speaker-59",
+        "currentPlayingSpeakerPosition": "-26 48",
+        "headHeadingSound": "1 1",
+        "hasClickedRight": true,
+        "speakerClicked": "speaker-59",
+        "speakerClickedPosition": "-26 48",
+        "headHeadingClick": "-41 46"
+      }
+    ]
+  },
+  {
+    "experience": "Resonance Audio",
+    "turns": [
+      {
+        "headHeadingStart": "0 0",
+        "currentPlayingSpeaker": "speaker-61",
+        "currentPlayingSpeakerPosition": "77 77",
+        "headHeadingSound": "0 0",
+        "hasClickedRight": true,
+        "speakerClicked": "speaker-61",
+        "speakerClickedPosition": "77 77",
+        "headHeadingClick": "64 19"
+      },
+      {
+        "headHeadingStart": "32 9",
+        "currentPlayingSpeaker": "speaker-5",
+        "currentPlayingSpeakerPosition": "26 -70",
+        "headHeadingSound": "1 -0",
+        "hasClickedRight": true,
+        "speakerClicked": "speaker-5",
+        "speakerClickedPosition": "26 -70",
+        "headHeadingClick": "-50 -62"
+      },
+      {
+        "headHeadingStart": "30 3",
+        "currentPlayingSpeaker": "speaker-55",
+        "currentPlayingSpeakerPosition": "147 154",
+        "headHeadingSound": "1 -1",
+        "hasClickedRight": true,
+        "speakerClicked": "speaker-55",
+        "speakerClickedPosition": "147 154",
+        "headHeadingClick": "133 173"
+      }
+    ]
+  }
+]

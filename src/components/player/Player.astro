@@ -4,6 +4,9 @@ import Menu from "./Menu.astro";
 const { firstPage } = Astro.props;
 ---
 
+<Fragment slot="head">
+  <script src="../../utils/rotation-header.js"></script>
+</Fragment>
 <a-entity id="player">
   <!-- camera -->
   <a-camera
@@ -13,7 +16,9 @@ const { firstPage } = Astro.props;
     look-controls
     cursor="rayOrigin: mouse"
     raycaster="objects: [data-watchable], [data-clickable]"
+    rotation-header
   >
+    <HUD />
     <a-cursor></a-cursor>
   </a-camera>
 

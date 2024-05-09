@@ -1,3 +1,7 @@
+---
+import { BASELINE_WAIT_TIME } from "../utils/constants";
+---
+
 <a-circle
   id="baseline-slide"
   position="0 0 -1.5"
@@ -10,8 +14,8 @@
   <a-text
     id="baseline-slide-text"
     align="center"
-    value="Look here for 30 seconds"
-    width="1"
+    value={BASELINE_WAIT_TIME / 1000}
+    width="2"
   >
   </a-text>
 </a-circle>

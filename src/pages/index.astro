@@ -20,10 +20,10 @@ import Player from "../components/player/Player.astro";
     <script
       src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"
       is:inline></script>
-    <script src="../utils/back-button.js" type="module" is:inline></script>
+    <script src="../utils/logs.js"></script>
   </head>
   <body>
-    <a-scene environment="preset: starry">
+    <a-scene environment="preset: starry" logs>
       <a-assets>
         <img id="portalPicture" src="/portal-preview.webp" />
         <script id="portalTemplate" type="text/html" is:inline>

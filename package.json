@@ -23,6 +23,7 @@
     "@vitejs/plugin-basic-ssl": "^1.0.1",
     "astro": "^4.5.9",
     "prettier": "^3.2.5",
-    "prettier-eslint": "^16.3.0"
+    "prettier-eslint": "^16.3.0",
+    "uuid": "^9.0.1"
   }
 }
