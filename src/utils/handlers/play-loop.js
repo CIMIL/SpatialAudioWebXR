@@ -41,15 +41,15 @@ export function playFromRandomSpeaker(state, action) {
 
   const degX = getAngle(
     -currentPlayingSPeakerPosition.x,
-    -currentPlayingSPeakerPosition.z
+    -currentPlayingSPeakerPosition.z,
   );
   const degY = getAngle(
     -currentPlayingSPeakerPosition.y,
-    -currentPlayingSPeakerPosition.z
+    -currentPlayingSPeakerPosition.z,
   );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`
+    `${degX.toFixed()} ${degY.toFixed()}`,
   );
 }
 
@@ -103,7 +103,7 @@ export function speakerClicked(state, action) {
 
   setPropertyOnTurn(
     "speakerClickedPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`
+    `${degX.toFixed()} ${degY.toFixed()}`,
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
@@ -117,7 +117,7 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerBox = document.querySelector(
-        `#speaker-${action.speakerClicked}-box`
+        `#speaker-${action.speakerClicked}-box`,
       );
       speakerBox.setAttribute("material", { color: "white" });
     }

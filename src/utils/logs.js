@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 
 // structure sample of the data object
 // {
@@ -26,17 +26,29 @@ AFRAME.registerComponent("logs", {
     // generate a unique log id
     // check if a log id already exists in local storage
     localStorage.getItem("sessionId") ||
-      localStorage.setItem("sessionId", uuidv4());
+      localStorage.setItem("sessionId", this.randomId());
 
     // log the start of the session
     console.log("Session started");
 
     document
-      .getElementById("sessioIdBox")
-      .setAttribute(
-        "value",
-        "Session ID: " + localStorage.getItem("sessionId")
-      );
+      .getElementById("sessionIdBox")
+      .setAttribute("value", "Your ID: " + localStorage.getItem("sessionId"));
+  },
+  randomId: function () {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+    length = 6;
+    let id = "";
+    // 3 random letters and 3 random numbers
+    for (let i = 0; i < length / 2; i++) {
+      id += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    }
+    id += "-";
+    for (let i = 0; i < length / 2; i++) {
+      id += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    }
+    return id;
   },
 });
 

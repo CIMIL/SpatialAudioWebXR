@@ -1,4 +1,5 @@
 ---
+import IdBox from "../components/IdBox.astro";
 import Player from "../components/player/Player.astro";
 ---
 
@@ -46,12 +47,13 @@ import Player from "../components/player/Player.astro";
         layout="type: line; plane: yz; margin: 3; align: center;"
       >
         <a-entity layout="type: line; align: center; margin: 3;">
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+          <!-- <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
           ></a-entity>
           <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
           ></a-entity>
           <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
-          ></a-entity>
+          ></a-entity> -->
+          <IdBox />
         </a-entity>
         <a-entity layout="type: line; align: center; margin: 3;">
           <a-entity
