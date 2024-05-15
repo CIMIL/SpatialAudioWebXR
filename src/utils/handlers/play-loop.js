@@ -27,8 +27,8 @@ export function playFromRandomSpeaker(state, action) {
   else console.error("Unknown audio context");
 
   if (DEBUG) {
-    const speakerBox = document.querySelector(`#speaker-${rand}-box`);
-    speakerBox.setAttribute("material", { color: "red" });
+    const speakerBox = document.querySelector(`#speaker-${rand}-ring`);
+    speakerBox.setAttribute("material", { color: "blue", opacity: "1" });
   }
 
   setPropertyOnTurn("headHeadingSound", localStorage.getItem("cameraRotation"));
@@ -41,15 +41,15 @@ export function playFromRandomSpeaker(state, action) {
 
   const degX = getAngle(
     -currentPlayingSPeakerPosition.x,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   const degY = getAngle(
     -currentPlayingSPeakerPosition.y,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
 }
 
@@ -78,6 +78,11 @@ export function speakerClicked(state, action) {
     `speaker-${action.speakerClicked}` ===
     `speaker-${state.currentPlayingSpeaker}`
   ) {
+    const speakerClicked = document.querySelector(
+      `#speaker-${action.speakerClicked}-ring`
+    );
+    speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
+
     // id yes increment score and write Correct in message box
     AFRAME.scenes[0].emit("updateScore");
 
@@ -86,6 +91,19 @@ export function speakerClicked(state, action) {
     });
     setPropertyOnTurn("hasClickedRight", true);
   } else {
+    const speakerClicked = document.querySelector(
+      `#speaker-${action.speakerClicked}-ring`
+    );
+    speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
+
+    const currentPlayingSpeaker = document.querySelector(
+      `#speaker-${state.currentPlayingSpeaker}-ring`
+    );
+    currentPlayingSpeaker.setAttribute("material", {
+      color: "green",
+      opacity: "1",
+    });
+
     // if not write Wrong in message box
     AFRAME.scenes[0].emit("updateMessageBox", {
       message: "Wrong",
@@ -103,12 +121,10 @@ export function speakerClicked(state, action) {
 
   setPropertyOnTurn(
     "speakerClickedPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
-  // empty currentPlayingSpeaker
-  state.currentPlayingSpeaker = "";
   // increment level
   state.currentLevel += 1;
 
@@ -116,11 +132,19 @@ export function speakerClicked(state, action) {
   //  wait for n seconds
   setTimeout(() => {
     if (DEBUG) {
-      const speakerBox = document.querySelector(
-        `#speaker-${action.speakerClicked}-box`,
+      const speakerClicked = document.querySelector(
+        `#speaker-${action.speakerClicked}-ring`
       );
-      speakerBox.setAttribute("material", { color: "white" });
+      const currentPlayingSpeaker = document.querySelector(
+        `#speaker-${state.currentPlayingSpeaker}-ring`
+      );
+
+      speakerClicked.setAttribute("material", { opacity: "0" });
+      currentPlayingSpeaker.setAttribute("material", { opacity: "0" });
     }
+
+    // empty currentPlayingSpeaker
+    state.currentPlayingSpeaker = "";
 
     // check if TURNS < 10
     if (state.currentLevel < TURNS) {

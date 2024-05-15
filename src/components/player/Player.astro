@@ -12,7 +12,7 @@ const { firstPage } = Astro.props;
   <a-camera
     id="camera"
     position="0 0 0"
-    wasd-controls
+    wasd-controls="fly: true; acceleration: 10"
     look-controls
     cursor="rayOrigin: mouse"
     raycaster="objects: [data-watchable], [data-clickable]"

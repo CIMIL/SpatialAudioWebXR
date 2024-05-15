@@ -26,9 +26,9 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
     <script src="../utils/main.js"></script>
   </Fragment>
   <Scene>
-    <a-assets>
+    <Fragment slot="assets">
       {audioSources.map((source) => <AudioSrc id={source.id} />)}
-    </a-assets>
+    </Fragment>
 
     <BaselineSlide />
     <Sphere>

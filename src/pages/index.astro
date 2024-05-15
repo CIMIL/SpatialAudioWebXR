@@ -27,20 +27,21 @@ import Player from "../components/player/Player.astro";
     <a-scene environment="preset: starry" logs>
       <a-assets>
         <img id="portalPicture" src="/portal-preview.webp" />
-        <script id="portalTemplate" type="text/html" is:inline>
-          <a-link
-            href="${link}"
-            title="${title}"
-            image="#portalPicture"
-            highlighted="true"
-            titleColor="#000000"
-            borderColor="green"
-            visualAspectEnabled="true"
-            data-clickable
-          >
-          </a-link>
-        </script>
       </a-assets>
+
+      <script id="portalTemplate" type="text/html" is:inline>
+        <a-link
+          href="${link}"
+          title="${title}"
+          image="#portalPicture"
+          highlighted="true"
+          titleColor="#000000"
+          borderColor="green"
+          visualAspectEnabled="true"
+          data-clickable
+        >
+        </a-link>
+      </script>
 
       <a-entity
         position="0 2.5 -7"
@@ -48,11 +49,11 @@ import Player from "../components/player/Player.astro";
       >
         <a-entity layout="type: line; align: center; margin: 3;">
           <!-- <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
-          ></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
-          ></a-entity>
-          <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
-          ></a-entity> -->
+    ></a-entity>
+    <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+    ></a-entity>
+    <a-entity template="src: #portalTemplate;" data-link="#" data-title=""
+    ></a-entity> -->
           <IdBox />
         </a-entity>
         <a-entity layout="type: line; align: center; margin: 3;">
