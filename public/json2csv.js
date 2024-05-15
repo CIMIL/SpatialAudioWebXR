@@ -1,5 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
 
+const distance = (x1, y1, x2, y2) => Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+
 const inputPath = process.argv[2]; // Get the input file path from command line arguments
 
 if (!inputPath) {
@@ -33,12 +35,18 @@ const jsonToCsv = (inputPath) => {
           speakerClicked,
           speakerClickedPosition,
           headHeadingClick,
+          errorDistance,
         }) =>
-          `${experience},${headHeadingStart.split(" ")[0]},${headHeadingStart.split(" ")[1]},${currentPlayingSpeaker},${currentPlayingSpeakerPosition.split(" ")[0]},${currentPlayingSpeakerPosition.split(" ")[1]},${headHeadingSound.split(" ")[0]},${headHeadingSound.split(" ")[1]},${hasClickedRight},${speakerClicked},${speakerClickedPosition.split(" ")[0]},${speakerClickedPosition.split(" ")[1]},${headHeadingClick.split(" ")[0]},${headHeadingClick.split(" ")[1]}`
+          `${experience},${headHeadingStart.split(" ")[0]},${headHeadingStart.split(" ")[1]},${currentPlayingSpeaker},${currentPlayingSpeakerPosition.split(" ")[0]},${currentPlayingSpeakerPosition.split(" ")[1]},${headHeadingSound.split(" ")[0]},${headHeadingSound.split(" ")[1]},${hasClickedRight},${speakerClicked},${speakerClickedPosition.split(" ")[0]},${speakerClickedPosition.split(" ")[1]},${headHeadingClick.split(" ")[0]},${headHeadingClick.split(" ")[1]},${distance(
+            parseFloat(currentPlayingSpeakerPosition.split(" ")[0]),
+            parseFloat(currentPlayingSpeakerPosition.split(" ")[1]),
+            parseFloat(speakerClickedPosition.split(" ")[0]),
+            parseFloat(speakerClickedPosition.split(" ")[1]),
+          )}`,
       )
       .join("\n");
     return `${acc}${turnsCsv}\n`;
-  }, "experience,headHeadingStartX, headHeadingStartY,currentPlayingSpeaker,currentPlayingSpeakerPositionX, currentPlayingSpeakerPositionY,headHeadingSoundX,headHeadingSoundY,hasClickedRight,speakerClicked,speakerClickedPositionX,speakerClickedPositionY,headHeadingClickX,headHeadingClickY\n");
+  }, "experience,headHeadingStartX, headHeadingStartY,currentPlayingSpeaker,currentPlayingSpeakerPositionX, currentPlayingSpeakerPositionY,headHeadingSoundX,headHeadingSoundY,hasClickedRight,speakerClicked,speakerClickedPositionX,speakerClickedPositionY,headHeadingClickX,headHeadingClickY,errorDistance\n");
 
   try {
     writeFileSync(outputPath, csv);
