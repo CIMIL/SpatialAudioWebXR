@@ -1,5 +1,5 @@
 ---
-import BaselineSlide from "../components/BaselineSlide.astro";
+import BaselineSlide from "../components/BaselineTarget.astro";
 import Sphere from "../components/Sphere.astro";
 import Player from "../components/player/Player.astro";
 import ExperienceLayout from "../layouts/ExperienceLayout.astro";
@@ -9,6 +9,7 @@ import { SPEAKER_RADIUS } from "../utils/constants";
 import Scene from "../components/Scene.astro";
 import AudioSrc from "../components/AudioSrc.astro";
 import AudioBox from "../components/AudioBox.astro";
+import MessageBox from "../components/MessageBox.astro";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 const audioSources = Array.from({ length: 64 }, (_, i) => ({
@@ -19,9 +20,11 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
   audioSrc: `#src-${i}`,
   position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
 }));
+
+const title = "Panner Node";
 ---
 
-<ExperienceLayout title="Panner Node">
+<ExperienceLayout title={title}>
   <Fragment slot="head">
     <script src="../utils/main.js"></script>
   </Fragment>
@@ -31,6 +34,7 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
     </Fragment>
 
     <BaselineSlide />
+    <MessageBox text={title}/>
     <Sphere>
       {
         speakers.map((speaker) => (

@@ -1,14 +1,13 @@
 ---
 const { id } = Astro.props;
 ---
-
-<!-- build a ring arround the model named id-ring -->
 <a-entity
   id={`${id}-box`}
   gltf-model="#speaker-glb"
   scale="0.05 0.05 0.05"
   look-at="#player"
   data-clickable
+  foo
 >
   <a-entity
     id={`${id}-ring`}
@@ -17,7 +16,6 @@ const { id } = Astro.props;
     position="0 0 0"
     rotation="0 0 0"
   >
-  </a-entity>
   <a-text
     value={id.split("-")[1]}
     align="center"

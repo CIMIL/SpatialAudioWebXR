@@ -17,7 +17,7 @@ export function playFromRandomSpeaker(state, action) {
   state.clickActive = true;
   // play audio from random speaker
   AFRAME.scenes[0].emit("updateMessageBox", {
-    message: "What Speaker is playing?",
+    message: "What speaker has played?",
   });
 
   if (document.title === "Panner Node")
@@ -41,15 +41,15 @@ export function playFromRandomSpeaker(state, action) {
 
   const degX = getAngle(
     -currentPlayingSPeakerPosition.x,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   const degY = getAngle(
     -currentPlayingSPeakerPosition.y,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
 }
 
@@ -79,7 +79,7 @@ export function speakerClicked(state, action) {
     `speaker-${state.currentPlayingSpeaker}`
   ) {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`,
+      `#speaker-${action.speakerClicked}-ring`
     );
     speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
 
@@ -92,12 +92,12 @@ export function speakerClicked(state, action) {
     setPropertyOnTurn("hasClickedRight", true);
   } else {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`,
+      `#speaker-${action.speakerClicked}-ring`
     );
     speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
 
     const currentPlayingSpeaker = document.querySelector(
-      `#speaker-${state.currentPlayingSpeaker}-ring`,
+      `#speaker-${state.currentPlayingSpeaker}-ring`
     );
     currentPlayingSpeaker.setAttribute("material", {
       color: "green",
@@ -106,7 +106,7 @@ export function speakerClicked(state, action) {
 
     // if not write Wrong in message box
     AFRAME.scenes[0].emit("updateMessageBox", {
-      message: "Wrong",
+      message: "Sorry, wrong speaker!",
     });
     setPropertyOnTurn("hasClickedRight", false);
   }
@@ -121,7 +121,7 @@ export function speakerClicked(state, action) {
 
   setPropertyOnTurn(
     "speakerClickedPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
@@ -133,10 +133,10 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerClicked = document.querySelector(
-        `#speaker-${action.speakerClicked}-ring`,
+        `#speaker-${action.speakerClicked}-ring`
       );
       const currentPlayingSpeaker = document.querySelector(
-        `#speaker-${state.currentPlayingSpeaker}-ring`,
+        `#speaker-${state.currentPlayingSpeaker}-ring`
       );
 
       speakerClicked.setAttribute("material", { opacity: "0" });
@@ -154,10 +154,11 @@ export function speakerClicked(state, action) {
       // else set messagebox to "Game Over"
       state.currentPlayingSpeaker = "";
       AFRAME.scenes[0].emit("updateMessageBox", {
-        message: "End of the Experience",
+        message: "End of the experience. Wait for instructions.",
       });
       // show menu
-      AFRAME.scenes[0].emit("toggleMenu", { visible: true });
+      const buttons = document.getElementById("buttons");
+      buttons.emit("showButtons", null, false);
     }
   }, TIME_BETWEEN_TURNS);
 }
