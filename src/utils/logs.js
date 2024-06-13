@@ -1,25 +1,25 @@
-// import { v4 as uuidv4 } from "uuid";
-
-// structure sample of the data object
-// {
-//   data: [
-//     {
-//       experience: "Panner Node",
-//       turns: [
-//         {
-//           currentPlayingSpeaker: "speaker-1", // in play-loop.js
-//           currentPlayingSpeakerPosition: "x y", // in play-loop.js
-//           speakerClicked: "speaker-1", // in play-loop.js
-//           speakerClickedPosition: "x y", // in play-loop.js
-//           headHeadingStart: "x y", // in baseline.js
-//           headHeadingSound: "x y", // in baseline.js
-//           headHeadingClick: "x y", // in play-loop.js
-//           hasClickedRight: true, // in play-loop.js
-//         },
-//       ],
-//     },
-//   ];
-// }
+/**
+  structure sample of the data object
+  {
+    data: [
+      {
+        experience: "Panner Node",
+        turns: [
+          {
+            currentPlayingSpeaker: "speaker-1", // in play-loop.js
+            currentPlayingSpeakerPosition: "x y", // in play-loop.js
+            speakerClicked: "speaker-1", // in play-loop.js
+            speakerClickedPosition: "x y", // in play-loop.js
+            headHeadingStart: "x y", // in baseline.js
+            headHeadingSound: "x y", // in baseline.js
+            headHeadingClick: "x y", // in play-loop.js
+            hasClickedRight: true, // in play-loop.js
+          },
+        ],
+      },
+    ];
+  }
+  */
 
 AFRAME.registerComponent("logs", {
   init: function () {
@@ -27,9 +27,6 @@ AFRAME.registerComponent("logs", {
     // check if a log id already exists in local storage
     localStorage.getItem("sessionId") ||
       localStorage.setItem("sessionId", this.randomId());
-
-    // log the start of the session
-    console.log("Session started");
 
     document
       .getElementById("sessionIdBox")

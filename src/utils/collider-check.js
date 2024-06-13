@@ -23,7 +23,7 @@ AFRAME.registerComponent("collider-check", {
     this.el.removeEventListener("raycaster-intersected", this.onIntersected);
     this.el.removeEventListener(
       "raycaster-intersected-cleared",
-      this.onIntersectedCleared
+      this.onIntersectedCleared,
     );
   },
 

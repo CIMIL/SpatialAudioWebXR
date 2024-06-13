@@ -36,7 +36,6 @@ AFRAME.registerState({
     updateMessageBox: function (state, action) {
       const messageBox = document.querySelector("#message-box");
       state.messageBox = action.message;
-
       messageBox.setAttribute("value", state.messageBox);
     },
   },
