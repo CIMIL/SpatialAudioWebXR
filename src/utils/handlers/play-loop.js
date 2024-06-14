@@ -24,6 +24,8 @@ export function playFromRandomSpeaker(state, action) {
     document.querySelector(`#speaker-${rand}`).components["sound"].playSound();
   else if (document.title === "Resonance Audio")
     document.querySelector(`#src-${rand}`).play();
+  else if (document.title === "Howler JS")
+    document.querySelector(`#speaker-${rand}`).emit("play-sound");
   else console.error("Unknown audio context");
 
   if (DEBUG) {
@@ -41,15 +43,15 @@ export function playFromRandomSpeaker(state, action) {
 
   const degX = getAngle(
     -currentPlayingSPeakerPosition.x,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   const degY = getAngle(
     -currentPlayingSPeakerPosition.y,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
 }
 
@@ -71,6 +73,10 @@ export function speakerClicked(state, action) {
       .components["sound"].stopSound();
   else if (document.title === "Resonance Audio")
     document.querySelector(`#src-${state.currentPlayingSpeaker}`).pause();
+  else if (document.title === "Howler JS")
+    document
+      .querySelector(`#speaker-${state.currentPlayingSpeaker}`)
+      .emit("pause-sound");
   else console.error("Unknown audio context");
 
   // check if clicked speaker is equal to current playing speaker
@@ -79,7 +85,7 @@ export function speakerClicked(state, action) {
     `speaker-${state.currentPlayingSpeaker}`
   ) {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`,
+      `#speaker-${action.speakerClicked}-ring`
     );
     speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
 
@@ -92,12 +98,12 @@ export function speakerClicked(state, action) {
     setPropertyOnTurn("hasClickedRight", true);
   } else {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`,
+      `#speaker-${action.speakerClicked}-ring`
     );
     speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
 
     const currentPlayingSpeaker = document.querySelector(
-      `#speaker-${state.currentPlayingSpeaker}-ring`,
+      `#speaker-${state.currentPlayingSpeaker}-ring`
     );
     currentPlayingSpeaker.setAttribute("material", {
       color: "green",
@@ -121,7 +127,7 @@ export function speakerClicked(state, action) {
 
   setPropertyOnTurn(
     "speakerClickedPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
@@ -133,10 +139,10 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerClicked = document.querySelector(
-        `#speaker-${action.speakerClicked}-ring`,
+        `#speaker-${action.speakerClicked}-ring`
       );
       const currentPlayingSpeaker = document.querySelector(
-        `#speaker-${state.currentPlayingSpeaker}-ring`,
+        `#speaker-${state.currentPlayingSpeaker}-ring`
       );
 
       speakerClicked.setAttribute("material", { opacity: "0" });

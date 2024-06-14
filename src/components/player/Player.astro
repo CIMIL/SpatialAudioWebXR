@@ -13,22 +13,20 @@ const { firstPage } = Astro.props;
     id="camera"
     position="0 0 0"
     wasd-controls="fly: true; acceleration: 10"
-    cursor="rayOrigin: mouse"
-    raycaster="objects: [data-watchable], [data-clickable]" 
+    raycaster="objects: [data-watchable]" 
+    cursor="rayOrigin: headset"
     rotation-header
+    howler-listener
   >
-    <!-- <a-entity hide-on-enter-vr position="0 0 -2">
-      <a-plane width="100" height="100" color="#242424"></a-plane>
-      <a-text align="center" value="Please enter VR mode with the button on the bottom right."></a-text>
-    </a-entity> -->
+    <a-cursor></a-cursor>
   </a-camera>
 
   <!-- hand controls -->
-  <a-entity id="left-hand" oculus-touch-controls="hand: left">
+  <a-entity id="left-hand" hand-controls="hand: left">
   </a-entity>
   <a-entity
     id="right-hand"
-    oculus-touch-controls="hand: right"
+    hand-controls="hand: right"
     laser-controls="hand: right; model: true"
     raycaster="objects: [data-clickable]"></a-entity>
 </a-entity>
