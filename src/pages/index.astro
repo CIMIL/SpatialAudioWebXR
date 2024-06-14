@@ -29,12 +29,14 @@ import DebugButton from "../components/DebugButton.astro";
   <body>
     <Scene>
       <Fragment slot="assets">
-        <img id="portalPicture" src="/portal-preview.webp" />
+        <img id="panner-node" src="/panner-node.webp" />
+        <img id="resonance-audio" src="/resonance-audio.webp" />
+        <img id="howler" src="/howler.webp" />
       </Fragment>
       <a-entity position="0 0 -4">
-        <Portal text="Panner Node" image="#portalPicture" link="/panner-node" position="-2 0 0.3" rotation="0 30 0" />
-        <Portal text="Resonance Audio" image="#portalPicture" link="/resonance-audio" position="0 0 -0.2" rotation="0 0 0" />
-        <Portal text="Howler JS" image="#portalPicture" link="/howler" position="2 0 0.3" rotation="0 -30 0" />
+        <Portal text="Panner Node" image="#panner-node" link="/panner-node" position="-2 0 0.3" rotation="0 30 0" />
+        <Portal text="Resonance Audio" image="#resonance-audio" link="/resonance-audio" position="0 0 -0.2" rotation="0 0 0" />
+        <Portal text="Howler JS" image="#howler" link="/howler" position="2 0 0.3" rotation="0 -30 0" />
         <a-text align="center" position="0 1.8 0" width="8" scale="0.4 0.4 0.4" value="Hi, thanks for trying this demo to experience different way of using spatial audio in web XR. We suggest using 'wolfic browser' however when changing page you are required to re-enter the VR mode due to limitations."></a-text>
         <a-entity position="0 1 0">
           <!-- TODO implement debug button -->
