@@ -1,4 +1,4 @@
-import { DEBUG } from "./constants";
+// import { DEBUG } from "./constants";
 
 AFRAME.registerComponent("toggle-debug", {
   init: function () {
