@@ -4,10 +4,11 @@ This project is a template for creating spatial audio experiences using A-Frame 
 
 The project is built using Astro, a static site generator for modern web development.
 
-The project includes two methods for spatial audio:
+The project includes three methods for spatial audio:
 
 - [Panner Node](https://developer.mozilla.org/en-US/docs/Web/API/PannerNode)
 - [Resonance Audio](https://resonance-audio.github.io/resonance-audio/)
+- [Howler.js](https://howlerjs.com/)
 
 ## How to Use
 

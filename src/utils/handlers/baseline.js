@@ -8,10 +8,14 @@ import { setPropertyOnTurn } from "../logs";
  */
 export function showBaseline(state, action) {
   const baselineSlide = document.querySelector("#baseline-slide");
+  const buttons = document.getElementById("buttons");
   // disable menu
-  AFRAME.scenes[0].emit("toggleMenu", { visible: false });
+  buttons.emit("hideButtons", null, false);
   baselineSlide.setAttribute("visible", true);
   baselineSlide.setAttribute("collider-check", {});
+  AFRAME.scenes[0].emit("updateMessageBox", {
+    message: "Please look at the count down and listen to the sound.",
+  });
 
   setPropertyOnTurn("headHeadingStart", localStorage.getItem("cameraRotation"));
 }

@@ -1,11 +1,25 @@
 ---
 const { id } = Astro.props;
 ---
-
-<a-box id={`${id}-box`} look-at="#player" scale="0.2 0.2 0.2" data-clickable>
+<a-entity
+  id={`${id}-box`}
+  gltf-model="#speaker-glb"
+  scale="0.05 0.05 0.05"
+  look-at="#player"
+  data-clickable
+  foo
+>
+  <a-entity
+    id={`${id}-ring`}
+    geometry="primitive: ring; radiusInner: 4.5; radiusOuter: 4.7"
+    material="color: blue; opacity: 0"
+    position="0 0 0"
+    rotation="0 0 0"
+  >
   <a-text
     value={id.split("-")[1]}
     align="center"
-    position="0 0 0.8"
+    position="0 -2 3"
+    scale="2 2 2"
     color="blue"></a-text>
-</a-box>
+</a-entity>

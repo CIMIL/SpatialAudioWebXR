@@ -1,0 +1,22 @@
+---
+import Buttons from "./Buttons.astro";
+
+const {text} = Astro.props;
+---
+
+<a-plane
+    width="1"
+    height="0.2"
+    position="0 -0.35 -1.8"
+    material="color: #282726"
+>
+    <a-text
+        id="message-box"
+        align="center"
+        value={text}
+        width="1"
+        color="#f2f2f2"
+      >
+    </a-text>
+<Buttons />
+</a-plane>

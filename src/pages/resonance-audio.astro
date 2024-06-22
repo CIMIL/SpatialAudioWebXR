@@ -1,5 +1,5 @@
 ---
-import BaselineSlide from "../components/BaselineSlide.astro";
+import BaselineTarget from "../components/BaselineTarget.astro";
 import Sphere from "../components/Sphere.astro";
 import Player from "../components/player/Player.astro";
 import ExperienceLayout from "../layouts/ExperienceLayout.astro";
@@ -9,6 +9,7 @@ import { distributeSpeakers } from "../utils/distribute-speakers";
 import { SPEAKER_RADIUS } from "../utils/constants";
 import AudioSrc from "../components/AudioSrc.astro";
 import AudioBox from "../components/AudioBox.astro";
+import MessageBox from "../components/MessageBox.astro";
 
 const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
 
@@ -21,9 +22,11 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
   audioSrc: `#src-${i}`,
   position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
 }));
+
+const title = "Resonance Audio";
 ---
 
-<ExperienceLayout title="Resonance Audio">
+<ExperienceLayout title={title}>
   <Fragment slot="head">
     <script
       src="https://cdn.jsdelivr.net/npm/aframe-resonance-audio-component@1.1.0/dist/aframe-resonance-audio-component.min.js"
@@ -31,12 +34,12 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
     <script src="../utils/main.js"></script>
   </Fragment>
   <Scene>
-    <a-assets>
+    <Fragment slot="assets">
       {audioSources.map((source) => <AudioSrc id={source.id} />)}
-    </a-assets>
+    </Fragment>
 
-    <BaselineSlide />
-
+    <BaselineTarget />
+     <MessageBox text={title}/>
     <Sphere>
       <a-resonance-audio-room
         width="20"

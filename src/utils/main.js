@@ -2,6 +2,7 @@ import { SPEAKER_RADIUS } from "./constants.js";
 import "./back-button.js";
 import "./start-button.js";
 import "./collider-check.js";
+import "./menu.js";
 import {
   showBaseline,
   removeBaseline,
@@ -32,9 +33,10 @@ AFRAME.registerState({
     setSecondsElapsed,
     playFromRandomSpeaker,
     speakerClicked,
-    toggleMenu: function (state, action) {
-      const menu = document.querySelector("#menu");
-      menu.object3D.visible = action.visible;
+    updateMessageBox: function (state, action) {
+      const messageBox = document.querySelector("#message-box");
+      state.messageBox = action.message;
+      messageBox.setAttribute("value", state.messageBox);
     },
   },
 });

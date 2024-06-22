@@ -12,24 +12,21 @@ const { firstPage } = Astro.props;
   <a-camera
     id="camera"
     position="0 0 0"
-    wasd-controls
-    look-controls
-    cursor="rayOrigin: mouse"
-    raycaster="objects: [data-watchable], [data-clickable]"
+    wasd-controls="fly: true; acceleration: 10"
+    raycaster="objects: [data-watchable]" 
+    cursor="rayOrigin: headset"
     rotation-header
+    howler-listener
   >
-    <HUD />
     <a-cursor></a-cursor>
   </a-camera>
 
   <!-- hand controls -->
-  <a-entity id="left-hand" oculus-touch-controls="hand: left">
-    <!-- show a plane oriented as the controller -->
-    <Menu />
+  <a-entity id="left-hand" hand-controls="hand: left">
   </a-entity>
   <a-entity
     id="right-hand"
-    oculus-touch-controls="hand: right"
+    hand-controls="hand: right"
     laser-controls="hand: right; model: true"
     raycaster="objects: [data-clickable]"></a-entity>
 </a-entity>

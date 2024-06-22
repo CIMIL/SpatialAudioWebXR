@@ -1,0 +1,23 @@
+---
+const {text, image, link, position, rotation} = Astro.props;
+---
+       
+<a-image
+    animation__onmouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 150"
+    animation__onmouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 150"
+    position={position}
+    rotation={rotation}
+    width="1.80"
+    height="1"
+    src={image}
+    link={`href: ${link};`}
+    data-clickable
+    data-watchable
+>
+    <a-text
+    value={text}
+    color="#f2f2f2"
+    align="center"
+    position="0 -0.8 0"
+    ></a-text>
+</a-image>

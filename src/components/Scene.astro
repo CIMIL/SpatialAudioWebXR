@@ -3,5 +3,9 @@
   webxr="referenceSpaceType: local"
   loading-screen="dotsColor: white; backgroundColor: #242424"
 >
+  <a-assets>
+    <a-asset-item id="speaker-glb" src="/speaker.glb"></a-asset-item>
+    <slot name="assets" />
+  </a-assets>
   <slot />
 </a-scene>
