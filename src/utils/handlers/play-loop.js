@@ -24,7 +24,10 @@ export function playFromRandomSpeaker(state, action) {
     document.querySelector(`#speaker-${rand}`).components["sound"].playSound();
   else if (document.title === "Resonance Audio")
     document.querySelector(`#src-${rand}`).play();
-  else if (document.title === "Howler JS")
+  else if (
+    document.title === "Howler JS - HRTF" ||
+    document.title === "Howler JS - equalpower"
+  )
     document.querySelector(`#speaker-${rand}`).emit("play-sound");
   else console.error("Unknown audio context");
 
@@ -73,7 +76,10 @@ export function speakerClicked(state, action) {
       .components["sound"].stopSound();
   else if (document.title === "Resonance Audio")
     document.querySelector(`#src-${state.currentPlayingSpeaker}`).pause();
-  else if (document.title === "Howler JS")
+  else if (
+    document.title === "Howler JS - HRTF" ||
+    document.title === "Howler JS - equalpower"
+  )
     document
       .querySelector(`#speaker-${state.currentPlayingSpeaker}`)
       .emit("pause-sound");

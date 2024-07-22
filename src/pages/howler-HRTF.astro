@@ -1,0 +1,59 @@
+---
+import BaselineTarget from "../components/BaselineTarget.astro";
+import Sphere from "../components/Sphere.astro";
+import Player from "../components/player/Player.astro";
+import ExperienceLayout from "../layouts/ExperienceLayout.astro";
+import Scene from "../components/Scene.astro";
+
+import { distributeSpeakers } from "../utils/distribute-speakers";
+import { SPEAKER_RADIUS } from "../utils/constants";
+import AudioSrc from "../components/AudioSrc.astro";
+import AudioBox from "../components/AudioBox.astro";
+import MessageBox from "../components/MessageBox.astro";
+
+const speakerPositions = distributeSpeakers(SPEAKER_RADIUS);
+
+const audioSources = Array.from({ length: 64 }, (_, i) => ({
+  id: `src-${i}`,
+}));
+
+const speakers = Array.from({ length: 64 }, (_, i) => ({
+  id: `speaker-${i}`,
+  audioSrc: `#src-${i}`,
+  position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
+}));
+
+const title = "Howler JS - HRTF";
+---
+
+<ExperienceLayout title={title}>
+  <Fragment slot="head">
+    <script src="../utils/howler-HRTF.js"></script>
+    <script src="../utils/main.js"></script>
+  </Fragment>
+  <Scene>
+    <Fragment slot="assets">
+      {audioSources.map((source) => <AudioSrc id={source.id} />)}
+    </Fragment>
+
+    <BaselineTarget />
+     <MessageBox text={title}/>
+    <Sphere>
+        {
+          speakers.map((speaker) => (
+            <a-entity
+              key={speaker.id}
+              id={speaker.id}
+              position={speaker.position}
+              howler-source={`src: ${speaker.audioSrc}`}
+              player
+            >
+              <AudioBox id={speaker.id} />
+            </a-entity>
+          ))
+        }
+    </Sphere>
+
+    <Player />
+  </Scene>
+</ExperienceLayout>
