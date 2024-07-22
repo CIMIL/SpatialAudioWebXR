@@ -24,7 +24,10 @@ export function playFromRandomSpeaker(state, action) {
     document.querySelector(`#speaker-${rand}`).components["sound"].playSound();
   else if (document.title === "Resonance Audio")
     document.querySelector(`#src-${rand}`).play();
-  else if (document.title === "Howler JS")
+  else if (
+    document.title === "Howler JS - HRTF" ||
+    document.title === "Howler JS - equalpower"
+  )
     document.querySelector(`#speaker-${rand}`).emit("play-sound");
   else console.error("Unknown audio context");
 
@@ -43,15 +46,15 @@ export function playFromRandomSpeaker(state, action) {
 
   const degX = getAngle(
     -currentPlayingSPeakerPosition.x,
-    -currentPlayingSPeakerPosition.z
+    -currentPlayingSPeakerPosition.z,
   );
   const degY = getAngle(
     -currentPlayingSPeakerPosition.y,
-    -currentPlayingSPeakerPosition.z
+    -currentPlayingSPeakerPosition.z,
   );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`
+    `${degX.toFixed()} ${degY.toFixed()}`,
   );
 }
 
@@ -73,11 +76,28 @@ export function speakerClicked(state, action) {
       .components["sound"].stopSound();
   else if (document.title === "Resonance Audio")
     document.querySelector(`#src-${state.currentPlayingSpeaker}`).pause();
-  else if (document.title === "Howler JS")
+  else if (
+    document.title === "Howler JS - HRTF" ||
+    document.title === "Howler JS - equalpower"
+  )
     document
       .querySelector(`#speaker-${state.currentPlayingSpeaker}`)
       .emit("pause-sound");
   else console.error("Unknown audio context");
+
+  // highlight clicked speaker
+  const speakerClicked = document.querySelector(
+    `#speaker-${action.speakerClicked}-ring`,
+  );
+
+  speakerClicked.setAttribute("material", {
+    color: "blue",
+    opacity: "1",
+  });
+
+  setTimeout(() => {
+    speakerClicked.setAttribute("material", { opacity: "0" });
+  }, 3000);
 
   // check if clicked speaker is equal to current playing speaker
   if (
@@ -85,9 +105,11 @@ export function speakerClicked(state, action) {
     `speaker-${state.currentPlayingSpeaker}`
   ) {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`
+      `#speaker-${action.speakerClicked}-ring`,
     );
-    speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
+
+    if (DEBUG)
+      speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
 
     // id yes increment score and write Correct in message box
     AFRAME.scenes[0].emit("updateScore");
@@ -98,17 +120,21 @@ export function speakerClicked(state, action) {
     setPropertyOnTurn("hasClickedRight", true);
   } else {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`
+      `#speaker-${action.speakerClicked}-ring`,
     );
-    speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
+
+    if (DEBUG)
+      speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
 
     const currentPlayingSpeaker = document.querySelector(
-      `#speaker-${state.currentPlayingSpeaker}-ring`
+      `#speaker-${state.currentPlayingSpeaker}-ring`,
     );
-    currentPlayingSpeaker.setAttribute("material", {
-      color: "green",
-      opacity: "1",
-    });
+
+    if (DEBUG)
+      currentPlayingSpeaker.setAttribute("material", {
+        color: "green",
+        opacity: "1",
+      });
 
     // if not write Wrong in message box
     AFRAME.scenes[0].emit("updateMessageBox", {
@@ -127,7 +153,7 @@ export function speakerClicked(state, action) {
 
   setPropertyOnTurn(
     "speakerClickedPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`
+    `${degX.toFixed()} ${degY.toFixed()}`,
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
@@ -139,10 +165,10 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerClicked = document.querySelector(
-        `#speaker-${action.speakerClicked}-ring`
+        `#speaker-${action.speakerClicked}-ring`,
       );
       const currentPlayingSpeaker = document.querySelector(
-        `#speaker-${state.currentPlayingSpeaker}-ring`
+        `#speaker-${state.currentPlayingSpeaker}-ring`,
       );
 
       speakerClicked.setAttribute("material", { opacity: "0" });

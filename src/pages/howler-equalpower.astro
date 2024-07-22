@@ -23,12 +23,12 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
   position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
 }));
 
-const title = "Howler JS";
+const title = "Howler JS - equalpower";
 ---
 
 <ExperienceLayout title={title}>
   <Fragment slot="head">
-    <script src="../utils/howler.js"></script>
+    <script src="../utils/howler-equalpower.js"></script>
     <script src="../utils/main.js"></script>
   </Fragment>
   <Scene>

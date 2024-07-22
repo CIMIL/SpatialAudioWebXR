@@ -6,7 +6,7 @@ import ExperienceLayout from "../layouts/ExperienceLayout.astro";
 import Scene from "../components/Scene.astro";
 
 import { distributeSpeakers } from "../utils/distribute-speakers";
-import { SPEAKER_RADIUS, VOLUME } from "../utils/constants";
+import { SPEAKER_RADIUS } from "../utils/constants";
 import AudioSrc from "../components/AudioSrc.astro";
 import AudioBox from "../components/AudioBox.astro";
 import MessageBox from "../components/MessageBox.astro";
@@ -23,14 +23,12 @@ const speakers = Array.from({ length: 64 }, (_, i) => ({
   position: `${speakerPositions[i].x} ${speakerPositions[i].y} ${speakerPositions[i].z}`,
 }));
 
-const title = "Resonance Audio";
+const title = "Howler JS - HRTF";
 ---
 
 <ExperienceLayout title={title}>
   <Fragment slot="head">
-    <script
-      src="https://cdn.jsdelivr.net/npm/aframe-resonance-audio-component@1.1.0/dist/aframe-resonance-audio-component.min.js"
-      is:inline></script>
+    <script src="../utils/howler-HRTF.js"></script>
     <script src="../utils/main.js"></script>
   </Fragment>
   <Scene>
@@ -41,33 +39,19 @@ const title = "Resonance Audio";
     <BaselineTarget />
      <MessageBox text={title}/>
     <Sphere>
-      <a-resonance-audio-room
-        width="20"
-        height="20"
-        depth="20"
-        ambisonic-order="3"
-        speed-of-sound="343"
-        left="acoustic-ceiling-tiles"
-        right="acoustic-ceiling-tiles"
-        front="acoustic-ceiling-tiles"
-        back="acoustic-ceiling-tiles"
-        down="acoustic-ceiling-tiles"
-        up="acoustic-ceiling-tiles"
-      >
         {
           speakers.map((speaker) => (
             <a-entity
               key={speaker.id}
               id={speaker.id}
               position={speaker.position}
-              resonance-audio-src={`src: ${speaker.audioSrc}; autoplay: false; loop: false; gain: ${VOLUME}`}
+              howler-source={`src: ${speaker.audioSrc}`}
               player
             >
               <AudioBox id={speaker.id} />
             </a-entity>
           ))
         }
-      </a-resonance-audio-room>
     </Sphere>
 
     <Player />

@@ -1,9 +1,3 @@
----
-import HUD from "./HUD.astro";
-import Menu from "./Menu.astro";
-const { firstPage } = Astro.props;
----
-
 <Fragment slot="head">
   <script src="../../utils/rotation-header.js"></script>
 </Fragment>
@@ -21,11 +15,11 @@ const { firstPage } = Astro.props;
   </a-camera>
 
   <!-- hand controls -->
-  <a-entity id="left-hand" hand-controls="hand: left">
+  <a-entity id="left-hand" laser-controls="hand: left; model: true" raycaster="objects: [data-clickable]"
+>
   </a-entity>
   <a-entity
     id="right-hand"
-    hand-controls="hand: right"
     laser-controls="hand: right; model: true"
     raycaster="objects: [data-clickable]"></a-entity>
 </a-entity>

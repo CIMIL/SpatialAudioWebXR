@@ -5,7 +5,7 @@ import Player from "../components/player/Player.astro";
 import ExperienceLayout from "../layouts/ExperienceLayout.astro";
 
 import { distributeSpeakers } from "../utils/distribute-speakers";
-import { SPEAKER_RADIUS } from "../utils/constants";
+import { SPEAKER_RADIUS, VOLUME } from "../utils/constants";
 import Scene from "../components/Scene.astro";
 import AudioSrc from "../components/AudioSrc.astro";
 import AudioBox from "../components/AudioBox.astro";
@@ -43,7 +43,7 @@ const title = "Panner Node";
             id={speaker.id}
             src={speaker.audioSrc}
             position={speaker.position}
-            volume="10"
+            volume={`${VOLUME}`}
           >
             <AudioBox id={speaker.id} />
           </a-sound>
