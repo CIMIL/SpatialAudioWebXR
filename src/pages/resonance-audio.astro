@@ -6,7 +6,7 @@ import ExperienceLayout from "../layouts/ExperienceLayout.astro";
 import Scene from "../components/Scene.astro";
 
 import { distributeSpeakers } from "../utils/distribute-speakers";
-import { SPEAKER_RADIUS } from "../utils/constants";
+import { SPEAKER_RADIUS, VOLUME } from "../utils/constants";
 import AudioSrc from "../components/AudioSrc.astro";
 import AudioBox from "../components/AudioBox.astro";
 import MessageBox from "../components/MessageBox.astro";
@@ -60,7 +60,7 @@ const title = "Resonance Audio";
               key={speaker.id}
               id={speaker.id}
               position={speaker.position}
-              resonance-audio-src={`src: ${speaker.audioSrc}; autoplay: false; loop: false; gain: 10`}
+              resonance-audio-src={`src: ${speaker.audioSrc}; autoplay: false; loop: false; gain: ${VOLUME}`}
               player
             >
               <AudioBox id={speaker.id} />

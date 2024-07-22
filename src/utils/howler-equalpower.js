@@ -1,4 +1,5 @@
 import { Howl } from "howler";
+import { VOLUME } from "./constants";
 
 AFRAME.registerComponent("howler-source", {
   schema: {
@@ -13,13 +14,11 @@ AFRAME.registerComponent("howler-source", {
 
     const sound = new Howl({
       src: [soundPath],
+      volume: VOLUME,
     });
 
     sound.pannerAttr({
       panningModel: "equalpower",
-      refDistance: 0.8,
-      rolloffFactor: 1,
-      distanceModel: "exponential",
     });
 
     sound.pos(coords.x, coords.y, coords.z);

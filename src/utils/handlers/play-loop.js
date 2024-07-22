@@ -85,6 +85,20 @@ export function speakerClicked(state, action) {
       .emit("pause-sound");
   else console.error("Unknown audio context");
 
+  // highlight clicked speaker
+  const speakerClicked = document.querySelector(
+    `#speaker-${action.speakerClicked}-ring`
+  );
+
+  speakerClicked.setAttribute("material", {
+    color: "blue",
+    opacity: "1",
+  });
+
+  setTimeout(() => {
+    speakerClicked.setAttribute("material", { opacity: "0" });
+  }, 3000);
+
   // check if clicked speaker is equal to current playing speaker
   if (
     `speaker-${action.speakerClicked}` ===
@@ -93,7 +107,9 @@ export function speakerClicked(state, action) {
     const speakerClicked = document.querySelector(
       `#speaker-${action.speakerClicked}-ring`
     );
-    speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
+
+    if (DEBUG)
+      speakerClicked.setAttribute("material", { color: "green", opacity: "1" });
 
     // id yes increment score and write Correct in message box
     AFRAME.scenes[0].emit("updateScore");
@@ -106,15 +122,19 @@ export function speakerClicked(state, action) {
     const speakerClicked = document.querySelector(
       `#speaker-${action.speakerClicked}-ring`
     );
-    speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
+
+    if (DEBUG)
+      speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
 
     const currentPlayingSpeaker = document.querySelector(
       `#speaker-${state.currentPlayingSpeaker}-ring`
     );
-    currentPlayingSpeaker.setAttribute("material", {
-      color: "green",
-      opacity: "1",
-    });
+
+    if (DEBUG)
+      currentPlayingSpeaker.setAttribute("material", {
+        color: "green",
+        opacity: "1",
+      });
 
     // if not write Wrong in message box
     AFRAME.scenes[0].emit("updateMessageBox", {
