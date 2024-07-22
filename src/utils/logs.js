@@ -28,9 +28,10 @@ AFRAME.registerComponent("logs", {
     localStorage.getItem("sessionId") ||
       localStorage.setItem("sessionId", this.randomId());
 
-    document
-      .getElementById("sessionIdBox")
-      .setAttribute("value", "Your ID: " + localStorage.getItem("sessionId"));
+    if (document.title === "Spatial Audio AFRAME")
+      document
+        .getElementById("id-text")
+        .setAttribute("value", "Your ID: " + localStorage.getItem("sessionId"));
   },
   randomId: function () {
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
