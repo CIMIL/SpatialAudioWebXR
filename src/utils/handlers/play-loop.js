@@ -46,15 +46,15 @@ export function playFromRandomSpeaker(state, action) {
 
   const degX = getAngle(
     -currentPlayingSPeakerPosition.x,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   const degY = getAngle(
     -currentPlayingSPeakerPosition.y,
-    -currentPlayingSPeakerPosition.z,
+    -currentPlayingSPeakerPosition.z
   );
   setPropertyOnTurn(
     "currentPlayingSpeakerPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
 }
 
@@ -87,7 +87,7 @@ export function speakerClicked(state, action) {
 
   // highlight clicked speaker
   const speakerClicked = document.querySelector(
-    `#speaker-${action.speakerClicked}-ring`,
+    `#speaker-${action.speakerClicked}-ring`
   );
 
   speakerClicked.setAttribute("material", {
@@ -105,7 +105,7 @@ export function speakerClicked(state, action) {
     `speaker-${state.currentPlayingSpeaker}`
   ) {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`,
+      `#speaker-${action.speakerClicked}-ring`
     );
 
     if (DEBUG)
@@ -114,20 +114,21 @@ export function speakerClicked(state, action) {
     // id yes increment score and write Correct in message box
     AFRAME.scenes[0].emit("updateScore");
 
-    AFRAME.scenes[0].emit("updateMessageBox", {
-      message: "Correct!",
-    });
+    if (DEBUG)
+      AFRAME.scenes[0].emit("updateMessageBox", {
+        message: "Correct!",
+      });
     setPropertyOnTurn("hasClickedRight", true);
   } else {
     const speakerClicked = document.querySelector(
-      `#speaker-${action.speakerClicked}-ring`,
+      `#speaker-${action.speakerClicked}-ring`
     );
 
     if (DEBUG)
       speakerClicked.setAttribute("material", { color: "red", opacity: "1" });
 
     const currentPlayingSpeaker = document.querySelector(
-      `#speaker-${state.currentPlayingSpeaker}-ring`,
+      `#speaker-${state.currentPlayingSpeaker}-ring`
     );
 
     if (DEBUG)
@@ -137,9 +138,10 @@ export function speakerClicked(state, action) {
       });
 
     // if not write Wrong in message box
-    AFRAME.scenes[0].emit("updateMessageBox", {
-      message: "Sorry, wrong speaker!",
-    });
+    if (DEBUG)
+      AFRAME.scenes[0].emit("updateMessageBox", {
+        message: "Sorry, wrong speaker!",
+      });
     setPropertyOnTurn("hasClickedRight", false);
   }
 
@@ -153,7 +155,7 @@ export function speakerClicked(state, action) {
 
   setPropertyOnTurn(
     "speakerClickedPosition",
-    `${degX.toFixed()} ${degY.toFixed()}`,
+    `${degX.toFixed()} ${degY.toFixed()}`
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
@@ -165,10 +167,10 @@ export function speakerClicked(state, action) {
   setTimeout(() => {
     if (DEBUG) {
       const speakerClicked = document.querySelector(
-        `#speaker-${action.speakerClicked}-ring`,
+        `#speaker-${action.speakerClicked}-ring`
       );
       const currentPlayingSpeaker = document.querySelector(
-        `#speaker-${state.currentPlayingSpeaker}-ring`,
+        `#speaker-${state.currentPlayingSpeaker}-ring`
       );
 
       speakerClicked.setAttribute("material", { opacity: "0" });
