@@ -1,9 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./constants";
 // Create a single supabase client for interacting with your database
-const supabase = createClient(
-  import.meta.env.PUBLIC_SUPABASE_URL,
-  import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-);
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const body = localStorage.getItem("data");
 const file = new Blob([body], { type: "application/json" });
@@ -23,6 +21,6 @@ const filename = localStorage.getItem("sessionId") + ".json";
     return;
   } else if (data) {
     console.log(data);
-    // window.location.href = "/reset";
+    window.location.href = "/reset";
   }
 })();

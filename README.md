@@ -55,7 +55,7 @@ It is also possible to change the time between each turn (`TIME_BETWEEN_TURNS` i
 
 The experiences can be repeated as many times as needed.
 
-Once done the supervisor can download the data in JSON format by navigating to the `/end` route. This will download a JSON file with the data collected directly on the VR headset. It then sets up a new session for the next user.
+Once done the supervisor can download the data in JSON format by navigating to the `/end` route. This will uplaod a JSON file with the data collected to the specified [Supabase Instance](https://supabase.com/) (more on that later). It then sets up a new session for the next user.
 
 If for any reason the supervisor needs a new session without saving the data to a file, they can navigate to the `/reset` route. This will cancel the data and set up a new session for the next user.
 
@@ -103,3 +103,17 @@ npm run dev -- --host
 ┃ Local    https://localhost:4321/
 ┃ Network  https://192.168.1.200:4321/
 ```
+
+## Supabase setup
+
+To use the data collection feature, you need to set up a Supabase instance and add your `URL` and `anon` key to the `src/utils/constants.js` file.
+Follow the instructions on the [Supabase website](https://supabase.com/) to set up your instance.
+
+The only thing you need is to enable the `Storage` feature and create a new bucket called `results`.
+Then you update the policy of the bucket with the following:
+
+```sql
+CREATE POLICY "upload_by_anyone i5g8hi_0" ON storage.objects FOR INSERT TO public WITH CHECK (bucket_id = 'results');
+```
+
+This means that anyone can upload a file to the bucket (in the popup for creating a new policy select INSERT and below anon role).
