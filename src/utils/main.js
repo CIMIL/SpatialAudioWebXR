@@ -2,7 +2,6 @@ import { SPEAKER_RADIUS } from "./constants.js";
 import "./back-button.js";
 import "./start-button.js";
 import "./collider-check.js";
-import "./menu.js";
 import {
   showBaseline,
   removeBaseline,

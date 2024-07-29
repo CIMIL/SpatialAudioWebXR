@@ -7,6 +7,16 @@ const body = localStorage.getItem("data");
 const file = new Blob([body], { type: "application/json" });
 const filename = localStorage.getItem("sessionId") + ".json";
 
+// download the file from the browser
+const a = document.createElement("a");
+document.body.appendChild(a);
+a.style = "display: none";
+const url = URL.createObjectURL(file);
+a.href = url;
+a.download = filename;
+a.click();
+window.URL.revokeObjectURL(url);
+
 (async () => {
   const { data, error } = await supabase.storage
     .from("results")
