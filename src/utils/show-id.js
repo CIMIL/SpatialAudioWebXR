@@ -1,7 +1,7 @@
 AFRAME.registerComponent("show-id", {
   init: function () {
     const sessionId = localStorage.getItem("sessionId");
-    const debugText = document.getElementById("id-text");
-    debugText.setAttribute("value", `Session ID: ${sessionId}`);
+    const idText = document.getElementById("id-text");
+    idText.setAttribute("value", `Session ID: ${sessionId}`);
   },
 });
