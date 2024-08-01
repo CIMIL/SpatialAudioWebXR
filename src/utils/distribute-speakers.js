@@ -6,55 +6,38 @@
 export function distributeSpeakers(radius) {
   const positions = [];
   const numberOfLayers = 8;
-  let numberOfBoxesForLine = 0;
+  const speakersPerLayer = [1, 7, 11, 13, 13, 11, 7, 1]; // Ensures a total of 64 speakers
 
   for (let layer = 0; layer < numberOfLayers; layer++) {
-    switch (layer) {
-      case 0:
-        numberOfBoxesForLine = 1;
-        break;
-      case 1:
-        numberOfBoxesForLine = 7;
-        break;
-      case 2:
-        numberOfBoxesForLine = 11;
-        break;
-      case 3:
-        numberOfBoxesForLine = 13;
-        break;
-      case 4:
-        numberOfBoxesForLine = 13;
-        break;
-      case 5:
-        numberOfBoxesForLine = 11;
-        break;
-      case 6:
-        numberOfBoxesForLine = 7;
-        break;
-      case 7:
-        numberOfBoxesForLine = 1;
-        break;
-    }
+    // Calculate the angle for this layer
+    const theta = (Math.PI * layer) / (numberOfLayers - 1);
+    const y = radius * Math.cos(theta);
+    const r = radius * Math.sin(theta);
 
-    for (let j = 0; j < numberOfBoxesForLine; j++) {
-      const position = {
-        x:
-          radius *
-          Math.sin((2 * Math.PI * j) / numberOfBoxesForLine) *
-          Math.sin((Math.PI * layer) / numberOfLayers),
-        y: radius * Math.cos((Math.PI * layer) / numberOfLayers),
-        z:
-          radius *
-          Math.cos((2 * Math.PI * j) / numberOfBoxesForLine) *
-          Math.sin((Math.PI * layer) / numberOfLayers),
-      };
+    // Determine the number of points in this layer
+    const numberOfPoints = speakersPerLayer[layer];
 
-      if (layer === 7) {
-        position.z = 0;
-      }
+    for (let point = 0; point < numberOfPoints; point++) {
+      const phi = (2 * Math.PI * point) / numberOfPoints;
+      const x = r * Math.cos(phi);
+      const z = r * Math.sin(phi);
 
-      positions.push(position);
+      positions.push({ x, y, z });
     }
   }
-  return positions;
+
+  const angleToRotate = 0.13; // apply rotation to fix the front speakers
+  const cosAngle = Math.cos(angleToRotate);
+  const sinAngle = Math.sin(angleToRotate);
+
+  const rotatedPositions = positions.map((pos) => {
+    const { x, y, z } = pos;
+    return {
+      x: x * cosAngle - z * sinAngle,
+      y: y,
+      z: x * sinAngle + z * cosAngle,
+    };
+  });
+
+  return rotatedPositions;
 }
