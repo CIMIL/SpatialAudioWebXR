@@ -55,9 +55,7 @@ It is also possible to change the time between each turn (`TIME_BETWEEN_TURNS` i
 
 The experiences can be repeated as many times as needed.
 
-Once done the supervisor can download the data in JSON format by navigating to the `/end` route. This will uplaod a JSON file with the data collected to the specified [Supabase Instance](https://supabase.com/) (more on that later). It then sets up a new session for the next user.
-
-> To upload the file on a S3 storage see the `fileupload` branch for the implementation with Supabase.
+Once done the supervisor can download the data in JSON format by navigating to the `/end` route. This will upload a JSON file with the data collected to the specified [Supabase Instance](https://supabase.com/) (more on that later) and also prompt to download the file on the VR headset. It then sets up a new session for the next user.
 
 If for any reason the supervisor needs a new session without saving the data to a file, they can navigate to the `/reset` route. This will cancel the data and set up a new session for the next user.
 
