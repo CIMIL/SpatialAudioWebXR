@@ -3,17 +3,17 @@
   {
     data: [
       {
-        experience: "Panner Node",
+        experience: "A-Frame Spatial Audio",
         turns: [
           {
-            currentPlayingSpeaker: "speaker-1", // in play-loop.js
-            currentPlayingSpeakerPosition: "x y", // in play-loop.js
-            speakerClicked: "speaker-1", // in play-loop.js
-            speakerClickedPosition: "x y", // in play-loop.js
+            currentPlayingSpeaker: "speaker-1", // in loop.js
+            currentPlayingSpeakerPosition: "x y", // in loop.js
+            speakerClicked: "speaker-1", // in loop.js
+            speakerClickedPosition: "x y", // in loop.js
             headHeadingStart: "x y", // in baseline.js
             headHeadingSound: "x y", // in baseline.js
-            headHeadingClick: "x y", // in play-loop.js
-            hasClickedRight: true, // in play-loop.js
+            headHeadingClick: "x y", // in loop.js
+            hasClickedRight: true, // in loop.js
           },
         ],
       },

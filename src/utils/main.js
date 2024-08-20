@@ -10,7 +10,7 @@ import {
   setSecondsElapsed,
 } from "./handlers/baseline.js";
 
-import { playFromRandomSpeaker, speakerClicked } from "./handlers/play-loop.js";
+import { playFromRandomSpeaker, speakerClicked } from "./handlers/loop.js";
 
 AFRAME.registerState({
   initialState: {
