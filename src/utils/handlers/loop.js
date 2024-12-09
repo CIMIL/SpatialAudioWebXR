@@ -20,9 +20,7 @@ export function playFromRandomSpeaker(state, action) {
     message: "What speaker played?",
   });
 
-  if (document.title === "A-Frame Spatial Audio")
-    document.querySelector(`#speaker-${rand}`).components["sound"].playSound();
-  else if (document.title === "Resonance Audio")
+  if (document.title === "Resonance Audio")
     document.querySelector(`#src-${rand}`).play();
   else if (
     document.title === "Howler JS - HRTF" ||
@@ -70,11 +68,7 @@ export function speakerClicked(state, action) {
   // deactivate clicks
   state.clickActive = false;
   // stop sound from current speaker
-  if (document.title === "A-Frame Spatial Audio")
-    document
-      .querySelector(`#speaker-${state.currentPlayingSpeaker}`)
-      .components["sound"].stopSound();
-  else if (document.title === "Resonance Audio")
+  if (document.title === "Resonance Audio")
     document.querySelector(`#src-${state.currentPlayingSpeaker}`).pause();
   else if (
     document.title === "Howler JS - HRTF" ||
