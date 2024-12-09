@@ -14,17 +14,17 @@ export function distributeSpeakers(radius) {
     // 2 and 4 -> 22.5 deg
 
     const thetaAngles = [
-      0,                     // Layer 0: 0° (North pole)
-      (45 * Math.PI) / 180,// Layer 2: 22.5° from center layer
-      (67.5 * Math.PI) / 180,  // Layer 1: 45° from center layer
-      (90 * Math.PI) / 180,  // Layer 3: 90° (equatorial plane)
+      0, // Layer 0: 0° (North pole)
+      (45 * Math.PI) / 180, // Layer 2: 22.5° from center layer
+      (67.5 * Math.PI) / 180, // Layer 1: 45° from center layer
+      (90 * Math.PI) / 180, // Layer 3: 90° (equatorial plane)
       (112.5 * Math.PI) / 180, // Layer 5: 45° below center
-      (135 * Math.PI) / 180,// Layer 4: 22.5° below center
-      Math.PI,               // Layer 6: 180° (South pole)
+      (135 * Math.PI) / 180, // Layer 4: 22.5° below center
+      Math.PI, // Layer 6: 180° (South pole)
     ];
 
     // If you need equally spaced layers, you can use this formula
-    // const theta = (Math.PI * layer) / (numberOfLayers - 1); 
+    // const theta = (Math.PI * layer) / (numberOfLayers - 1);
 
     const theta = thetaAngles[layer];
     const y = radius * Math.cos(theta);
@@ -74,7 +74,6 @@ export function distributeSpeakers(radius) {
       positions.push({ id, x, y, z });
     }
   }
-
 
   // shift 90 desgrees to left to have 0 in front
   const angleToRotate = -Math.PI / 2;
