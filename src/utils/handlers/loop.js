@@ -17,7 +17,7 @@ export function playFromRandomSpeaker(state, action) {
   state.clickActive = true;
   // play audio from random speaker
   AFRAME.scenes[0].emit("updateMessageBox", {
-    message: "What speaker has played?",
+    message: "What speaker played?",
   });
 
   if (document.title === "A-Frame Spatial Audio")
