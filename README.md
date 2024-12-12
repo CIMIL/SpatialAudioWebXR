@@ -33,6 +33,10 @@ astro  v4.5.9 ready in 11 ms
 
 ┃ Local    http://localhost:4321/
 ┃ Network  http://192.168.1.176:4321/
+
+# https: 
+npm run dev -- --host
+
 ```
 
 > A deployed version can also be found here:
