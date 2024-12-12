@@ -4,17 +4,17 @@ This project makes you experience spatial audio using A-Frame and WebXR. The pro
 
 The project is built using Astro, a static site generator for modern web development.
 
-The project includes three methods (and four experiences) for spatial audio:
+The project includes three methods for spatial audio:
 
-- [A-Frame Spatial Audio (PannerNode)](https://aframe.io/docs/1.6.0/components/sound.html)
 - [Resonance Audio](https://resonance-audio.github.io/resonance-audio/)
-- [Howler.js (PannerNode)](https://howlerjs.com/)
+- [Howler.js (equalpower)](https://howlerjs.com/)
+- [Howler.js (HRTF)](https://howlerjs.com/)
 
 ## How to Use
 
 To use this project, you need to have a VR headset that supports WebXR (tested on the Oculus Quest). The project can be run locally and accessed on the VR headset by using the network IP address in the browser.
 
-You will need to have Node.js (v20.12.1) installed on your machine to run the project.
+You will need Node.js (v20.12.1) installed on your machine to run the project.
 
 To get started, clone the repository and install the dependencies:
 

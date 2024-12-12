@@ -29,15 +29,13 @@ import IdText from "../components/IdText.astro";
   <body>
     <Scene>
       <Fragment slot="assets">
-        <img id="aframe-spatial-audio" src="/aframe-spatial-audio.webp" />
         <img id="resonance-audio" src="/resonance-audio.webp" />
         <img id="howler" src="/howler.webp" />
       </Fragment>
       <a-entity position="0 0 -4">
-        <Portal text="A-Frame Spatial Audio" image="#aframe-spatial-audio" link="/aframe-spatial-audio" position="-3 0 0.3" rotation="0 30 0" />
-        <Portal text="Resonance Audio" image="#resonance-audio" link="/resonance-audio" position="-1 0 -0.2" rotation="0 10 0" />
-        <Portal text="Howler JS - HRTF" image="#howler" link="/howler-HRTF" position="1 0 -0.2" rotation="0 -10 0" />
-        <Portal text="Howler JS - equalpower" image="#howler" link="/howler-equalpower" position="3 0 0.3" rotation="0 -30 0" />
+        <Portal text="Resonance Audio" image="#resonance-audio" link="/resonance-audio" position="-2 0 0" rotation="0 20 0" />
+        <Portal text="Howler JS - HRTF" image="#howler" link="/howler-HRTF" position="0 0 -0.3" rotation="0 0 0" />
+        <Portal text="Howler JS - equalpower" image="#howler" link="/howler-equalpower" position="2 0 0" rotation="0 -20 0" />
         <a-text align="center" position="0 1.8 0" width="8" scale="0.4 0.4 0.4" value="Hi, thanks for trying this demo to experience different way of using spatial audio in web XR. We suggest using 'wolvic browser' however when changing page you are required to re-enter the VR mode due to limitations."></a-text>
         <a-entity position="0 1 0">
           <IdText />
