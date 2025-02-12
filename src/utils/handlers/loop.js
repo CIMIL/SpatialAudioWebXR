@@ -1,4 +1,4 @@
-import { TIME_BETWEEN_TURNS, TURNS, DEBUG } from "../constants.js";
+import { TIME_BETWEEN_TURNS, TURNS, DEBUG, SPEAKERS_COUNT } from "../constants.js";
 import { pushTurn, setPropertyOnTurn } from "../logs.js";
 import { getAngle } from "../rotation-header.js";
 
@@ -8,8 +8,8 @@ import { getAngle } from "../rotation-header.js";
  * @param {Object} action - The action object.
  */
 export function playFromRandomSpeaker(state, action) {
-  // random number from 0 to 63
-  const rand = Math.floor(Math.random() * (63 + 1));
+  // random number from 0 to SPEAKERS_COUNT
+  const rand = Math.floor(Math.random() * (SPEAKERS_COUNT + 1));
   // update currentPlayingSpeaker
   state.currentPlayingSpeaker = `${rand}`;
 
