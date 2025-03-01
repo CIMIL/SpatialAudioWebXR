@@ -42,17 +42,17 @@ const title = "Resonance Audio";
      <MessageBox text={title}/>
     <Sphere>
       <a-resonance-audio-room
-        width="20"
-        height="20"
-        depth="20"
-        ambisonic-order="3"
+        width="3"
+        height="3"
+        depth="3"
+        ambisonic-order="1"
         speed-of-sound="343"
-        left="acoustic-ceiling-tiles"
-        right="acoustic-ceiling-tiles"
-        front="acoustic-ceiling-tiles"
-        back="acoustic-ceiling-tiles"
-        down="acoustic-ceiling-tiles"
-        up="acoustic-ceiling-tiles"
+        left="uniform"
+        right="uniform"
+        front="uniform"
+        back="uniform"
+        down="uniform"
+        up="uniform"
       >
         {
           speakers.map((speaker) => (

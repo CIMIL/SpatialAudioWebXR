@@ -11,6 +11,7 @@ AFRAME.registerComponent("start-button", {
       pushExperience({ experience: experience, turns: [] });
 
       AFRAME.scenes[0].emit("showBaseline");
+      //AFRAME.scenes[0].emit("playFromRandomSpeaker");
     });
   },
 });

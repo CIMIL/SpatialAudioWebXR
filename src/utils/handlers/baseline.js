@@ -1,24 +1,30 @@
 import { BASELINE_WAIT_TIME } from "../constants";
 import { setPropertyOnTurn } from "../logs";
 
+
 /**
  * Shows the baseline.
  * @param {Object} state - The state object.
  * @param {Object} action - The action object.
  */
 export function showBaseline(state, action) {
+  
   const baselineSlide = document.querySelector("#baseline-slide");
   const buttons = document.getElementById("buttons");
   // disable menu
   buttons.emit("hideButtons", null, false);
-  baselineSlide.setAttribute("visible", true);
+  
+  //baselineSlide.setAttribute("visible", false);
   baselineSlide.setAttribute("collider-check", {});
   AFRAME.scenes[0].emit("updateMessageBox", {
     message: "Please look at the count down and listen to the sound.",
   });
-
+  
   setPropertyOnTurn("headHeadingStart", localStorage.getItem("cameraRotation"));
+  
 }
+
+
 
 /**
  * Removes the baseline.
@@ -26,10 +32,11 @@ export function showBaseline(state, action) {
  * @param {Object} action - The action object.
  */
 export function removeBaseline(state, action) {
+  
   const baselineSlide = document.querySelector("#baseline-slide");
   baselineSlide.setAttribute("visible", false);
   baselineSlide.removeAttribute("collider-check");
-
+  
   AFRAME.scenes[0].emit("playFromRandomSpeaker");
 }
 
@@ -39,6 +46,7 @@ export function removeBaseline(state, action) {
  * @param {Object} action - The action object.
  */
 export function checkIfIntersected(state, action) {
+  AFRAME.scenes[0].emit("removeBaseline");
   if (state.isIntersected) {
     state.secondsElapsed += action.timeDelta;
     const baselineSlideText = document.querySelector("#baseline-slide-text");
@@ -62,6 +70,7 @@ export function checkIfIntersected(state, action) {
 
     baselineSlideText.setAttribute("value", BASELINE_WAIT_TIME / 1000);
   }
+    
 }
 
 /**
@@ -70,7 +79,9 @@ export function checkIfIntersected(state, action) {
  * @param {Object} action - The action object.
  */
 export function setIsIntersected(state, action) {
+  
   state.isIntersected = action.isIntersected;
+  
 }
 
 /**
@@ -79,5 +90,7 @@ export function setIsIntersected(state, action) {
  * @param {Object} action - The action object.
  */
 export function setSecondsElapsed(state, action) {
+  
   state.secondsElapsed = action.secondsElapsed;
+  
 }

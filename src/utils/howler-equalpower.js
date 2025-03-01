@@ -19,6 +19,13 @@ AFRAME.registerComponent("howler-source", {
 
     sound.pannerAttr({
       panningModel: "equalpower",
+      refDistance: 1,
+      rolloffFactor: 1,
+      distanceModel: 'inverse',
+      maxDistance: 10000,
+      coneInnerAngle: 360,
+      coneOuterAngle: 360,
+      coneOuterGain: 0
     });
 
     sound.pos(coords.x, coords.y, coords.z);

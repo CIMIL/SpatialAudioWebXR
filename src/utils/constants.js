@@ -1,9 +1,9 @@
 export const TIME_BETWEEN_TURNS = 3000;
 export const DEBUG = false;
-export const TURNS = 16;
+export const TURNS = 3;
 export const SPEAKER_RADIUS = 2;
 export const SPEAKERS_COUNT = 42;
 export const BASELINE_WAIT_TIME = 3000;
 export const VOLUME = 5;
-export const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
-export const SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+export const SUPABASE_URL = 'https://dztwpbnpgfjngoifhfte.supabase.co';
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6dHdwYm5wZ2ZqbmdvaWZoZnRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2NzM5MDgsImV4cCI6MjA1NjI0OTkwOH0.w3IPVMCrtMHBT50tM0exsUQoMhni1XGIq65_ZuKhrkg';

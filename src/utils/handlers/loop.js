@@ -34,6 +34,9 @@ export function playFromRandomSpeaker(state, action) {
     speakerBox.setAttribute("material", { color: "blue", opacity: "1" });
   }
 
+  const speakerBox = document.querySelector(`#speaker-${rand}-ring`);
+  console.log(speakerBox);
+
   setPropertyOnTurn("headHeadingSound", localStorage.getItem("cameraRotation"));
 
   setPropertyOnTurn("currentPlayingSpeaker", `speaker-${rand}`);
@@ -174,10 +177,16 @@ export function speakerClicked(state, action) {
     // empty currentPlayingSpeaker
     state.currentPlayingSpeaker = "";
 
+    console.log(state.currentLevel);
+
     // check if TURNS < 10
     if (state.currentLevel < TURNS) {
       // if yes, emit new playFromRandomSpeaker
-      AFRAME.scenes[0].emit("showBaseline");
+      const buttons = document.getElementById("buttons");
+      buttons.emit("showButtons", null, false);
+
+      //AFRAME.scenes[0].emit("showBaseline");
+
     } else {
       // else set messagebox to "Game Over"
       state.currentPlayingSpeaker = "";
