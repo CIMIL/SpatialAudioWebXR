@@ -171,6 +171,8 @@ export function speakerClicked(state, action) {
         opacity: "1",
       });
 
+
+
     // if not write Wrong in message box
     if (DEBUG)
       AFRAME.scenes[0].emit("updateMessageBox", {

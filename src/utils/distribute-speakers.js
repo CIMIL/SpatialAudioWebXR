@@ -2,7 +2,7 @@
  * Distributes speakers in a spherical pattern.
  * @param {number} radius - The radius of the sphere.
  * @return {Array} An array of speaker positions.
- */
+ */decodeURI
 export function distributeSpeakers(radius) {
   const positions = [];
   const speakersPerLayer = [1, 4, 8, 16, 8, 4, 1]; // Ensures a total of 64 speakers
