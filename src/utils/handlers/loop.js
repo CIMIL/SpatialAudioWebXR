@@ -2,14 +2,28 @@ import { TIME_BETWEEN_TURNS, TURNS, DEBUG, SPEAKERS_COUNT } from "../constants.j
 import { pushTurn, setPropertyOnTurn } from "../logs.js";
 import { getAngle } from "../rotation-header.js";
 
+
 /**
- * Plays audio from a random speaker.
+ * Plays audio from speakers in a random order without repeating until all speakers have been used.
  * @param {Object} state - The current state.
  * @param {Object} action - The action object.
  */
 export function playFromRandomSpeaker(state, action) {
-  // random number from 0 to SPEAKERS_COUNT
-  const rand = Math.floor(Math.random() * (SPEAKERS_COUNT + 1));
+  // Initialize or reset the available speakers array if needed
+  if (!state.availableSpeakers || state.availableSpeakers.length === 0) {
+    // Create an array with all speaker indices [0, 1, 2, ..., SPEAKERS_COUNT]
+    state.availableSpeakers = Array.from({ length: SPEAKERS_COUNT + 1 }, (_, i) => i);
+    // Shuffle the array using Fisher-Yates algorithm
+    for (let i = state.availableSpeakers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [state.availableSpeakers[i], state.availableSpeakers[j]] = 
+        [state.availableSpeakers[j], state.availableSpeakers[i]];
+    }
+  }
+  
+  // Take the next speaker from the shuffled array
+  const rand = state.availableSpeakers.pop();
+  
   // update currentPlayingSpeaker
   state.currentPlayingSpeaker = `${rand}`;
 
@@ -111,7 +125,7 @@ export function speakerClicked(state, action) {
   );
 
   speakerClicked.setAttribute("material", {
-    color: "blue",
+    color: "red",
     opacity: "1",
   });
 
