@@ -20,6 +20,13 @@ export function playFromRandomSpeaker(state, action) {
     message: "What speaker played?",
   });
 
+  // Record the sound start time and save it to localStorage for persistence
+  const soundPlayedTime = Date.now();
+  localStorage.setItem("soundPlayedTime", soundPlayedTime);
+  
+  // Save to the current turn
+  setPropertyOnTurn("soundPlayedTime", soundPlayedTime);
+
   if (document.title === "Resonance Audio")
     document.querySelector(`#src-${rand}`).play();
   else if (
@@ -68,6 +75,22 @@ export function speakerClicked(state, action) {
   // if clicks are not active, ignore
   if (!state.clickActive) return;
 
+  // Record the click time
+  const clickTime = Date.now();
+  
+  // Get the sound played time from localStorage
+  const soundPlayedTime = parseInt(localStorage.getItem("soundPlayedTime") || 0);
+  
+  // Calculate the response time in milliseconds
+  const responseTime = clickTime - soundPlayedTime;
+  
+  // Log for debugging
+  console.log(`Response time: ${responseTime} ms`);
+  
+  // Save to the current turn - do this BEFORE pushTurn() is called
+  setPropertyOnTurn("clickTime", clickTime);
+  setPropertyOnTurn("responseTime", responseTime);
+  
   // deactivate clicks
   state.clickActive = false;
   // stop sound from current speaker
@@ -156,11 +179,13 @@ export function speakerClicked(state, action) {
   );
   setPropertyOnTurn("headHeadingClick", localStorage.getItem("cameraRotation"));
 
-  // increment level
+  // Increment level AFTER all properties are set
   state.currentLevel += 1;
 
+  // Now we can safely push the turn with all collected data
   pushTurn();
-  //  wait for n seconds
+  
+  // Wait for TIME_BETWEEN_TURNS
   setTimeout(() => {
     if (DEBUG) {
       const speakerClicked = document.querySelector(
