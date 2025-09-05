@@ -40,7 +40,10 @@ npm run dev -- --host
 ```
 
 > A deployed version can also be found here:
-> [https://spatial-audio-aframe.netlify.app/](https://spatial-audio-aframe.netlify.app/)
+
+> User Training Phase: [https://spatial-web-audio-training.netlify.app/](https://spatial-web-audio-training.netlify.app/)
+
+> User Test Phase: [https://spatial-web-audio-exp.netlify.app/](https://spatial-web-audio-exp.netlify.app/)
 
 The project can be accessed on the VR headset by using the network IP address in the browser.
 
